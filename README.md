@@ -3,6 +3,7 @@
 27/6/22 Monday
 - can only access /hotels path via search from /DestinationSearch
 - Get below error when opening /DestinationSearch
+
 react-dom.development.js:86 Warning: Invalid DOM property `class`. Did you mean `className`?
 
 # Getting Started with Create React App
