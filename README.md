@@ -6,6 +6,14 @@
 
 react-dom.development.js:86 Warning: Invalid DOM property `class`. Did you mean `className`?
 
+Also renamed some files for integration
+
+Ann/Feature 1
+Home.jsx -> DestinationSearchPage
+
+Aditi/Feature 2
+Home.jsx -> HotelSearchPage
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
