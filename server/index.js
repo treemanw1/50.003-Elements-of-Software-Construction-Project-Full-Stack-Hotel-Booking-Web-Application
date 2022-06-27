@@ -1,7 +1,7 @@
+require('dotenv').config();
 const express = require("express");
 const cors = require('cors');
 
-const PORT = process.env.PORT || 3001;
 const Note = require('../models/mongo')
 
 const app = express();
@@ -46,6 +46,8 @@ app.get('*', (request, response) => {
   response.send('<h1>404 Error</h1>')
 })
 
+const PORT = process.env.PORT || 3001;
+// const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });

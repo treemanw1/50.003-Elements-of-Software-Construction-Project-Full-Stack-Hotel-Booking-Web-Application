@@ -1,9 +1,6 @@
 const mongoose = require('mongoose')
 
-//const url = process.env.MONGODB_URI
-
-// not sure if pw correct
-const url = "mongodb+srv://fullstack:mongodbpassword@cluster0.uani7.mongodb.net/noteApp?retryWrites=true&w=majority"
+const url = process.env.MONGODB_URI
 
 console.log('connecting to', url)
 
