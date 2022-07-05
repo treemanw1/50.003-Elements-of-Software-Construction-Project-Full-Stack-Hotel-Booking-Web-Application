@@ -1,43 +1,55 @@
-.navbar{
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+
+.navbar {
   height: 50px;
-  background-color: #484444;
+  background-color: rgba(7, 5, 5, 0.5);
   display: flex;
   justify-content: center;
 }
 
-.navContainer{
+.navContainer {
   width: 100%;
-  max-width: 1024px;
   color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
-.logo{
-  font-weight: 500;
+.childLogoContainer {
+  display: flex;
+  align-items: center;
+  gap:5px;
 }
 
-.navButton{
+.logo {
+  font-size:13px;
+  font-family: "Poppins";
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+.logoImage {
+  height: 35px;
+  width: 35px;
+  display: flex;
+  flex-direction: row;
+}
+
+.navButton {
+  font-size: 12px;
   margin-left: 20px;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
-
-}
-
-.btn {
-  border: none;
-  padding: 14px 28px;
-  font-size: 16px;
-  cursor: pointer;
-  display: inline-block;
   color: white;
+  background: none;
+  font-weight: bold;
 }
 
-
-
-.btn:hover {
-  font-size: 17px;
+.navButton:hover {
+  font-size: 14px;
   color: white;
 }

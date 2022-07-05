@@ -1,5 +1,6 @@
-import "./searchItem.css";
 
+
+import "./searchItem.css";
 
 const SearchItem = ({name, address, distance, rating}) => {
   return (
@@ -11,25 +12,26 @@ const SearchItem = ({name, address, distance, rating}) => {
       />
       <div className="siDesc">
         <h1 className="siTitle">{name}</h1>
+        <span className="siSubtitle">{address}</span>
         <span className="siSubtitle">
           {rating} stars
         </span>
-        <span className="siSubtitle">
-          {address}
-        </span>
-        <span className="siDistance">{Math.round(distance * 100) / 100} km from city centre</span>
-        <span className="siFeatures">
-          Show on map
-        </span>
-        
+
+        <link
+          rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"
+          crossorigin="anonymous"
+        ></link>
+        <button className="siFeatures">
+          <i class="fas fa-location-arrow fa-fw"></i> Show on Map
+        </button>
       </div>
       <div className="siDetails">
-        
         <div className="siDetailTexts">
           <span className="siPrice">SGD 1360</span>
           <span className="roomDetails">1 room, 3 nights</span>
-          <button className="siCheckButton">Select</button>
         </div>
+        <button className="siCheckButton">Book Now</button>
       </div>
     </div>
   );

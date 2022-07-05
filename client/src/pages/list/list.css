@@ -1,48 +1,57 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+
+.background {
+  background-color: #e8e6e6;
+}
+
 .listContainer {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
 }
 
 .listWrapper {
+  background-color: #e8e6e6;
   width: 100%;
-  max-width: 1248px;
   display: flex;
   gap: 20px;
+  margin: 20px;
 }
 
 .listSearch {
   flex: 1;
-  background-color: #febb02;
+  background-color: #a9bffb;
   padding: 10px;
   position: sticky;
   top: 10px;
   height: max-content;
 }
 
-.lsTitle{
-  font-size: 20px;
-  color: #555;
+.lsTitle {
+  font-size: 16px;
   margin-bottom: 10px;
+  font-family: "Poppins";
+  font-weight: 100;
+  text-align: center;
+
 }
 
-.lsItem{
+.lsItem {
   display: flex;
   flex-direction: column;
   gap: 5px;
   margin-bottom: 10px;
 }
 
-.lsItem>label{
+.lsItem > label {
   font-size: 12px;
 }
 
-.lsItem>input{
+.lsItem > input {
   height: 30px;
   border: none;
   padding: 5px;
 }
-.lsItem>span{
+.lsItem > span {
   height: 30px;
   padding: 5px;
   background-color: white;
@@ -51,11 +60,11 @@
   cursor: pointer;
 }
 
-.lsOptions{
+.lsOptions {
   padding: 10px;
 }
 
-.lsOptionItem{
+.lsOptionItem {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
@@ -63,11 +72,11 @@
   font-size: 12px;
 }
 
-.lsOptionInput{
+.lsOptionInput {
   width: 50px;
 }
 
-.listSearch>button{
+.listSearch > button {
   padding: 10px;
   background-color: #0071c2;
   color: white;
@@ -81,11 +90,73 @@
   flex: 2;
 }
 
+.filter {
+  flex-wrap: wrap;
+  background-color: rgba(255, 255, 255, 0.6);
+  justify-content: left;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.headerSearchItem1 {
+  gap: 10px;
+  color: black;
+}
+
+.spaceItem {
+  gap: 10px;
+  color: black;
+  padding-bottom: 10px;
+}
+
+.filterHeader{
+
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-family: "Poppins";
+  font-weight: 100;
+  text-align: center;
+
+}
+
+.filterSearchInput {
+  height: 40px;
+  font-size: 14px;
+  padding: 0px 5px;
+  background-color: white;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.form-control {
+  font-size: 13px;
+  display: grid;
+  grid-template-columns: 1em auto;
+  line-height: 2;
+  gap: 0.5em;
+}
+
+.backgroundItem{
+  background-color: white;
+  padding-left:17px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+}
+
 .btn {
   border: none;
   background-color: inherit;
   padding: 14px 28px;
   font-size: 16px;
+  font-weight: bold;
+  width:max-content;
   cursor: pointer;
   display: inline-block;
 }
