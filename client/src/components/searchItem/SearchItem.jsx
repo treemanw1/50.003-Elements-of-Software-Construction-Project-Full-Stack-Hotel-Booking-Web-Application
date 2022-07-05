@@ -1,6 +1,6 @@
 import "./searchItem.css";
 
-const SearchItem = () => {
+const SearchItem = ({onBookClick}) => {
   return (
     <div className="searchItem">
       <img
@@ -26,7 +26,7 @@ const SearchItem = () => {
         <div className="siDetailTexts">
           <span className="siPrice">SGD 1360</span>
           <span className="roomDetails">1 room, 3 nights</span>
-          <button className="siCheckButton">Book Now</button>
+          <button className="siCheckButton" onClick={onBookClick}>Book Now</button>
         </div>
       </div>
     </div>
