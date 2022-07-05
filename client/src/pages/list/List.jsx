@@ -22,8 +22,6 @@ const List = () => {
         <div className="listWrapper">
           <div className="listSearch">
             <h1 className="lsTitle">Map</h1>
-            
-            
           </div>
           <div className="listResult">
             <SearchItem />

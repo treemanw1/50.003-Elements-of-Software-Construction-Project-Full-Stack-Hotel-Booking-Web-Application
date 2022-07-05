@@ -7,6 +7,7 @@ import DestinationSearchPage from "./pages/Destination search page/DestinationSe
 import HotelSearchPage from "./pages/Hotel search page/HotelSearchPage";
 import Hotel from "./pages/hotel/Hotel";
 import List from "./pages/list/List";
+import HotelDetails from "./pages/Hotel details/HotelDetails";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/HotelSearch" element={<HotelSearchPage/>}/>
         <Route path="/hotels" element={<List/>}/>
         <Route path="/hotels/:id" element={<Hotel/>}/>
+        <Route path="/HotelDetails" element={<HotelDetails/>}/>
       </Routes>
     </BrowserRouter>
   );

@@ -1,5 +1,8 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# my stuff
+/package-og.json
+
 # bfg stuff
 passwords.txt
 bfg-1.14.0.jar
@@ -7,6 +10,7 @@ bfg-1.14.0.jar
 
 # dependencies
 /node_modules
+/client/node_modules
 /.pnp
 .pnp.js
 
