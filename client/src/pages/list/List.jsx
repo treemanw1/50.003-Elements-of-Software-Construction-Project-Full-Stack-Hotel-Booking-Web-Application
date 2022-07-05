@@ -6,15 +6,20 @@ import { useState } from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
+import { Button} from 'react-bootstrap';
+import {hotelList} from './info.jsx';
+const imagePerRow = 4;
+
 
 const List = () => {
   const location = useLocation();
-  const [destination, setDestination] = useState(location.state.destination);
-  const [date, setDate] = useState(location.state.date);
-  const [openDate, setOpenDate] = useState(false);
-  const [options, setOptions] = useState(location.state.options);
+  const [next, setNext] = useState(imagePerRow);
+const handleMoreImage = () => {
+    setNext(next + imagePerRow);
+  };
 
   return (
+    
     <div>
       <Navbar />
       <Header/>
@@ -22,17 +27,30 @@ const List = () => {
         <div className="listWrapper">
           <div className="listSearch">
             <h1 className="lsTitle">Map</h1>
+            
           </div>
           <div className="listResult">
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
-            <SearchItem />
+          {hotelList?.slice(0, next)?.map((data, key) => {
+          return (
+            <div key={key}>
+              <SearchItem
+                key={key}
+                name={data.name}
+                address={data.address}
+                distance={data.distance}
+                rating={data.rating}
+              />
+            </div>
+          );
+        })}
+        {next < hotelList?.length && (
+          <Button
+            className="btn success"
+            onClick={handleMoreImage}
+          >
+            Load more
+          </Button>
+        )}
           </div>
         </div>
       </div>
@@ -41,3 +59,4 @@ const List = () => {
 };
 
 export default List;
+

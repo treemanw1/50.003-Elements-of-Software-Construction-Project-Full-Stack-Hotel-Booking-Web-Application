@@ -6,9 +6,9 @@ const Navbar = () => {
       <div className="navContainer">
         <span className="logo">Trivago</span>
         <div className="navItems">
-          <button className="navButton">Hotel Search</button>
-          <button className="navButton">Room Search</button>
-          <button className="navButton">Login</button>
+          <button className="btn">Hotel Search</button>
+          <button className="btn">Room Search</button>
+          <button className="btn">Login</button>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import "./searchItem.css";
 
-const SearchItem = ({onBookClick}) => {
+
+const SearchItem = ({name, address, distance, rating}) => {
   return (
     <div className="searchItem">
       <img
@@ -9,13 +10,14 @@ const SearchItem = ({onBookClick}) => {
         className="siImg"
       />
       <div className="siDesc">
-        <h1 className="siTitle">Shangri-La Singapore</h1>
+        <h1 className="siTitle">{name}</h1>
         <span className="siSubtitle">
-          22 Orange Grove 
+          {rating} stars
         </span>
-        <span className="siDistance">14.4 km from city centre</span>
-        
-        
+        <span className="siSubtitle">
+          {address}
+        </span>
+        <span className="siDistance">{Math.round(distance * 100) / 100} km from city centre</span>
         <span className="siFeatures">
           Show on map
         </span>
@@ -26,7 +28,7 @@ const SearchItem = ({onBookClick}) => {
         <div className="siDetailTexts">
           <span className="siPrice">SGD 1360</span>
           <span className="roomDetails">1 room, 3 nights</span>
-          <button className="siCheckButton" onClick={onBookClick}>Book Now</button>
+          <button className="siCheckButton">Select</button>
         </div>
       </div>
     </div>
