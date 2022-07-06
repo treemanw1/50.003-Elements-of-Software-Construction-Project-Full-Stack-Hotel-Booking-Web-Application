@@ -1,14 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
 
 body {
-  /* background-image: url(../../components/navbar/background.jpeg); */
   background-image: url(../../components/navbar/background3.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.destinationSearchContainer{
-  margin-top: 100px; 
+.homeContainer {
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,27 +15,27 @@ body {
   position: relative;
 }
 
-.container { 
-  width: 1024px; 
+.childHomeContainer {
+  width: 1024px;
   display: flex;
   align-items: center;
-} 
+}
 
-.column { 
-  float: center; 
+.question {
+  float: center;
   width: 50%;
-} 
+}
 
-.text { 
+.text {
   text-align: left;
   font-size: 80px;
   line-height: 70pt;
   font-weight: bold;
   color: white;
-} 
+}
 
-.search { 
-  height: 300px;
+.search {
+  flex-wrap: wrap;
   background-color: rgba(255, 255, 255, 0.6);
   width: 50%;
   justify-content: left;
@@ -51,48 +50,28 @@ body {
   color: black;
 }
 
-.headerSearchInput {
-  font-size: 12px;
-  border-radius: 5px;
-  width: 100%;
+.destinationSearchInput {
   height: 40px;
-  margin: 5px 0px 15px 0px;
-  box-sizing: border-box;
-  color: black;
+  font-size: 12px;
+  padding: 0px 5px;
+  background-color: white;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.headerSearchItem2   {
+.searchContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.spaceItem {
   gap: 10px;
   color: black;
   padding-bottom: 10px;
-}
-
-.headerSearchText {
-  font-size: 12px;
-  padding:12px 5px;
-  color: black;
-  cursor: pointer;
-  background-color:white;
-  border-radius: 5px;
-}
-
-.headerSearchItem3   {
-  gap: 10px;
-  color: black;
-  padding-bottom: 10px;
-  padding-top: 10px;
-}
-
-.headerSearchItem4   {
-  font-size: 12px;
-  border-radius: 5px;
-  gap: 10px;
-  color: black;
-  background-color:white;
-  padding-top: 12px;
-  padding-bottom: 12px;
-  padding-left: 5px;
-  margin-bottom: 20px;
 }
 
 .date {
@@ -101,23 +80,49 @@ body {
   color: black;
 }
 
-.options {
-  position: absolute;
-  top: 50px;
+.dateItem {
+  font-size: 12px;
+  padding: 12px 5px;
+  color: black;
+  cursor: pointer;
   background-color: white;
+  border-radius: 5px;
+}
+
+.childSearchContainer {
+  width: 50%;
+  color: black;
+  padding-bottom: px;
+  padding-top: 10px;
+}
+
+.countItem {
+  font-size: 12px;
+  border-radius: 5px;
+  gap: 10px;
+  color: black;
+  background-color: white;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 5px;
+  margin-bottom: 20px;
+}
+
+.options {
+  display: contents;
   color: black;
   border-radius: 5px;
-  -webkit-box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
-  box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
 }
 
 .optionItem {
   display: flex;
-  justify-content: space-between;
-  margin: 10px;
+  justify-content: space-evenly;
+  width: min-content;
+  align-items: center;
 }
 
 .optionCounter {
+  padding-left: 5px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -132,27 +137,25 @@ body {
   color: black;
   cursor: pointer;
   background-color: white;
+  border-radius: 5px;
 }
 
 .optionCounterButton:disabled {
   cursor: not-allowed;
 }
 
-.headerSearchItem5   {
+.checkItem {
   border-radius: 5px;
   gap: 10px;
 }
 
-
-.SearchBtn {
+.searchButton {
   font-weight: bold;
   width: 100%;
   height: 40px;
-  color:white;
-  /* background: #0071c2; */
-  background: rgb(1, 116, 1);
+  color: white;
+  background: rgb(76, 148, 98,1);
   border-radius: 5px;
   border: none;
   cursor: pointer;
 }
-
