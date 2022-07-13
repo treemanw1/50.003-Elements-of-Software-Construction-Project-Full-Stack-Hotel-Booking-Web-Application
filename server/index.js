@@ -2,45 +2,36 @@ require('dotenv').config();
 const express = require("express");
 const cors = require('cors');
 
-const Note = require('../models/mongo')
+const Destination = require('../models/destination')
+// const Note = require('../models/note')
 
 const app = express();
 app.use(cors());
-
-let destinations = [
-  {
-    id: 1,
-    destination: "Japan"
-  },
-  {
-    id: 2,
-    destination: "Korea"
-  },
-  {
-    id: 3,
-    destination: "Singapore"
-  },
-  {
-    id: 4,
-    destination: "Taiwan"
-  }
-]
 
 app.get("/", (request, response) => {
   response.send('<h1>Backend front page</h1>')
 });
 
-// app.get('/api/destinations', function(req, res) {
-//   res.json(destinations);
-//   });
-
 app.get('/api/destinations', (request, response) => {
-  console.log('response:', response);
-  Note.find({}).then(notes => {
-    console.log('notes:', notes);
-    response.json(notes)
+  Destination.find({}).then(destinations => {
+    console.log('destinations length:', destinations.length);
+    var terms = destinations.map(function (c) {
+      return c.term;
+    });
+    response.json(terms)
+    // response.json(destinations)
   })
 })
+
+
+
+// app.get('/api/notes', (request, response) => {
+//   console.log('response:', response);
+//   Note.find({}).then(notes => {
+//     console.log('notes:', notes);
+//     response.json(notes)
+//   })
+// })
 
 app.get('*', (request, response) => {
   response.send('<h1>404 Error</h1>')
