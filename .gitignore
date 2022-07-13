@@ -10,7 +10,8 @@ bfg-1.14.0.jar
 
 # dependencies
 /node_modules
-/client/node_modules
+client/node_modules
+clientf4/node_modules
 /.pnp
 .pnp.js
 

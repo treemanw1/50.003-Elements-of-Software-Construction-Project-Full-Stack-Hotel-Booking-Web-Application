@@ -1,8 +1,6 @@
-
-
 import "./searchItem.css";
 
-const SearchItem = ({name, address, distance, rating}) => {
+const SearchItem = ({name, address, distance, rating, handleBookNow}) => {
   return (
     <div className="searchItem">
       <img
@@ -20,7 +18,7 @@ const SearchItem = ({name, address, distance, rating}) => {
         <link
           rel="stylesheet"
           href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
         ></link>
         <button className="siFeatures">
           <i class="fas fa-location-arrow fa-fw"></i> Show on Map
@@ -31,7 +29,7 @@ const SearchItem = ({name, address, distance, rating}) => {
           <span className="siPrice">SGD 1360</span>
           <span className="roomDetails">1 room, 3 nights</span>
         </div>
-        <button className="siCheckButton">Book Now</button>
+        <button className="siCheckButton" onClick={handleBookNow}>Book Now</button>
       </div>
     </div>
   );

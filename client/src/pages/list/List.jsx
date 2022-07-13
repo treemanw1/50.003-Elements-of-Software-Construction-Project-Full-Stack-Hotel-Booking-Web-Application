@@ -1,7 +1,7 @@
 import "./list.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
@@ -18,9 +18,14 @@ const List = () => {
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
   const [next, setNext] = useState(imagePerRow);
-  
+  const navigate = useNavigate();
+
 const handleMoreImage = () => {
     setNext(next + imagePerRow);
+  };
+
+const handleBookNow = () => {
+    navigate("/HotelDetails");
   };
 
   return (
@@ -88,6 +93,7 @@ const handleMoreImage = () => {
                 address={data.address}
                 distance={data.distance}
                 rating={data.rating}
+                handleBookNow={handleBookNow}
               />
             </div>
           );
