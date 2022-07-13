@@ -14,7 +14,7 @@ app.get("/", (request, response) => {
 
 app.get('/api/destinations', (request, response) => {
   Destination.find({}).then(destinations => {
-    console.log('destinations length:', destinations.length);
+    // console.log('destinations length:', destinations.length);
     var terms = destinations.map(function (c) {
       return c.term;
     });

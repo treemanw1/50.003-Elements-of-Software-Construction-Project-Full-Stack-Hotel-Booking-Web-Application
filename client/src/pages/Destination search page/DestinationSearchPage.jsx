@@ -3,11 +3,14 @@ import Navbar from "../../components/navbar/Navbar";
 import "./DestinationSearchPage.css";
 
 import { DateRange } from "react-date-range";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import CreatableSingle from "../../components/CreatableSingle";
+
+import axios from 'axios'
 
 const Home = ({ type }) => {
   const [destination, setDestination] = useState("");
@@ -25,8 +28,24 @@ const Home = ({ type }) => {
     children: 0,
     room: 1,
   });
-
   const navigate = useNavigate();
+
+  // state governing options displayed in CreatableSingle
+  const [dropdownDisplay, setDropdownDisplay] = useState([]);
+
+  // pull data from /api/destinations
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/api/destinations')
+      .then(response => {
+        console.log('DATA:')
+        console.log(response.data);
+        setDropdownDisplay(response.data);
+      })
+  }, [])
+
+  console.log("dropdownDisplay:", dropdownDisplay);
+
 
   const handleOption = (name, operation) => {
     setOptions((prev) => {
@@ -52,16 +71,19 @@ const Home = ({ type }) => {
             <div class="text">are you</div>
             <div class="text">travelling to?</div>
           </div>
-
           <div className="search">
             <div className="headerSearchItem1">
               <div className="spaceItem">DESTINATION</div>
               <div className="destinationSearchInput">
-                <input
+                {/* <input
                   type="text"
                   placeholder="Enter Destination"
                   className="headerSearchInput"
                   onChange={(e) => setDestination(e.target.value)}
+                /> */}
+                <CreatableSingle options={dropdownDisplay}
+                // getOptionLabel={option => option.term}
+                // getOptionValue={option => option.term}
                 />
               </div>
             </div>
