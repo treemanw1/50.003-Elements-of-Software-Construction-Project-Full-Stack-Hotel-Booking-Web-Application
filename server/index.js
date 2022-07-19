@@ -2,7 +2,8 @@ require('dotenv').config();
 const express = require("express");
 const cors = require('cors');
 
-const Destination = require('../models/destination')
+const Destination = require('../models/destination');
+const { remove } = require('../models/destination');
 // const Note = require('../models/note')
 
 const app = express();
@@ -16,14 +17,17 @@ app.get('/api/destinations', (request, response) => {
   Destination.find({}).then(destinations => {
     // console.log('destinations length:', destinations.length);
     var terms = destinations.map(function (c) {
-      return c.term;
+      return {label: c.term, value: c.term};
     });
+    console.log("before:", terms.length);
+    terms = terms.filter(d => d.value!= undefined && d.label!= undefined); // supposedly removes empty terms
+    terms = terms.filter(d => d != undefined);
+    // terms = terms.filter(d => d != null);
+    console.log("after:", terms.length);
+
     response.json(terms)
-    // response.json(destinations)
   })
 })
-
-
 
 // app.get('/api/notes', (request, response) => {
 //   console.log('response:', response);

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import CreatableSelect from 'react-select/creatable';
+import Select from 'react-select';
 // import { ColourOption, colourOptions } from '../data';
 // import { ActionMeta, OnChangeValue } from 'react-select';
 
@@ -9,11 +9,11 @@ const style = {
   maxWidth:550,
 }
 
-const CreatableSingle = ({options}) => {
+const CreatableSingle = ({options, onInputChange, onChange}) => {
   return (
     // <div style={style}>
     <div style={style}>
-      <CreatableSelect options={options}/>
+      <Select options={options} onInputChange={onInputChange} onChange={onChange}/>
       </div>
   );
 }

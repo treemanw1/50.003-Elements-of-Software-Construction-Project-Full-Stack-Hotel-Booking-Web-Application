@@ -13,7 +13,8 @@ import CreatableSingle from "../../components/CreatableSingle";
 import axios from 'axios'
 
 const Home = ({ type }) => {
-  const [destination, setDestination] = useState("");
+  const navigate = useNavigate();
+  const [filterPhrase, setFilterPhrase] = useState("");
   const [openDate, setOpenDate] = useState(false);
   const [date, setDate] = useState([
     {
@@ -28,24 +29,38 @@ const Home = ({ type }) => {
     children: 0,
     room: 1,
   });
-  const navigate = useNavigate();
 
-  // state governing options displayed in CreatableSingle
-  const [dropdownDisplay, setDropdownDisplay] = useState([]);
+  // states governing options displayed in CreatableSingle
+  const [destinationData, setDestinationData] = useState([]);
+  const [noFilteredDestinations, setNoFilteredDestinations] = useState(100);
+  
+  let dropdownDisplay = noFilteredDestinations > 50
+  ? []  // > 50
+  : destinationData.filter(d => d.value.toLowerCase().includes(filterPhrase)) // < 50
 
   // pull data from /api/destinations
   useEffect(() => {
+    setNoFilteredDestinations(100);
     axios
       .get('http://localhost:3001/api/destinations')
       .then(response => {
-        console.log('DATA:')
-        console.log(response.data);
-        setDropdownDisplay(response.data);
+        console.log('data retrieved')
+        setDestinationData(response.data);
       })
   }, [])
 
+  // console.log("destinationData:", destinationData);
+  console.log("noFilteredDestinations: ", noFilteredDestinations);
+  // if (destinationData.length!==0) {
+  //   console.log("INSIDE");
+  //   console.log(destinationData[0].value);
+  //   console.log(destinationData[0]["value"]);
+  //   console.log(destinationData[0].value.toLowerCase());
+  //   let filtered = destinationData.filter(d => console.log(d.value.toLowerCase().includes("london")));
+  //   console.log("filtered:", filtered);
+  // }
+  // console.log("filterPhrase:", filterPhrase);
   console.log("dropdownDisplay:", dropdownDisplay);
-
 
   const handleOption = (name, operation) => {
     setOptions((prev) => {
@@ -57,7 +72,17 @@ const Home = ({ type }) => {
   };
 
   const handleSearch = () => {
-    navigate("/hotels", { state: { destination, date, options } });
+    navigate("/hotels", { state: { filterPhrase, date, options } });
+  };
+
+  // sets destination phrase
+  const handleInputChange = (phrase) => {
+    setNoFilteredDestinations(destinationData.filter(d => d.value.toLowerCase().includes
+      (phrase)).length);
+    console.log("filtered:", destinationData.filter(d => d.value.toLowerCase().includes
+    (phrase)).length);
+    setFilterPhrase(phrase);
+    console.log("phrase: ", phrase);
   };
 
   return (
@@ -81,9 +106,10 @@ const Home = ({ type }) => {
                   className="headerSearchInput"
                   onChange={(e) => setDestination(e.target.value)}
                 /> */}
-                <CreatableSingle options={dropdownDisplay}
-                // getOptionLabel={option => option.term}
-                // getOptionValue={option => option.term}
+                <CreatableSingle
+                options={dropdownDisplay}
+                onInputChange={(handleInputChange)}
+                onChange={()=>console.log("onChange")} // activates when selecting destination
                 />
               </div>
             </div>
