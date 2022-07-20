@@ -8,13 +8,16 @@ import SearchItem from "../../components/searchItem/SearchItem";
 import Map from "../../components/Map";
 import "./HotelDetails.css"
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import {GoogleMap, useLoadScript, Marker} from "@react-google-maps/api"
 
 const HotelDetails= () => {
-
     const navigate = useNavigate();
+    const location = useLocation();
+    const coords = location.state.coords;
+
+    console.log("Coords (Details):", coords);
 
     const handleBookButton = () => {
         navigate("/DestinationSearch");
@@ -37,7 +40,7 @@ const HotelDetails= () => {
             <div className="listWrapper">
                 <div className="listSearch">
                     <h1 className='lsTitle'>Map</h1>
-                    <div><Map></Map></div>
+                    <div><Map lat={coords[0]} lng={coords[1]}></Map></div>
                 </div>
                 <div className="listResult">
                 <SearchItem name="Grand Suite" address="123 Sesame Street" rating="5" onBookClick={handleBookButton}/>

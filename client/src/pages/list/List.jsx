@@ -1,32 +1,50 @@
+import axios from 'axios'
 import "./list.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-date-range";
 import SearchItem from "../../components/searchItem/SearchItem";
 import { Button} from 'react-bootstrap';
-import {hotelList} from './info.jsx';
+import {hotelList} from './info.jsx'; // hardcoded data
 const imagePerRow = 4;
-
 
 const List = () => {
   const location = useLocation();
-  const [destination, setDestination] = useState(location.state.destination);
+  const uid = location.state.uid;
+  const [hotels, setHotels] = useState([]);
   const [date, setDate] = useState(location.state.date);
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
   const [next, setNext] = useState(imagePerRow);
   const navigate = useNavigate();
+  const [coords, setCoords] = useState([0,0]);
 
-const handleMoreImage = () => {
-    setNext(next + imagePerRow);
-  };
+  console.log("UID:", uid);
+  
+  const pullHotelData = () => {
+    console.log('pulling hotel data...')
+    axios
+      .get(`http://localhost:3001/api/hotels/${uid}`)
+      .then(response => {
+        console.log('promise fulfilled')
+        setHotels(response.data)
+      })
+  }
+  useEffect(pullHotelData, []);
 
-const handleBookNow = () => {
-    navigate("/HotelDetails");
-  };
+  useEffect(() => {
+    if (coords[0]!==0 && coords[1]!==0)
+    navigate("/HotelDetails", { state: { coords } });
+  }, [coords])
+
+  console.log("hotels:", hotels);
+
+  const handleMoreImage = () => {
+      setNext(next + imagePerRow);
+    };
 
   return (
     
@@ -47,7 +65,8 @@ const handleBookNow = () => {
                       type="text"
                       placeholder="Search Hotel Name or Brand"
                       className="headerSearchInput"
-                      onChange={(e) => setDestination(e.target.value)}
+                      // onChange={(e) => setDestination(e.target.value)}
+                      onChange={() => console.log("onChange")}
                     />
                   </div>
                 </div>
@@ -84,7 +103,7 @@ const handleBookNow = () => {
               </div>
             </div>
           <div className="listResult">
-          {hotelList?.slice(0, next)?.map((data, key) => {
+          {hotels?.slice(0, next)?.map((data, key) => {
           return (
             <div key={key}>
               <SearchItem
@@ -93,7 +112,10 @@ const handleBookNow = () => {
                 address={data.address}
                 distance={data.distance}
                 rating={data.rating}
-                handleBookNow={handleBookNow}
+                handleBookNow={() => {
+                  console.log("Coords:", data.latitude, data.longitude);
+                  setCoords([data.latitude, data.longitude]);
+                }}
               />
             </div>
           );
@@ -101,8 +123,7 @@ const handleBookNow = () => {
         {next < hotelList?.length && (
           <Button
             className="btn success"
-            onClick={handleMoreImage}
-          >
+            onClick={handleMoreImage}>
             Load more
           </Button>
         )}

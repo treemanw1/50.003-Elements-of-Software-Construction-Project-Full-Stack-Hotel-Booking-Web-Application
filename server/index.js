@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require("express");
+const fetch = require('node-fetch');
 const cors = require('cors');
 
 const Destination = require('../models/destination');
@@ -17,25 +18,32 @@ app.get('/api/destinations', (request, response) => {
   Destination.find({}).then(destinations => {
     // console.log('destinations length:', destinations.length);
     var terms = destinations.map(function (c) {
-      return {label: c.term, value: c.term};
+      return {label: c.term, value: c.term, uid: c.uid};
     });
-    console.log("before:", terms.length);
-    terms = terms.filter(d => d.value!= undefined && d.label!= undefined); // supposedly removes empty terms
+    // console.log("before:", terms.length);
+    // remove empty terms
+    terms = terms.filter(d => d.value!= undefined && d.label!= undefined);
     terms = terms.filter(d => d != undefined);
-    // terms = terms.filter(d => d != null);
-    console.log("after:", terms.length);
+    // // remove duplicates (takes a bit too long)
+    var terms = terms.filter((arr, index, self) =>
+    index === self.findIndex((t) => (t.label === arr.label && t.value === arr.value)))
 
+    // console.log("after:", terms.length);
     response.json(terms)
   })
 })
 
-// app.get('/api/notes', (request, response) => {
-//   console.log('response:', response);
-//   Note.find({}).then(notes => {
-//     console.log('notes:', notes);
-//     response.json(notes)
-//   })
-// })
+app.get('/api/hotels/:id', async (req, res) => {
+  try {
+    const apiResponse = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${req.params.id}`);
+    const apiResponseJson = await apiResponse.json()
+    console.log(apiResponseJson)
+    res.json(apiResponseJson)
+  } catch (err) {
+    console.log(err)
+    res.status(500).send('Something went wrong')
+  }
+})
 
 app.get('*', (request, response) => {
   response.send('<h1>404 Error</h1>')

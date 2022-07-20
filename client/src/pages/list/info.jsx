@@ -4,7 +4,7 @@ export const hotelList = [
       "imageCount": 52,
       "latitude": 1.318685,
       "longitude": 103.847882,
-      "name": "The Forest by Wangz",
+      "name": "Hard Code Hotel",
       "address": "145A Moulmein Road",
       "address1": "145A Moulmein Road",
       "rating": 4,

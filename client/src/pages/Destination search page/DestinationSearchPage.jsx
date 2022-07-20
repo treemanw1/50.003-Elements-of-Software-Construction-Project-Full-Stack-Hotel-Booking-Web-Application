@@ -12,8 +12,10 @@ import CreatableSingle from "../../components/CreatableSingle";
 
 import axios from 'axios'
 
+
 const Home = ({ type }) => {
   const navigate = useNavigate();
+  const [uid, setUid] = useState("");
   const [filterPhrase, setFilterPhrase] = useState("");
   const [openDate, setOpenDate] = useState(false);
   const [date, setDate] = useState([
@@ -29,6 +31,8 @@ const Home = ({ type }) => {
     children: 0,
     room: 1,
   });
+
+  const headers = {};
 
   // states governing options displayed in CreatableSingle
   const [destinationData, setDestinationData] = useState([]);
@@ -72,7 +76,7 @@ const Home = ({ type }) => {
   };
 
   const handleSearch = () => {
-    navigate("/hotels", { state: { filterPhrase, date, options } });
+    navigate("/hotels", { state: { uid, date, options } });
   };
 
   // sets destination phrase
@@ -109,7 +113,10 @@ const Home = ({ type }) => {
                 <CreatableSingle
                 options={dropdownDisplay}
                 onInputChange={(handleInputChange)}
-                onChange={()=>console.log("onChange")} // activates when selecting destination
+                onChange={(newValue)=> {
+                  setUid(newValue.uid);
+                }
+                } // activates when selecting destination
                 />
               </div>
             </div>
