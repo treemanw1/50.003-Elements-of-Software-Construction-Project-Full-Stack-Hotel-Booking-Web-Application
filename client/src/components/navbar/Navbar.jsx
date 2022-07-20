@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const navigate = useNavigate();
   const handleDestinationSearch = () => {
-    navigate("/DestinationSearch", { state: {} });
+    navigate("/", { state: {} });
   };
   const handleHotelSearch = () => {
     navigate("/hotels", { state: {} });
