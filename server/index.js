@@ -33,7 +33,18 @@ app.get('/api/destinations', (request, response) => {
   })
 })
 
-app.get('/api/hotels/:id', async (req, res) => {
+app.get('/api/hotels/:id/:startDate/:endDate/:no_guests', async (req, res) => {
+  try {
+    const apiResponse = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${req.params.id}&checkin=${req.params.startDate}&checkout=${req.params.endDate}&guests=${req.params.no_guests}`);
+    const apiResponseJson = await apiResponse.json()
+    res.json(apiResponseJson)
+  } catch (err) {
+    console.log(err)
+    res.status(500).send('Something went wrong')
+  }
+})
+
+app.get('/api/hotels/prices', async (req, res) => {
   try {
     const apiResponse = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${req.params.id}`);
     const apiResponseJson = await apiResponse.json()
@@ -44,6 +55,8 @@ app.get('/api/hotels/:id', async (req, res) => {
     res.status(500).send('Something went wrong')
   }
 })
+
+
 
 app.get('*', (request, response) => {
   response.send('<h1>404 Error</h1>')

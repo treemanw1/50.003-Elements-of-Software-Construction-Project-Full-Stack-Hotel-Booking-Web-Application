@@ -13,26 +13,49 @@ const imagePerRow = 4;
 
 const List = () => {
   const location = useLocation();
-  const uid = location.state.uid;
   const [hotels, setHotels] = useState([]);
-  const [date, setDate] = useState(location.state.date);
+
+  const uid = location.state.uid;
+  
+  // const [date, setDate] = useState(location.state.date);
+  const date = location.state.date;
+
+  let ye0 = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date[0].startDate);
+  let mo0 = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(date[0].startDate);
+  let da0 = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date[0].startDate);
+  const startDate = `${ye0}-${mo0}-${da0}`;
+
+  let ye1 = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date[0].endDate);
+  let mo1 = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(date[0].endDate);
+  let da1 = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date[0].endDate);
+  const endDate = `${ye1}-${mo1}-${da1}`;
+
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
+
   const [next, setNext] = useState(imagePerRow);
   const navigate = useNavigate();
   const [coords, setCoords] = useState([0,0]);
 
-  console.log("UID:", uid);
+  // console.log("UID:", uid);
+  // console.log("dates:");
+  // console.log(startDate);
+  // console.log(endDate);
+  console.log("options:", options);
   
   const pullHotelData = () => {
     console.log('pulling hotel data...')
     axios
-      .get(`http://localhost:3001/api/hotels/${uid}`)
+      .get(`http://localhost:3001/api/hotels/${uid}/${startDate}/${endDate}/${options.adult}`)
       .then(response => {
         console.log('promise fulfilled')
         setHotels(response.data)
       })
   }
+
+  
+
+
   useEffect(pullHotelData, []);
 
   useEffect(() => {
