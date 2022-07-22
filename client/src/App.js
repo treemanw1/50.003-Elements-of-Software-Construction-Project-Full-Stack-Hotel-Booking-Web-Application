@@ -5,7 +5,7 @@ import {
 } from "react-router-dom";
 import DestinationSearchPage from "./pages/Destination search page/DestinationSearchPage";
 import HotelSearchPage from "./pages/Hotel search page/HotelSearchPage";
-import HotelDetails from "./pages/Hotel details/HotelDetails";
+import HotelDetails from "./pages/Hotel details/HotelDetails2";
 import Hotel from "./pages/hotel/Hotel";
 import List from "./pages/list/List2";
 

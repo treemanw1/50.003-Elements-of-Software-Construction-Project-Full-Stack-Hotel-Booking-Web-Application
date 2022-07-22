@@ -1,0 +1,101 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+
+.roomItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+  background-color: white;
+  align-items: center;
+  height: 200px;
+  border-radius: 5px;
+}
+
+.roomImg {
+  width: 40%;
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.roomDesc {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex: 2;
+}
+
+.roomTitle {
+  font-size: 18px;
+  font-weight: 200;
+  font-family: "Poppins";
+}
+
+.roomDistance {
+  font-size: 16px;
+}
+
+.roomSubtitle {
+  font-size: 16px;
+}
+
+.roomFeatures {
+  background: none;
+  border: none;
+  text-align: left;
+  color: #1d67cd;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 0;
+}
+
+.roomDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px 20px 0px;
+  justify-content: space-between;
+}
+
+.roomRating {
+  display: flex;
+  justify-content: space-between;
+}
+
+.roomRating > span {
+  font-weight: 500;
+}
+.roomRating > button {
+  background-color: #386150;
+  color: white;
+  padding: 5px;
+  font-weight: bold;
+  border: none;
+}
+
+.roomDetailTexts {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-bottom: 10px;
+}
+
+.roomPrice {
+  font-size: 24px;
+}
+
+.roomCheckButton {
+  background: rgb(76, 148, 98, 1);
+  color: white;
+  font-weight: bold;
+  padding: 10px 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.roomSubDetails {
+  font-size: 16px;
+}

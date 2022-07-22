@@ -32,7 +32,7 @@ const List = () => {
   let da1 = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date[0].endDate);
   const endDate = `${ye1}-${mo1}-${da1}`;
 
-  const [openDate, setOpenDate] = useState(false);
+  // const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState(location.state.options);
 
   const [next, setNext] = useState(imagePerRow);
