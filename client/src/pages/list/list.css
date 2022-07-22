@@ -1,20 +1,22 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins");
 
-.background {
-  background-color: #e8e6e6;
+.listBackground {
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 .listContainer {
   display: flex;
   justify-content: center;
+  /* decide whether to have white/no background */
+  background-color: none;
 }
 
 .listWrapper {
-  background-color: #e8e6e6;
   width: 100%;
   display: flex;
   gap: 20px;
   margin: 20px;
+
 }
 
 .listSearch {
@@ -24,15 +26,6 @@
   position: sticky;
   top: 10px;
   height: max-content;
-}
-
-.lsTitle {
-  font-size: 16px;
-  margin-bottom: 10px;
-  font-family: "Poppins";
-  font-weight: 100;
-  text-align: center;
-
 }
 
 .lsItem {
@@ -92,17 +85,20 @@
 
 .filter {
   flex-wrap: wrap;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.75);
   justify-content: left;
   padding-top: 20px;
   padding-bottom: 20px;
   padding-left: 15px;
   padding-right: 15px;
+  margin-top: 10px;
+  
 }
 
 .headerSearchItem1 {
   gap: 10px;
   color: black;
+  margin-bottom: 10px;
 }
 
 .spaceItem {
@@ -111,14 +107,13 @@
   padding-bottom: 10px;
 }
 
-.filterHeader{
-
+.filterHeader {
   font-size: 16px;
+  margin-top: 10px;
   margin-bottom: 10px;
   font-family: "Poppins";
   font-weight: 100;
   text-align: center;
-
 }
 
 .filterSearchInput {
@@ -131,20 +126,27 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
+  font-family: "Poppins";
 }
 
-.form-control {
+.form-group {
   font-size: 13px;
   display: grid;
-  grid-template-columns: 1em auto;
+  grid-template-columns: 15px auto;
   line-height: 2;
-  gap: 0.5em;
+  gap: 7px;
+  font-family: "Poppins";
 }
 
-.backgroundItem{
+.form-group-rating {
+  display: grid;
+  grid-template-columns: 15px auto;
+  gap: 5px;
+}
+
+.backgroundItem {
   background-color: white;
-  padding-left:17px;
+  padding-left: 17px;
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 5px;
@@ -152,21 +154,16 @@
 
 .btn {
   border: none;
-  background-color: inherit;
-  padding: 14px 28px;
-  font-size: 16px;
-  font-weight: bold;
-  width:max-content;
+  background: none;
+  font-family: "Poppins";
+  font-size: 15px;
+  width: 100%;
   cursor: pointer;
-  display: inline-block;
+  align-items: center;
 }
-
 
 .success {
-  color: green;
+  color: black;
+  align-items: left;
 }
 
-.success:hover {
-  background-color: #04AA6D;
-  color: white;
-}

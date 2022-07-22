@@ -205,7 +205,7 @@ const Header = ({ type }) => {
                 </div>
                 <div className="updateItem">
                   <button className="searchBtn" onClick={handleSearch}>
-                    SEARCH
+                    Modify Search
                   </button>
                 </div>
               </div>

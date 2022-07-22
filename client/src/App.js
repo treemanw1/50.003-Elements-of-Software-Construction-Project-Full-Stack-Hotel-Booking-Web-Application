@@ -7,7 +7,7 @@ import DestinationSearchPage from "./pages/Destination search page/DestinationSe
 import HotelSearchPage from "./pages/Hotel search page/HotelSearchPage";
 import HotelDetails from "./pages/Hotel details/HotelDetails";
 import Hotel from "./pages/hotel/Hotel";
-import List from "./pages/list/List";
+import List from "./pages/list/List2";
 
 function App() {
   return (

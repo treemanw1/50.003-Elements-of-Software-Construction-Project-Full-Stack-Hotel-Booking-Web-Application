@@ -14,6 +14,8 @@ const imagePerRow = 4;
 const List = () => {
   const location = useLocation();
   const [hotels, setHotels] = useState([]);
+  const [hotelIds, setHotelIds] = useState([]);
+  const [hotelPrices, setHotelPrices] = useState([]);
 
   const uid = location.state.uid;
   
@@ -48,22 +50,38 @@ const List = () => {
     axios
       .get(`http://localhost:3001/api/hotels/${uid}/${startDate}/${endDate}/${options.adult}`)
       .then(response => {
-        console.log('promise fulfilled')
-        setHotels(response.data)
+        console.log('promise fulfilled');
+        setHotels(response.data);
+        // setHotelIds(response.data.map(d => d.id));
       })
   }
 
-  
-
+  const pullHotelPricingData = () => {
+    console.log("pulling pricing data...");
+    // async function fetchData() {
+      for (let i=0; i<hotelIds.length; i++) {
+        axios
+          .get(`http://localhost:3001/api/hotels/prices/${uid}/${hotelIds[i]}/${startDate}/${endDate}/${options.adult}`)
+          .then(response => {
+            let updated = hotelPrices.concat(response.data);
+            setHotelPrices(updated);
+          })
+      }
+    // }
+    // fetchData();
+  }
 
   useEffect(pullHotelData, []);
+  // useEffect(pullHotelPricingData, []);
+
+  console.log("hotels:", hotels);
+  // console.log("hotel Ids:", hotelIds);
+  // console.log("hotelPrices", hotelPrices);
 
   useEffect(() => {
     if (coords[0]!==0 && coords[1]!==0)
     navigate("/HotelDetails", { state: { coords } });
   }, [coords])
-
-  console.log("hotels:", hotels);
 
   const handleMoreImage = () => {
       setNext(next + imagePerRow);

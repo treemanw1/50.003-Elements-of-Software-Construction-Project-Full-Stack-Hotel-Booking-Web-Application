@@ -20,11 +20,11 @@
 .childLogoContainer {
   display: flex;
   align-items: center;
-  gap:5px;
+  gap: 5px;
 }
 
 .logo {
-  font-size:13px;
+  font-size: 13px;
   font-family: "Poppins";
   background: none;
   border: none;
@@ -47,9 +47,4 @@
   color: white;
   background: none;
   font-weight: bold;
-}
-
-.navButton:hover {
-  font-size: 14px;
-  color: white;
 }

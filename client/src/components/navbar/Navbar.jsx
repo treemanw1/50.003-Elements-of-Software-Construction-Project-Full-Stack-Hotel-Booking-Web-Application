@@ -10,8 +10,8 @@ const Navbar = () => {
   const handleHotelSearch = () => {
     navigate("/hotels", { state: {} });
   };
-  const handleRoomSearch = () => {
-    navigate("/hotels/sad", { state: {} });
+  const handleRegister = () => {
+    navigate("/register");
   };
 
   return (
@@ -31,8 +31,8 @@ const Navbar = () => {
           <button className="navButton" onClick={handleHotelSearch}>
             Hotel Search
           </button>
-          <button className="navButton" onClick={handleRoomSearch}>
-            Room Search
+          <button className="navButton" onClick={handleRegister}>
+            Register
           </button>
           <button className="navButton">Login</button>
         </div>

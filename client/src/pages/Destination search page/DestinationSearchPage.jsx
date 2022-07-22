@@ -12,7 +12,6 @@ import CreatableSingle from "../../components/CreatableSingle";
 
 import axios from 'axios'
 
-
 const Home = ({ type }) => {
   const navigate = useNavigate();
   const [uid, setUid] = useState("");
@@ -31,8 +30,6 @@ const Home = ({ type }) => {
     children: 0,
     room: 1,
   });
-
-  const headers = {};
 
   // states governing options displayed in CreatableSingle
   const [destinationData, setDestinationData] = useState([]);
@@ -122,7 +119,7 @@ const Home = ({ type }) => {
             </div>
 
             <div className="spaceItem">
-              <div className="spaceItem">CHECKING DATES</div>
+              <div className="spaceItem">CHECK-IN CHECK-OUT DATES</div>
               <div className="dateItem">
                 <span
                   onClick={() => setOpenDate(!openDate)}

@@ -33,26 +33,25 @@ app.get('/api/destinations', (request, response) => {
   })
 })
 
-app.get('/api/hotels/:id/:startDate/:endDate/:no_guests', async (req, res) => {
+app.get('/api/hotels/:uid/:startDate/:endDate/:no_guests', async (req, res) => {
   try {
-    const apiResponse = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${req.params.id}&checkin=${req.params.startDate}&checkout=${req.params.endDate}&guests=${req.params.no_guests}`);
+    const apiResponse = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${req.params.uid}&checkin=${req.params.startDate}&checkout=${req.params.endDate}&guests=${req.params.no_guests}`);
     const apiResponseJson = await apiResponse.json()
     res.json(apiResponseJson)
   } catch (err) {
     console.log(err)
-    res.status(500).send('Something went wrong')
+    res.status(500).send('Querying hotel by Destination failed.')
   }
 })
 
-app.get('/api/hotels/prices', async (req, res) => {
+app.get('/api/hotels/prices/:uid/:id/:startDate/:endDate/:no_guests', async (req, res) => {
   try {
-    const apiResponse = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${req.params.id}`);
+    const apiResponse = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${req.params.id}/price?destination_id=${req.params.uid}&checkin=${req.params.startDate}&checkout=${req.params.endDate}&lang=en_US&currency=SGD&country_code=SG&guests=${req.params.no_guests}&partner_id=1`);
     const apiResponseJson = await apiResponse.json()
-    console.log(apiResponseJson)
     res.json(apiResponseJson)
   } catch (err) {
     console.log(err)
-    res.status(500).send('Something went wrong')
+    res.status(500).send('Querying price by hotel id failed.')
   }
 })
 

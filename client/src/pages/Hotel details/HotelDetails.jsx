@@ -5,7 +5,7 @@
 // Select button for each room option to redirect to Feature 4
 import Navbar from "../../components/navbar/Navbar";
 import SearchItem from "../../components/searchItem/SearchItem";
-import Map from "../../components/Map";
+import Map from "../../components/map/Map";
 import "./HotelDetails.css"
 
 import { useNavigate, useLocation } from "react-router-dom";
