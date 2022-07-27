@@ -4,9 +4,9 @@ import {
   Route,
 } from "react-router-dom";
 import DestinationSearchPage from "./pages/Destination search page/DestinationSearchPage";
-import HotelSearchPage from "./pages/Hotel search page/HotelSearchPage";
+// import HotelSearchPage from "./pages/Hotel search page/HotelSearchPage";
 import HotelDetails from "./pages/Hotel details/HotelDetails2";
-import Hotel from "./pages/hotel/Hotel";
+// import Hotel from "./pages/hotel/Hotel";
 import List from "./pages/list/List2";
 
 function App() {
@@ -14,10 +14,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<DestinationSearchPage/>} />
-        <Route path="/HotelSearch" element={<HotelSearchPage/>}/>
+        {/* <Route path="/HotelSearch" element={<HotelSearchPage/>}/> */}
         <Route path="/HotelDetails" element={<HotelDetails/>}/>
         <Route path="/hotels" element={<List/>}/>
-        <Route path="/hotels/:id" element={<Hotel/>}/>
+        {/* <Route path="/hotels/:id" element={<Hotel/>}/> */}
       </Routes>
     </BrowserRouter>
   );
