@@ -33,22 +33,34 @@ app.get('/api/destinations', (request, response) => {
   })
 })
 
-app.get('/api/hotels/:uid/:startDate/:endDate/:no_guests', async (req, res) => {
+// query regular hotel info
+app.get('/api/hotels/destinationID/:uid/:startDate/:endDate/:no_guests', async (req, res) => {
   try {
     const apiResponse = await fetch(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${req.params.uid}&checkin=${req.params.startDate}&checkout=${req.params.endDate}&guests=${req.params.no_guests}`);
+    // const apiResponse = await fetch(`https://hotelapi.loyalty.dev/api/hotels/prices?destination_id=${req.params.uid}&checkin=${req.params.startDate}&checkout=${req.params.endDate}&lang=en_US&currency=SGD&country_code=SG&guests=${req.params.no_guests}&partner_id=1bU`);
     const apiResponseJson = await apiResponse.json()
-    res.json(apiResponseJson)
+    res.json(apiResponseJson.map(function (c) {
+      return {id: c.id, name: c.name, address:c.address, rating:c.rating, distance:c.distance, lat:c.latitude, lng:c.longitude};
+    }));
   } catch (err) {
     console.log(err)
     res.status(500).send('Querying hotel by Destination failed.')
   }
 })
 
-app.get('/api/hotels/prices/:uid/:id/:startDate/:endDate/:no_guests', async (req, res) => {
+// query hotel info + pricing
+app.get('/api/hotelsPricing/destinationID/:uid/:startDate/:endDate/:no_guests', async (req, res) => {
   try {
-    const apiResponse = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${req.params.id}/price?destination_id=${req.params.uid}&checkin=${req.params.startDate}&checkout=${req.params.endDate}&lang=en_US&currency=SGD&country_code=SG&guests=${req.params.no_guests}&partner_id=1`);
+    const apiResponse = await fetch(`https://hotelapi.loyalty.dev/api/hotels/prices?destination_id=${req.params.uid}&checkin=${req.params.startDate}&checkout=${req.params.endDate}&lang=en_US&currency=SGD&country_code=SG&guests=${req.params.no_guests}&partner_id=1bU`);
+    // const apiResponse = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${req.params.id}/price?destination_id=${req.params.uid}&checkin=${req.params.startDate}&checkout=${req.params.endDate}&lang=en_US&currency=SGD&country_code=SG&guests=${req.params.no_guests}&partner_id=1`);
     const apiResponseJson = await apiResponse.json()
-    res.json(apiResponseJson)
+    const apiResponseJsonReduced = apiResponseJson.hotels.map(function (c) {
+      return {id: c.id, lowest_price:c.lowest_price};
+    });
+    apiResponseJsonReduced.sort(function(a, b){
+      return a.lowest_price - b.lowest_price;
+    });
+    res.json(apiResponseJsonReduced)
   } catch (err) {
     console.log(err)
     res.status(500).send('Querying price by hotel id failed.')

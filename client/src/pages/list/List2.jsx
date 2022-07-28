@@ -13,53 +13,13 @@ import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
 const imagePerRow = 7;
 const List = () => {
-//   const location = useLocation();
-//   const [destination, setDestination] = useState(location.state.destination);
-//   const [openDate, setOpenDate] = useState(false);
-//   const [next, setNext] = useState(imagePerRow);
-//   const navigate = useNavigate();
-
-//   const uid = location.state.uid;
-  
-//   // const [date, setDate] = useState(location.state.date);
-//   const date = location.state.date;
-
-//   let ye0 = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date[0].startDate);
-//   let mo0 = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(date[0].startDate);
-//   let da0 = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date[0].startDate);
-//   const startDate = `${ye0}-${mo0}-${da0}`;
-
-//   let ye1 = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date[0].endDate);
-//   let mo1 = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(date[0].endDate);
-//   let da1 = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date[0].endDate);
-//   const endDate = `${ye1}-${mo1}-${da1}`;
-
-//   // const [openDate, setOpenDate] = useState(false);
-//   const [options, setOptions] = useState(location.state.options);
-
-//   const handleBookButton = () => {
-//     navigate("/DestinationSearch");
-//   };
-//   const { isLoaded } = useLoadScript({
-//     // googleMapsApiKey: "AIzaSyBTdnh-tBXxLc2lwZJEFso2IWM30p6Nudw",
-//     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-//   });
-//   // cant figure out inserting api_key into process.env..., dm me for the api key
-//   console.log("api_key:", process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
-//   if (!isLoaded) return <div>Loading...</div>;
-
-//   const handleMoreImage = () => {
-//     setNext(next + imagePerRow);
-//   };
-
-//   const handleBookNow = () => {
-//     navigate("/HotelDetails");
-//   };
 
     const location = useLocation();
     const [hotels, setHotels] = useState([]);
-    const [hotelIds, setHotelIds] = useState([]);
     const [hotelPrices, setHotelPrices] = useState([]);
+
+    // const [hotelDisplay, setHotelDisplay] = useState([]);
+    const hotelDisplay = [];
 
     const uid = location.state.uid;
 
@@ -83,44 +43,67 @@ const List = () => {
     const navigate = useNavigate();
     const [coords, setCoords] = useState([0,0]);
 
-    // console.log("UID:", uid);
-    // console.log("dates:");
-    // console.log(startDate);
-    // console.log(endDate);
-    console.log("options:", options);
-
     const pullHotelData = () => {
-    console.log('pulling hotel data...')
-    axios
-        .get(`http://localhost:3001/api/hotels/${uid}/${startDate}/${endDate}/${options.adult}`)
-        .then(response => {
-        console.log('promise fulfilled');
-        setHotels(response.data);
-        // setHotelIds(response.data.map(d => d.id));
-        })
+      console.log('pulling hotel data...')
+      console.log(`http://localhost:3001/api/hotels/${uid}/${startDate}/${endDate}/${options.adult}`);
+      axios // get general hotel info
+          .get(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`)
+          .then(response => {
+          console.log('general hotel info:');
+          console.log(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`);
+          setHotels(response.data);
+          })
+      axios // get hotel price info
+          .get(`http://localhost:3001/api/hotelsPricing/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`)
+          .then(response => {
+          console.log('hotel pricing info:');
+          console.log(`http://localhost:3001/api/hotelsPricing/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`);
+          setHotelPrices(response.data);
+          })
     }
 
-    const pullHotelPricingData = () => {
-    console.log("pulling pricing data...");
-    // async function fetchData() {
-        for (let i=0; i<hotelIds.length; i++) {
-        axios
-            .get(`http://localhost:3001/api/hotels/prices/${uid}/${hotelIds[i]}/${startDate}/${endDate}/${options.adult}`)
-            .then(response => {
-            let updated = hotelPrices.concat(response.data);
-            setHotelPrices(updated);
-            })
-        }
-    // }
-    // fetchData();
+    const setupHotelDisplay = () => {
+      console.log("SET HOTEL DISPLAY");
+      console.log(hotelDisplay.length, hotels.length, hotelPrices.length);
     }
 
     useEffect(pullHotelData, []);
-    // useEffect(pullHotelPricingData, []);
+    // useEffect(setupHotelDisplay, [hotelDisplay]);
 
-    console.log("hotels:", hotels);
-    // console.log("hotel Ids:", hotelIds);
-    // console.log("hotelPrices", hotelPrices);
+    // getting hotel info from hotelPrices id (put in useEffect later, coniditonal display state empty, hjotels/hotepricings empty)
+    if (hotelDisplay.length===0 & hotels.length !==0 & hotelPrices.length!==0) {  
+      console.log("hotel ID: ETCa");
+      console.log("hotels:", hotels);
+      console.log("hotel pricings:", hotelPrices);
+      for (let i=0; i<hotelPrices.length; i++) {
+        // if hotelPricing id exists in general info api
+        if (hotels.find(e => e.id===hotelPrices[i].id) !== undefined) {
+          let entry = hotels.find(e => e.id===hotelPrices[i].id)
+          // console.log(entry);
+          entry.lowest_price = hotelPrices[i].lowest_price
+          hotelDisplay.push(entry);
+        } 
+      }
+    }
+
+    if (hotelDisplay.length !==0) {
+      console.log("hotel display filled");
+      console.log(hotelDisplay.length);
+      console.log(hotelDisplay);
+    }
+
+    // console.log('hotel display:', hotelDisplay);
+    // console.log(hotelDisplay[0][0]);
+    // console.log(hotelDisplay[0][0].name);
+
+    // compile all relevant info (ids in hotelPrices) into hotelDisplay state
+    // let filtered = hotels.filter(e => e.id=="ETCa")
+    // filtered = filtered[0]
+    // console.log("filtered:", filtered);
+    // console.log("type:", typeof filtered);
+    // console.log("string:", filtered.toString());
+    // console.log("fitered:", filtered.name);
+
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -128,7 +111,7 @@ const List = () => {
     
     useEffect(() => {
     if (coords[0]!==0 && coords[1]!==0)
-    navigate("/HotelDetails", { state: { coords } });
+      navigate("/HotelDetails", { state: { coords } });
     }, [coords])
 
     if (!isLoaded) {
@@ -236,24 +219,50 @@ const List = () => {
               </div>
             </div>
             <div className="listResult">
-              {hotels?.slice(0, next)?.map((data, key) => {
+
+              {/* {hotelPrices?.slice(0, next)?.map((e, index) => {
                 return (
-                  <div key={key}>
+                  <div key={index}>
                     <SearchItem
-                      key={key}
-                      name={data.name}
-                      address={data.address}
-                      distance={data.distance}
-                      rating={data.rating}
-                      price={1360}
+                      key={index}
+                      name={hotels.filter(d => d.id==e.id)[0][0].name}
+                      address={hotels.filter(d => d.id==e.id)[0].address}
+                      distance={hotels.filter(d => d.id==e.id)[0].distance}
+                      rating={hotels.filter(d => d.id==e.id)[0].rating}
+                      price={e.lowest_price}
+                      // price={hotelPrices.find(e => e.id==data.id).lowest_price}
                       handleBookNow={() => {
-                        console.log("Coords:", data.latitude, data.longitude);
-                        setCoords([data.latitude, data.longitude]);
+                        console.log("Coords:", hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng);
+                        setCoords([hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng]);
                       }}
                     />
                   </div>
                 );
-              })}
+              })} */}
+
+              {hotelDisplay.map((e, index) => {
+                return (
+                  <div key={index}>
+                    <SearchItem
+                      key={index}
+                      name={e.name}
+                      address={e.address}
+                      distance={e.distance}
+                      rating={e.rating}
+                      price={e.lowest_price}
+                      // price={hotelPrices.find(e => e.id==data.id).lowest_price}
+                      handleBookNow={() => {
+                        console.log("Coords:", hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng);
+                        setCoords([hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng]);
+                      }}
+                    />
+                  </div>
+                );
+              })
+              }
+
+
+              
               {next < hotels?.length && (
                 <Button className="btn success" onClick={handleMoreImage}>
                   Load more
