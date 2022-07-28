@@ -39,6 +39,8 @@ const List = () => {
     // const [openDate, setOpenDate] = useState(false);
     const [options, setOptions] = useState(location.state.options);
 
+    const destinationCoords = location.state.destinationCoords;
+
     const [next, setNext] = useState(imagePerRow);
     const navigate = useNavigate();
     const [coords, setCoords] = useState([0,0]);
@@ -92,19 +94,6 @@ const List = () => {
       console.log(hotelDisplay);
     }
 
-    // console.log('hotel display:', hotelDisplay);
-    // console.log(hotelDisplay[0][0]);
-    // console.log(hotelDisplay[0][0].name);
-
-    // compile all relevant info (ids in hotelPrices) into hotelDisplay state
-    // let filtered = hotels.filter(e => e.id=="ETCa")
-    // filtered = filtered[0]
-    // console.log("filtered:", filtered);
-    // console.log("type:", typeof filtered);
-    // console.log("string:", filtered.toString());
-    // console.log("fitered:", filtered.name);
-
-
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     });
@@ -131,7 +120,7 @@ const List = () => {
           <div className="listWrapper">
             <div className="listSearch">
               <div>
-                <Map lat={44} lng={-80}></Map>
+                <Map lat={destinationCoords[0]} lng={destinationCoords[1]} zoom={12}></Map>
               </div>
               <div className="filter">
                 <div className="headerSearchItem1">
@@ -220,26 +209,6 @@ const List = () => {
             </div>
             <div className="listResult">
 
-              {/* {hotelPrices?.slice(0, next)?.map((e, index) => {
-                return (
-                  <div key={index}>
-                    <SearchItem
-                      key={index}
-                      name={hotels.filter(d => d.id==e.id)[0][0].name}
-                      address={hotels.filter(d => d.id==e.id)[0].address}
-                      distance={hotels.filter(d => d.id==e.id)[0].distance}
-                      rating={hotels.filter(d => d.id==e.id)[0].rating}
-                      price={e.lowest_price}
-                      // price={hotelPrices.find(e => e.id==data.id).lowest_price}
-                      handleBookNow={() => {
-                        console.log("Coords:", hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng);
-                        setCoords([hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng]);
-                      }}
-                    />
-                  </div>
-                );
-              })} */}
-
               {hotelDisplay.map((e, index) => {
                 return (
                   <div key={index}>
@@ -260,8 +229,6 @@ const List = () => {
                 );
               })
               }
-
-
               
               {next < hotels?.length && (
                 <Button className="btn success" onClick={handleMoreImage}>

@@ -18,7 +18,7 @@ app.get('/api/destinations', (request, response) => {
   Destination.find({}).then(destinations => {
     // console.log('destinations length:', destinations.length);
     var terms = destinations.map(function (c) {
-      return {label: c.term, value: c.term, uid: c.uid};
+      return {label: c.term, value: c.term, uid: c.uid, lat:c.lat, lng:c.lng};
     });
     // console.log("before:", terms.length);
     // remove empty terms

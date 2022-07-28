@@ -31,6 +31,8 @@ const Home = ({ type }) => {
     room: 1,
   });
 
+  const [destinationCoords, setDestinationCoords] = useState([0,0]);
+
   // states governing options displayed in CreatableSingle
   const [destinationData, setDestinationData] = useState([]);
   const [noFilteredDestinations, setNoFilteredDestinations] = useState(100);
@@ -73,7 +75,7 @@ const Home = ({ type }) => {
   };
 
   const handleSearch = () => {
-    navigate("/hotels", { state: { uid, date, options } });
+    navigate("/hotels", { state: { uid, date, options, destinationCoords } });
   };
 
   // sets destination phrase
@@ -105,6 +107,7 @@ const Home = ({ type }) => {
                 onInputChange={(handleInputChange)}
                 onChange={(newValue)=> {
                   setUid(newValue.uid);
+                  setDestinationCoords([newValue.lat, newValue.lng])
                 }
                 } // activates when selecting destination
                 />
