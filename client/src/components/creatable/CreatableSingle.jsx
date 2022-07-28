@@ -6,7 +6,9 @@ import Select from 'react-select';
 
 const style = {
   width:'100%',
+  height:40,
   maxWidth:550,
+  fontSize: 12,
 }
 
 const CreatableSingle = ({options, onInputChange, onChange}) => {

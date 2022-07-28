@@ -8,7 +8,7 @@ import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import CreatableSingle from "../../components/CreatableSingle";
+import CreatableSingle from "../../components/creatable/CreatableSingle";
 
 import axios from 'axios'
 
@@ -100,13 +100,6 @@ const Home = ({ type }) => {
           <div className="search">
             <div className="headerSearchItem1">
               <div className="spaceItem">DESTINATION</div>
-              <div className="destinationSearchInput">
-                {/* <input
-                  type="text"
-                  placeholder="Enter Destination"
-                  className="headerSearchInput"
-                  onChange={(e) => setDestination(e.target.value)}
-                /> */}
                 <CreatableSingle
                 options={dropdownDisplay}
                 onInputChange={(handleInputChange)}
@@ -115,7 +108,6 @@ const Home = ({ type }) => {
                 }
                 } // activates when selecting destination
                 />
-              </div>
             </div>
 
             <div className="spaceItem">
