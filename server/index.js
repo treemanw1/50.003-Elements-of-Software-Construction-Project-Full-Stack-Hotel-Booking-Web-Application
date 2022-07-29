@@ -40,7 +40,7 @@ app.get('/api/hotels/destinationID/:uid/:startDate/:endDate/:no_guests', async (
     // const apiResponse = await fetch(`https://hotelapi.loyalty.dev/api/hotels/prices?destination_id=${req.params.uid}&checkin=${req.params.startDate}&checkout=${req.params.endDate}&lang=en_US&currency=SGD&country_code=SG&guests=${req.params.no_guests}&partner_id=1bU`);
     const apiResponseJson = await apiResponse.json()
     res.json(apiResponseJson.map(function (c) {
-      return {id: c.id, name: c.name, address:c.address, rating:c.rating, distance:c.distance, lat:c.latitude, lng:c.longitude};
+      return {id: c.id, name: c.name, description:c.description, address:c.address, rating:c.rating, distance:c.distance, lat:c.latitude, lng:c.longitude};
     }));
   } catch (err) {
     console.log(err)
@@ -67,7 +67,21 @@ app.get('/api/hotelsPricing/destinationID/:uid/:startDate/:endDate/:no_guests', 
   }
 })
 
-
+// query room info by hotel id
+app.get('/api/rooms/:uid/:hotelID/:startDate/:endDate/:no_guests', async (req, res) => {
+  try {
+    const apiResponse = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${req.params.hotelID}/price?destination_id=${req.params.uid}&checkin=${req.params.startDate}&checkout=${req.params.endDate}&lang=en_US&currency=SGD&country_code=SG&guests=${req.params.no_guests}&partner_id=1`);
+    // const apiResponse = await fetch(`https://hotelapi.loyalty.dev/api/hotels/${req.params.id}/price?destination_id=${req.params.uid}&checkin=${req.params.startDate}&checkout=${req.params.endDate}&lang=en_US&currency=SGD&country_code=SG&guests=${req.params.no_guests}&partner_id=1`);
+    const apiResponseJson = await apiResponse.json()
+    const rooms = apiResponseJson.rooms.map(function (c) {
+      return {name:c.roomNormalizedDescription, price:c.price, key: c.key, img_link:c.images[0], };
+    });
+    res.json(rooms)
+  } catch (err) {
+    console.log(err)
+    res.status(500).send('Querying rooms by hotel id failed.')
+  }
+})
 
 app.get('*', (request, response) => {
   response.send('<h1>404 Error</h1>')

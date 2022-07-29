@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { hotelList } from "./info.jsx";
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import { useLoadScript} from "@react-google-maps/api";
 
 const imagePerRow = 7;
 const List = () => {
@@ -17,15 +17,16 @@ const List = () => {
     const location = useLocation();
     const [hotels, setHotels] = useState([]);
     const [hotelPrices, setHotelPrices] = useState([]);
-
-    // const [hotelDisplay, setHotelDisplay] = useState([]);
     const hotelDisplay = [];
+    const [hotelInfo, setHotelInfo] = useState({});
 
+
+    // Data retrieved from Destination Search page via useLocation()
     const uid = location.state.uid;
+    const [options, setOptions] = useState(location.state.options);
+    const destinationCoords = location.state.destinationCoords;
 
-    // const [date, setDate] = useState(location.state.date);
     const date = location.state.date;
-
     let ye0 = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date[0].startDate);
     let mo0 = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(date[0].startDate);
     let da0 = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date[0].startDate);
@@ -36,10 +37,6 @@ const List = () => {
     let da1 = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date[0].endDate);
     const endDate = `${ye1}-${mo1}-${da1}`;
 
-    // const [openDate, setOpenDate] = useState(false);
-    const [options, setOptions] = useState(location.state.options);
-
-    const destinationCoords = location.state.destinationCoords;
 
     const [next, setNext] = useState(imagePerRow);
     const navigate = useNavigate();
@@ -47,11 +44,12 @@ const List = () => {
 
     const pullHotelData = () => {
       console.log('pulling hotel data...')
-      console.log(`http://localhost:3001/api/hotels/${uid}/${startDate}/${endDate}/${options.adult}`);
+      console.log(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`);
       axios // get general hotel info
           .get(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`)
           .then(response => {
           console.log('general hotel info:');
+          console.log(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${uid}&checkin=${startDate}&checkout=${endDate}&guests=${options.adult}`);
           console.log(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`);
           setHotels(response.data);
           })
@@ -64,19 +62,11 @@ const List = () => {
           })
     }
 
-    const setupHotelDisplay = () => {
-      console.log("SET HOTEL DISPLAY");
-      console.log(hotelDisplay.length, hotels.length, hotelPrices.length);
-    }
-
     useEffect(pullHotelData, []);
     // useEffect(setupHotelDisplay, [hotelDisplay]);
 
     // getting hotel info from hotelPrices id (put in useEffect later, coniditonal display state empty, hjotels/hotepricings empty)
-    if (hotelDisplay.length===0 & hotels.length !==0 & hotelPrices.length!==0) {  
-      console.log("hotel ID: ETCa");
-      console.log("hotels:", hotels);
-      console.log("hotel pricings:", hotelPrices);
+    if (hotelDisplay.length===0 & hotels.length !==0 & hotelPrices.length!==0) { 
       for (let i=0; i<hotelPrices.length; i++) {
         // if hotelPricing id exists in general info api
         if (hotels.find(e => e.id===hotelPrices[i].id) !== undefined) {
@@ -88,11 +78,11 @@ const List = () => {
       }
     }
 
-    if (hotelDisplay.length !==0) {
-      console.log("hotel display filled");
-      console.log(hotelDisplay.length);
-      console.log(hotelDisplay);
-    }
+    // if (hotelDisplay.length !==0) {
+    //   console.log("hotel display filled");
+    //   console.log(hotelDisplay.length);
+    //   console.log(hotelDisplay);
+    // }
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -100,7 +90,7 @@ const List = () => {
     
     useEffect(() => {
     if (coords[0]!==0 && coords[1]!==0)
-      navigate("/HotelDetails", { state: { coords } });
+      navigate("/HotelDetails", { state: { hotelInfo, uid, date, options, coords } });
     }, [coords])
 
     if (!isLoaded) {
@@ -219,10 +209,16 @@ const List = () => {
                       distance={e.distance}
                       rating={e.rating}
                       price={e.lowest_price}
-                      // price={hotelPrices.find(e => e.id==data.id).lowest_price}
                       handleBookNow={() => {
-                        console.log("Coords:", hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng);
+                        // console.log("Coords:", hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng);
                         setCoords([hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng]);
+                        setHotelInfo({
+                          id: e.id,
+                          name: e.name,
+                          description: e.description,
+                          rating: e.rating,
+                          address: e.address
+                        })
                       }}
                     />
                   </div>

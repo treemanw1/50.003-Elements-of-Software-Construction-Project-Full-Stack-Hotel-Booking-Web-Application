@@ -11,7 +11,7 @@ const style = {
   fontSize: 12,
 }
 
-const CreatableSingle = ({options, onInputChange, onChange}) => {
+const Single = ({options, onInputChange, onChange}) => {
   return (
     // <div style={style}>
     <div style={style}>
@@ -20,4 +20,4 @@ const CreatableSingle = ({options, onInputChange, onChange}) => {
   );
 }
 
-export default CreatableSingle;
+export default Single;

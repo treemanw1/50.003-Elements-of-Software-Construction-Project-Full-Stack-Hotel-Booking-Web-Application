@@ -3,8 +3,6 @@ import "./roomItem.css";
 const RoomItem = ({
   imageUrl,
   name,
-  address,
-  rating,
   handleBookNow,
   price,
 }) => {
@@ -13,7 +11,6 @@ const RoomItem = ({
       <img className="roomImg" src={imageUrl} alt="" />
       <div className="roomDesc">
         <h1 className="roomTitle">{name}</h1>
-        <div className="roomSubtitle">{address}</div>
         <link
           rel="stylesheet"
           href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"
@@ -23,7 +20,7 @@ const RoomItem = ({
       <div className="roomDetails">
         <div className="roomDetailTexts">
           <span className="roomPrice">SGD {price}</span>
-          <span className="roomSubDetails">1 room, 3 nights</span>
+          {/* <span className="roomSubDetails">1 room, 3 nights</span> */}
         </div>
         <button className="roomCheckButton" onClick={handleBookNow}>
           Book Now

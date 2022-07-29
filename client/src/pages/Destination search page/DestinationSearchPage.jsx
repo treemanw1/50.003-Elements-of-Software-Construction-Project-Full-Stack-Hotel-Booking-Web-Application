@@ -8,7 +8,7 @@ import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import CreatableSingle from "../../components/creatable/CreatableSingle";
+import Single from "../../components/creatable/Single";
 
 import axios from 'axios'
 
@@ -22,14 +22,16 @@ const Home = ({ type }) => {
       startDate: new Date(),
       endDate: new Date(),
       key: "selection",
-    },
-  ]);
+    }]);
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
     adult: 1,
     children: 0,
     room: 1,
   });
+
+  // send data to /hotels path in single object state
+  const [hotelsData, setHotelsData] = useState({});
 
   const [destinationCoords, setDestinationCoords] = useState([0,0]);
 
@@ -54,15 +56,6 @@ const Home = ({ type }) => {
 
   // console.log("destinationData:", destinationData);
   console.log("noFilteredDestinations: ", noFilteredDestinations);
-  // if (destinationData.length!==0) {
-  //   console.log("INSIDE");
-  //   console.log(destinationData[0].value);
-  //   console.log(destinationData[0]["value"]);
-  //   console.log(destinationData[0].value.toLowerCase());
-  //   let filtered = destinationData.filter(d => console.log(d.value.toLowerCase().includes("london")));
-  //   console.log("filtered:", filtered);
-  // }
-  // console.log("filterPhrase:", filterPhrase);
   console.log("dropdownDisplay:", dropdownDisplay);
 
   const handleOption = (name, operation) => {
@@ -102,7 +95,7 @@ const Home = ({ type }) => {
           <div className="search">
             <div className="headerSearchItem1">
               <div className="spaceItem">DESTINATION</div>
-                <CreatableSingle
+                <Single
                 options={dropdownDisplay}
                 onInputChange={(handleInputChange)}
                 onChange={(newValue)=> {
@@ -245,7 +238,6 @@ const Home = ({ type }) => {
                 </div>
               </div>
             </div>
-
             <div className="checkItem">
               <button className="searchButton" onClick={handleSearch}>
                 Search

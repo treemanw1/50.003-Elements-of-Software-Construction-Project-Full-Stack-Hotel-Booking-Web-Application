@@ -16,8 +16,10 @@ const HotelDetails= () => {
     const navigate = useNavigate();
     const location = useLocation();
     const coords = location.state.coords;
+    const hotelID = location.state.hotelID
 
     console.log("Coords (Details):", coords);
+    console.log("hotelID:", hotelID);
 
     const handleBookButton = () => {
         navigate("/DestinationSearch");
