@@ -4,10 +4,13 @@ import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import Map from "../../components/map/Map";
 import Star from "../../components/star/Star";
-import SearchItem from "../../components/searchItem/SearchItem";
-import { useLocation, useNavigate } from "react-router-dom";
+
+import HotelDisplay from "../../components/hotelDisplay/HotelDisplay"
+
+import { renderMatches, useLocation, useNavigate } from "react-router-dom";
+import {render} from 'react-dom'
 import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
+
 import { hotelList } from "./info.jsx";
 import { useLoadScript} from "@react-google-maps/api";
 
@@ -19,7 +22,7 @@ const List = () => {
     const [hotelPrices, setHotelPrices] = useState([]);
     const hotelDisplay = [];
     const [hotelInfo, setHotelInfo] = useState({});
-
+    const [loading, setLoading] = useState(true);
 
     // Data retrieved from Destination Search page via useLocation()
     const uid = location.state.uid;
@@ -48,41 +51,45 @@ const List = () => {
       axios // get general hotel info
           .get(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`)
           .then(response => {
-          console.log('general hotel info:');
-          console.log(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${uid}&checkin=${startDate}&checkout=${endDate}&guests=${options.adult}`);
-          console.log(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`);
+          // console.log('general hotel info:');
+          // console.log(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${uid}&checkin=${startDate}&checkout=${endDate}&guests=${options.adult}`);
+          // console.log(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`);
+          console.log('general hotel info retrieved');
           setHotels(response.data);
           })
       axios // get hotel price info
           .get(`http://localhost:3001/api/hotelsPricing/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`)
           .then(response => {
-          console.log('hotel pricing info:');
-          console.log(`http://localhost:3001/api/hotelsPricing/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`);
+          // console.log('hotel pricing info:');
+          // console.log(`http://localhost:3001/api/hotelsPricing/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`);
+          console.log('hotel pricing data retrieved');
           setHotelPrices(response.data);
           })
+      setLoading(false);
+    }
+
+    // getting hotel info from hotelPrices id (put in useEffect later, coniditonal display state empty, hjotels/hotepricings empty)
+    const initializeHotelDisplay = () => {
+      console.log("initialize hotel display");
+      if (hotelDisplay.length===0 & hotels.length !==0 & hotelPrices.length!==0) {
+        // console.log(hotelDisplay.length===0, hotels.length !==0, hotelPrices.length!==0);
+        for (let i=0; i<hotelPrices.length; i++) {
+          // if hotelPricing id exists in general info api
+          if (hotels.find(e => e.id===hotelPrices[i].id) !== undefined) {
+            let entry = hotels.find(e => e.id===hotelPrices[i].id)
+            // console.log(entry);
+            entry.lowest_price = hotelPrices[i].lowest_price
+            hotelDisplay.push(entry);
+          }
+        }
+      }
+      console.log('hotel display:', hotelDisplay);
     }
 
     useEffect(pullHotelData, []);
-    // useEffect(setupHotelDisplay, [hotelDisplay]);
+    useEffect(initializeHotelDisplay, [hotelPrices])
 
-    // getting hotel info from hotelPrices id (put in useEffect later, coniditonal display state empty, hjotels/hotepricings empty)
-    if (hotelDisplay.length===0 & hotels.length !==0 & hotelPrices.length!==0) { 
-      for (let i=0; i<hotelPrices.length; i++) {
-        // if hotelPricing id exists in general info api
-        if (hotels.find(e => e.id===hotelPrices[i].id) !== undefined) {
-          let entry = hotels.find(e => e.id===hotelPrices[i].id)
-          // console.log(entry);
-          entry.lowest_price = hotelPrices[i].lowest_price
-          hotelDisplay.push(entry);
-        } 
-      }
-    }
-
-    // if (hotelDisplay.length !==0) {
-    //   console.log("hotel display filled");
-    //   console.log(hotelDisplay.length);
-    //   console.log(hotelDisplay);
-    // }
+ 
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -101,6 +108,16 @@ const List = () => {
         setNext(next + imagePerRow);
     };
 
+    render = () => {
+      let rooms;
+      if (loading) {
+        rooms = <div>Loading...</div>
+      }
+      else {
+        rooms = <div>Loaded</div>
+      }
+    }
+    
   return (
     <div>
       <Navbar />
@@ -197,18 +214,60 @@ const List = () => {
                 </div>
               </div>
             </div>
-            <div className="listResult">
 
-              {hotelDisplay.map((e, index) => {
+            <HotelDisplay hotelDisplay={hotelDisplay} handleMoreImage={handleMoreImage}
+              handleBookNow={(e) => {
+                // console.log("Coords:", hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng);
+                setCoords([hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng]);
+                setHotelInfo({
+                    id: e.id,
+                    name: e.name,
+                    description: e.description,
+                    rating: e.rating,
+                    address: e.address
+                })
+                }}>
+                </HotelDisplay>
+
+            {/* <div className='listResult'>
+              {hotelDisplay.length===0
+                ? 'Loading...'
+                : hotelDisplay.map((e, index) => {
+                  return (
+                    <div key={index}>
+                      <SearchItem key={index} name={e.name} address={e.address} distance={e.distance}
+                        rating={e.rating} price={e.lowest_price}
+                        handleBookNow={() => {
+                          // console.log("Coords:", hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng);
+                          setCoords([hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng]);
+                          setHotelInfo({
+                            id: e.id,
+                            name: e.name,
+                            description: e.description,
+                            rating: e.rating,
+                            address: e.address
+                          })
+                          }
+                        }/>
+                    </div>
+                  );})
+              }
+            </div> */}
+            
+
+
+
+            {/* <div className="listResult">
+              Loading...
+              {
+                hotelDisplay.length === 0?
+                "Loading..."
+                :
+                {hotelDisplay.map((e, index) => {
                 return (
                   <div key={index}>
-                    <SearchItem
-                      key={index}
-                      name={e.name}
-                      address={e.address}
-                      distance={e.distance}
-                      rating={e.rating}
-                      price={e.lowest_price}
+                    <SearchItem key={index} name={e.name} address={e.address} distance={e.distance}
+                      rating={e.rating} price={e.lowest_price}
                       handleBookNow={() => {
                         // console.log("Coords:", hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng);
                         setCoords([hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng]);
@@ -219,19 +278,21 @@ const List = () => {
                           rating: e.rating,
                           address: e.address
                         })
-                      }}
-                    />
+                        }
+                      }/>
                   </div>
-                );
-              })
-              }
-              
+                );})}
+
               {next < hotels?.length && (
                 <Button className="btn success" onClick={handleMoreImage}>
                   Load more
                 </Button>
               )}
-            </div>
+              }
+            </div> */}
+
+
+
           </div>
         </div>
       </div>

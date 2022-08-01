@@ -55,8 +55,8 @@ const Home = ({ type }) => {
   }, [])
 
   // console.log("destinationData:", destinationData);
-  console.log("noFilteredDestinations: ", noFilteredDestinations);
-  console.log("dropdownDisplay:", dropdownDisplay);
+  // console.log("noFilteredDestinations: ", noFilteredDestinations);
+  // console.log("dropdownDisplay:", dropdownDisplay);
 
   const handleOption = (name, operation) => {
     setOptions((prev) => {
@@ -75,10 +75,7 @@ const Home = ({ type }) => {
   const handleInputChange = (phrase) => {
     setNoFilteredDestinations(destinationData.filter(d => d.value.toLowerCase().includes
       (phrase)).length);
-    console.log("filtered:", destinationData.filter(d => d.value.toLowerCase().includes
-    (phrase)).length);
     setFilterPhrase(phrase);
-    console.log("phrase: ", phrase);
   };
 
   return (

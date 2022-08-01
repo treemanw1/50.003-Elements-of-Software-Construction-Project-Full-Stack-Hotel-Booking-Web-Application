@@ -75,6 +75,7 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
     setNext(next + roomsPerRow);
   };
 
+
   return (
     <div>
       <Navbar />
@@ -94,7 +95,7 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
                 <Star rating={hotelInfo.rating}></Star>
               </div>
 
-              <div dangerouslySetInnerHTML={{ __html: hotelInfo.description }} />
+              <div class="hdInfo" dangerouslySetInnerHTML={{ __html: hotelInfo.description }} />
 
               {/* <div class="hdInfo">
                 <p>

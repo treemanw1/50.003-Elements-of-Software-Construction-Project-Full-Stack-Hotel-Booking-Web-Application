@@ -2,9 +2,9 @@ import "./searchItem.css";
 import Star from "../../components/star/Star";
 
 const SearchItem = ({
-  imageUrl,
+  // imageUrl,
   name,
-  distance,
+  // distance,
   address,
   rating,
   handleBookNow,
