@@ -5,9 +5,9 @@ import {
 } from "react-router-dom";
 import DestinationSearchPage from "./pages/Destination search page/DestinationSearchPage";
 // import HotelSearchPage from "./pages/Hotel search page/HotelSearchPage";
-import HotelDetails from "./pages/Hotel details/HotelDetails2";
+import HotelDetails from "./pages/Hotel details/HotelDetails";
 // import Hotel from "./pages/hotel/Hotel";
-import List from "./pages/list/List2";
+import List from "./pages/list/List";
 
 function App() {
   return (

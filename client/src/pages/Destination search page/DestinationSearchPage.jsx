@@ -8,7 +8,7 @@ import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
-import Single from "../../components/creatable/Single";
+import Single from "../../components/single/Single";
 
 import axios from 'axios'
 
