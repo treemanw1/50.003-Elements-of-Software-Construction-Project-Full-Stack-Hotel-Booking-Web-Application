@@ -47,38 +47,28 @@ const List = () => {
     const [coords, setCoords] = useState([0,0]);
 
     const pullHotelData = () => {
-      console.log('pulling hotel data...')
-      console.log(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`);
-      axios // get general hotel info
-          .get(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`)
-          .then(response => {
-          // console.log('general hotel info:');
-          // console.log(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${uid}&checkin=${startDate}&checkout=${endDate}&guests=${options.adult}`);
-          // console.log(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`);
-          console.log('general hotel info retrieved');
-          setHotels(response.data);
-          })
-      console.log('pulling hotel pricing info...');
-      console.log(`http://localhost:3001/api/hotelsPricing/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`)
-      axios // get hotel price info
-          .get(`http://localhost:3001/api/hotelsPricing/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`)
-          .then(response => {
-          // console.log('hotel pricing info:');
-          // console.log(`http://localhost:3001/api/hotelsPricing/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`);
-          console.log('hotel pricing data retrieved');
-          setHotelPrices(response.data);
-          })
-      setLoading(false);
+      if (hotels.length===0 | hotelPrices.length===0) {
+        console.log("axios pulling all...");  
+        console.log(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`);
+        console.log(`http://localhost:3001/api/hotelsPricing/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`)
+        axios.all([axios.get(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`),
+          axios.get(`http://localhost:3001/api/hotelsPricing/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`)])
+          .then(axios.spread((hotelResponse, hotelPricingResponse) => {
+            console.log("RESPONSES:");
+            console.log(hotelResponse.data);
+            console.log(hotelPricingResponse.data);
+            setHotelPrices(hotelPricingResponse.data);
+            setHotels(hotelResponse.data);
+          }))
+        .catch(error => console.log(error));
+        setLoading(false);
+      }
     }
-
-    // getting hotel info from hotelPrices id (put in useEffect later, coniditonal display state empty, hjotels/hotepricings empty)
+    
     const initializeHotelDisplay = () => {
-      // console.log('hotel prices:', hotelPrices.length);
       console.log("initializing hotel display:", hotelTemp.length===0, hotels.length !==0, hotelPrices.length!==0);
       if (hotelTemp.length===0 & hotels.length !==0 & hotelPrices.length!==0) {
-        // console.log(hotelDisplay.length===0, hotels.length !==0, hotelPrices.length!==0);
         for (let i=0; i<hotelPrices.length; i++) {
-          console.log(i);
           // if hotelPricing id exists in general info api
           if (hotels.find(e => e.id===hotelPrices[i].id) !== undefined) {
             let entry = hotels.find(e => e.id===hotelPrices[i].id)
@@ -92,12 +82,11 @@ const List = () => {
       }
     }
 
-    useEffect(pullHotelData, []); // pull once
+    useEffect(pullHotelData, [hotelPrices]);
+    
     useEffect(initializeHotelDisplay, [hotelPrices]) // initialize when hotelPrices changes
-    useEffect(() => console.log('hotel price length:', hotelPrices.length)); // prints length every time state is updated
 
-
-    console.log('hotel display:', hotelDisplay);
+    // console.log('hotel display:', hotelDisplay);
 
     const { isLoaded } = useLoadScript({
         googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
@@ -224,7 +213,6 @@ const List = () => {
             </div>
 
             <div className="listResult">
-              {/* Hotel length: {hotelDisplay.length} */}
               { hotelDisplay.length == 0
               ? <div class="loader"></div>
               :<>{hotelDisplay.map((e, index) => {
@@ -237,6 +225,9 @@ const List = () => {
                       distance={e.distance}
                       rating={e.rating}
                       price={e.lowest_price}
+                      imageUrl={e.img_details.count === 0
+                        ? "https://assets3.thrillist.com/v1/image/1144882/1584x1056/crop;webp=auto;jpeg_quality=60;progressive.jpg"
+                        : e.img_details.prefix+e.img_index+e.img_details.suffix}
                       handleBookNow={() => {
                         // console.log("Coords:", hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng);
                         setCoords([hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng]);
@@ -245,7 +236,10 @@ const List = () => {
                           name: e.name,
                           description: e.description,
                           rating: e.rating,
-                          address: e.address
+                          address: e.address,
+                          img_link: e.img_details.count === 0
+                          ? "https://assets3.thrillist.com/v1/image/1144882/1584x1056/crop;webp=auto;jpeg_quality=60;progressive.jpg"
+                          : e.img_details.prefix+e.img_index+e.img_details.suffix
                         })
                       }}
                     />

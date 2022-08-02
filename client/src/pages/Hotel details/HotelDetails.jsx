@@ -41,17 +41,19 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
   const navigate = useNavigate();
 
   const pullRoomData = () => {
-    console.log('hotelInfo:', hotelInfo);
-    console.log('pulling room data...')
-    console.log(`http://localhost:3001/api/rooms/${uid}/${hotelInfo.id}/${startDate}/${endDate}/${options.adult}`);
-    axios // get general hotel info
-        .get(`http://localhost:3001/api/rooms/${uid}/${hotelInfo.id}/${startDate}/${endDate}/${options.adult}`)
-        .then(response => {
-          setRooms(response.data)
-        })
+    if (rooms.length === 0) {
+      console.log('hotelInfo:', hotelInfo);
+      console.log('pulling room data...')
+      console.log(`http://localhost:3001/api/rooms/${uid}/${hotelInfo.id}/${startDate}/${endDate}/${options.adult}`);
+      axios // get general hotel info
+          .get(`http://localhost:3001/api/rooms/${uid}/${hotelInfo.id}/${startDate}/${endDate}/${options.adult}`)
+          .then(response => {
+            setRooms(response.data)
+          })
+    }
   }
 
-  useEffect(pullRoomData, []);
+  useEffect(pullRoomData, [rooms]);
 
   const handleBookButton = () => {
     navigate("/booking");
@@ -78,7 +80,8 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
           <div className="hotelDetailsWrapper">
             <img
               className="hdImg"
-              src="https://q-xx.bstatic.com/xdata/images/hotel/840x460/237415834.jpg?k=5d5c496b4c2844258a4c73e2c5013056ebf019f20d17228cd44050d4fcd2b73e&o="
+              src={hotelInfo.img_link}
+              // src="https://q-xx.bstatic.com/xdata/images/hotel/840x460/237415834.jpg?k=5d5c496b4c2844258a4c73e2c5013056ebf019f20d17228cd44050d4fcd2b73e&o="
               alt=""
             />
             <div className="hdDesc">
@@ -137,7 +140,9 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
                       name={e.name}
                       imageUrl={e.img_link == undefined
                         ? "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
-                        : e.img_link.high_resolution_url
+                        : e.img_link.high_resolution_url == undefined
+                          ? "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
+                          : e.img_link.high_resolution_url
                       }
                       // price={Math.round(
                       //   data["rooms"][key]["coverted_max_cash_payment"] * 3

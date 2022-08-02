@@ -40,7 +40,7 @@ app.get('/api/hotels/destinationID/:uid/:startDate/:endDate/:no_guests', async (
     // const apiResponse = await fetch(`https://hotelapi.loyalty.dev/api/hotels/prices?destination_id=${req.params.uid}&checkin=${req.params.startDate}&checkout=${req.params.endDate}&lang=en_US&currency=SGD&country_code=SG&guests=${req.params.no_guests}&partner_id=1bU`);
     const apiResponseJson = await apiResponse.json()
     res.json(apiResponseJson.map(function (c) {
-      return {id: c.id, name: c.name, description:c.description, address:c.address, rating:c.rating, distance:c.distance, lat:c.latitude, lng:c.longitude};
+      return {id: c.id, name: c.name, description:c.description, address:c.address, rating:c.rating, distance:c.distance, lat:c.latitude, lng:c.longitude, img_details: c.image_details, img_index: c.default_image_index};
     }));
   } catch (err) {
     console.log(err)

@@ -1,4 +1,4 @@
-import SearchItem from "../../components/searchItem/SearchItem";
+import SearchItem from "../searchItem/SearchItem";
 import { Button } from "react-bootstrap";
 
 const HotelDisplay = ({hotelDisplay, handleBookNow, handleMoreImage}) => {

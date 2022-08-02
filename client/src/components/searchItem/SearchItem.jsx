@@ -1,8 +1,9 @@
 import "./searchItem.css";
 import Star from "../../components/star/Star";
+import { useState } from "react";
 
 const SearchItem = ({
-  // imageUrl,
+  imageUrl,
   name,
   // distance,
   address,
@@ -10,14 +11,17 @@ const SearchItem = ({
   handleBookNow,
   price,
 }) => {
+
+  const [imgSrc, setImgSrc] = useState(imageUrl);
+  const onError = () => setImgSrc("https://c.tenor.com/d-OUBVmtG3kAAAAd/gnomed-gnome.gif")
+
   return (
     <div className="searchItem">
       <img
         className="siImg"
-        // src="https://static.wixstatic.com/media/77f58e_3ae21cb6dd5a4896a9a76906f6a6d958~mv2.png"
-        src="https://www.watg.com/wp-content/uploads/1978/01/WATG_Shangri-La-Hotel-Garden-Wing-Singapoire-1-1230x640.jpg"
-        // src={imageUrl}
-        alt=""
+        src={imgSrc}
+        onError={onError}
+        alt="Hotel image"
       />
       <div className="siDesc">
         <h1 className="siTitle">{name}</h1>
