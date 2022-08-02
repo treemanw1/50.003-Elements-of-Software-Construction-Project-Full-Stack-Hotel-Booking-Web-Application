@@ -2,102 +2,141 @@ import axios from 'axios'
 import "./list.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { format } from "date-fns";
-import { DateRange } from "react-date-range";
+import Map from "../../components/map/Map";
+import Star from "../../components/star/Star";
 import SearchItem from "../../components/searchItem/SearchItem";
-import { Button} from 'react-bootstrap';
-import {hotelList} from './info.jsx'; // hardcoded data
-const imagePerRow = 4;
+import { Button } from "react-bootstrap";
+import HotelDisplay from "../../components/hotelDisplay/HotelDisplay"
 
+import { renderMatches, useLocation, useNavigate } from "react-router-dom";
+import {render} from 'react-dom'
+import { useState, useEffect } from "react";
+import { hotelList } from "./info.jsx";
+import { useLoadScript} from "@react-google-maps/api";
+
+const imagePerRow = 7;
 const List = () => {
-  const location = useLocation();
-  const [hotels, setHotels] = useState([]);
-  const [hotelIds, setHotelIds] = useState([]);
-  const [hotelPrices, setHotelPrices] = useState([]);
 
-  const uid = location.state.uid;
-  
-  // const [date, setDate] = useState(location.state.date);
-  const date = location.state.date;
+    const location = useLocation();
+    const [hotels, setHotels] = useState([]);
+    const [hotelPrices, setHotelPrices] = useState([]);
+    const hotelTemp = [];
+    const [hotelDisplay, setHotelDisplay] = useState([])
+    const [hotelInfo, setHotelInfo] = useState({});
+    const [loading, setLoading] = useState(true);
 
-  let ye0 = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date[0].startDate);
-  let mo0 = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(date[0].startDate);
-  let da0 = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date[0].startDate);
-  const startDate = `${ye0}-${mo0}-${da0}`;
+    // Data retrieved from Destination Search page via useLocation()
+    const uid = location.state.uid;
+    const [options, setOptions] = useState(location.state.options);
+    const destinationCoords = location.state.destinationCoords;
 
-  let ye1 = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date[0].endDate);
-  let mo1 = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(date[0].endDate);
-  let da1 = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date[0].endDate);
-  const endDate = `${ye1}-${mo1}-${da1}`;
+    const date = location.state.date;
+    let ye0 = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date[0].startDate);
+    let mo0 = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(date[0].startDate);
+    let da0 = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date[0].startDate);
+    const startDate = `${ye0}-${mo0}-${da0}`;
 
-  // const [openDate, setOpenDate] = useState(false);
-  const [options, setOptions] = useState(location.state.options);
+    let ye1 = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date[0].endDate);
+    let mo1 = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(date[0].endDate);
+    let da1 = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date[0].endDate);
+    const endDate = `${ye1}-${mo1}-${da1}`;
 
-  const [next, setNext] = useState(imagePerRow);
-  const navigate = useNavigate();
-  const [coords, setCoords] = useState([0,0]);
 
-  // console.log("UID:", uid);
-  // console.log("dates:");
-  // console.log(startDate);
-  // console.log(endDate);
-  console.log("options:", options);
-  
-  const pullHotelData = () => {
-    console.log('pulling hotel data...')
-    axios
-      .get(`http://localhost:3001/api/hotels/${uid}/${startDate}/${endDate}/${options.adult}`)
-      .then(response => {
-        console.log('promise fulfilled');
-        setHotels(response.data);
-        // setHotelIds(response.data.map(d => d.id));
-      })
-  }
+    const [next, setNext] = useState(imagePerRow);
+    const navigate = useNavigate();
+    const [coords, setCoords] = useState([0,0]);
 
-  const pullHotelPricingData = () => {
-    console.log("pulling pricing data...");
-    // async function fetchData() {
-      for (let i=0; i<hotelIds.length; i++) {
-        axios
-          .get(`http://localhost:3001/api/hotels/prices/${uid}/${hotelIds[i]}/${startDate}/${endDate}/${options.adult}`)
+    const pullHotelData = () => {
+      console.log('pulling hotel data...')
+      console.log(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`);
+      axios // get general hotel info
+          .get(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`)
           .then(response => {
-            let updated = hotelPrices.concat(response.data);
-            setHotelPrices(updated);
+          // console.log('general hotel info:');
+          // console.log(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${uid}&checkin=${startDate}&checkout=${endDate}&guests=${options.adult}`);
+          // console.log(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`);
+          console.log('general hotel info retrieved');
+          setHotels(response.data);
           })
+      console.log('pulling hotel pricing info...');
+      console.log(`http://localhost:3001/api/hotelsPricing/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`)
+      axios // get hotel price info
+          .get(`http://localhost:3001/api/hotelsPricing/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`)
+          .then(response => {
+          // console.log('hotel pricing info:');
+          // console.log(`http://localhost:3001/api/hotelsPricing/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`);
+          console.log('hotel pricing data retrieved');
+          setHotelPrices(response.data);
+          })
+      setLoading(false);
+    }
+
+    // getting hotel info from hotelPrices id (put in useEffect later, coniditonal display state empty, hjotels/hotepricings empty)
+    const initializeHotelDisplay = () => {
+      // console.log('hotel prices:', hotelPrices.length);
+      console.log("initializing hotel display:", hotelTemp.length===0, hotels.length !==0, hotelPrices.length!==0);
+      if (hotelTemp.length===0 & hotels.length !==0 & hotelPrices.length!==0) {
+        // console.log(hotelDisplay.length===0, hotels.length !==0, hotelPrices.length!==0);
+        for (let i=0; i<hotelPrices.length; i++) {
+          console.log(i);
+          // if hotelPricing id exists in general info api
+          if (hotels.find(e => e.id===hotelPrices[i].id) !== undefined) {
+            let entry = hotels.find(e => e.id===hotelPrices[i].id)
+            // console.log(entry);
+            entry.lowest_price = hotelPrices[i].lowest_price
+            hotelTemp.push(entry);
+          }
+        }
+        console.log('setting hotel display');
+        setHotelDisplay(hotelTemp);
       }
-    // }
-    // fetchData();
-  }
+    }
 
-  useEffect(pullHotelData, []);
-  // useEffect(pullHotelPricingData, []);
+    useEffect(pullHotelData, []); // pull once
+    useEffect(initializeHotelDisplay, [hotelPrices]) // initialize when hotelPrices changes
+    useEffect(() => console.log('hotel price length:', hotelPrices.length)); // prints length every time state is updated
 
-  console.log("hotels:", hotels);
-  // console.log("hotel Ids:", hotelIds);
-  // console.log("hotelPrices", hotelPrices);
 
-  useEffect(() => {
+    console.log('hotel display:', hotelDisplay);
+
+    const { isLoaded } = useLoadScript({
+        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    });
+    
+    useEffect(() => {
     if (coords[0]!==0 && coords[1]!==0)
-    navigate("/HotelDetails", { state: { coords } });
-  }, [coords])
+      navigate("/HotelDetails", { state: { hotelInfo, uid, date, options, coords } });
+    }, [coords])
 
-  const handleMoreImage = () => {
-      setNext(next + imagePerRow);
+    if (!isLoaded) {
+        return <div>Loading...</div>;
+    }
+
+    const handleMoreImage = () => {
+        setNext(next + imagePerRow);
     };
 
-  return (
+    render = () => {
+      let rooms;
+      if (loading) {
+        rooms = <div>Loading...</div>
+      }
+      else {
+        rooms = <div>Loaded</div>
+      }
+    }
     
+  return (
     <div>
       <Navbar />
-      <Header/>
-      <div className="listContainer">
-        <div className="listWrapper">
-        <div className="listSearch">
-              <h1 className="lsTitle">Map</h1>
-              <div className="filterHeader">FILTER BY</div>
-
+      <div className="listBackground">
+        <Header />
+        <div className="listContainer">
+          <div className="listWrapper">
+            <div className="listSearch">
+              <div>
+                <Map lat={destinationCoords[0]} lng={destinationCoords[1]} zoom={12}></Map>
+              </div>
               <div className="filter">
                 <div className="headerSearchItem1">
                   <div className="spaceItem">HOTEL NAME</div>
@@ -113,29 +152,69 @@ const List = () => {
                 </div>
 
                 <div className="headerSearchItem1">
+                  <div className="spaceItem">RATING</div>
+                  <div className="backgroundItem">
+                    <label class="form-group-rating">
+                      <input type="checkbox" name="checkbox" />
+                      <div>
+                        <Star rating={5}></Star>
+                      </div>
+                    </label>
+
+                    <label class="form-group-rating">
+                      <input type="checkbox" name="checkbox-checked" />
+                      <div>
+                        <Star rating={4}></Star>
+                      </div>
+                    </label>
+
+                    <label class="form-group-rating">
+                      <input type="checkbox" name="checkbox-checked" />
+                      <div>
+                        <Star rating={3}></Star>
+                      </div>
+                    </label>
+
+                    <label class="form-group-rating">
+                      <input type="checkbox" name="checkbox-checked" />
+                      <div>
+                        <Star rating={2}></Star>
+                      </div>
+                    </label>
+
+                    <label class="form-group-rating">
+                      <input type="checkbox" name="checkbox-checked" />
+                      <div>
+                        <Star rating={1}></Star>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+
+                <div className="headerSearchItem1">
                   <div className="spaceItem">DISTANCE TO CENTER</div>
                   <div className="backgroundItem">
-                    <label class="form-control">
+                    <label class="form-group">
                       <input type="checkbox" name="checkbox" />
                       Inside city center
                     </label>
 
-                    <label class="form-control">
+                    <label class="form-group">
                       <input type="checkbox" name="checkbox-checked" />
                       less than 2 km to center
                     </label>
 
-                    <label class="form-control">
+                    <label class="form-group">
                       <input type="checkbox" name="checkbox-checked" />
                       2-5 km to center
                     </label>
 
-                    <label class="form-control">
+                    <label class="form-group">
                       <input type="checkbox" name="checkbox-checked" />
                       5-10 km to center
                     </label>
 
-                    <label class="form-control">
+                    <label class="form-group">
                       <input type="checkbox" name="checkbox-checked" />
                       more than 10 km to center
                     </label>
@@ -143,31 +222,45 @@ const List = () => {
                 </div>
               </div>
             </div>
-          <div className="listResult">
-          {hotels?.slice(0, next)?.map((data, key) => {
-          return (
-            <div key={key}>
-              <SearchItem
-                key={key}
-                name={data.name}
-                address={data.address}
-                distance={data.distance}
-                rating={data.rating}
-                handleBookNow={() => {
-                  console.log("Coords:", data.latitude, data.longitude);
-                  setCoords([data.latitude, data.longitude]);
-                }}
-              />
+
+            <div className="listResult">
+              {/* Hotel length: {hotelDisplay.length} */}
+              { hotelDisplay.length == 0
+              ? <div class="loader"></div>
+              :<>{hotelDisplay.map((e, index) => {
+                return (
+                  <div key={index}>
+                    <SearchItem
+                      key={index}
+                      name={e.name}
+                      address={e.address}
+                      distance={e.distance}
+                      rating={e.rating}
+                      price={e.lowest_price}
+                      handleBookNow={() => {
+                        // console.log("Coords:", hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng);
+                        setCoords([hotels.filter(d => d.id==e.id)[0].lat, hotels.filter(d => d.id==e.id)[0].lng]);
+                        setHotelInfo({
+                          id: e.id,
+                          name: e.name,
+                          description: e.description,
+                          rating: e.rating,
+                          address: e.address
+                        })
+                      }}
+                    />
+                  </div>
+                );
+              })}
+              {next < hotels?.length && (
+                <Button className="btn success" onClick={handleMoreImage}>
+                  Load more
+                </Button>
+              )}
+              </>              
+              }  
             </div>
-          );
-        })}
-        {next < hotelList?.length && (
-          <Button
-            className="btn success"
-            onClick={handleMoreImage}>
-            Load more
-          </Button>
-        )}
+
           </div>
         </div>
       </div>
@@ -176,4 +269,3 @@ const List = () => {
 };
 
 export default List;
-
