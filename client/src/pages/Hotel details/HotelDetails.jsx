@@ -9,16 +9,16 @@ import RoomItem from "../../components/roomItem/RoomItem";
 import { roomList } from "./room_info.jsx";
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useLoadScript} from "@react-google-maps/api";
-
+import { useLoadScript } from "@react-google-maps/api";
+import { Button } from "react-bootstrap";
 const roomsPerRow = 5;
 
 const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
   var roomsLength = roomList[0].rooms.length;
-  const [next, setNext] = useState(roomsLength);
+  const [next, setNext] = useState(roomsPerRow);
   const location = useLocation();
 
-  const coords = location.state.coords;  
+  const coords = location.state.coords;
   const uid = location.state.uid;
   const [options, setOptions] = useState(location.state.options);
   const hotelInfo = location.state.hotelInfo;
@@ -36,7 +36,7 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
   let ye1 = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date[0].endDate);
   let mo1 = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(date[0].endDate);
   let da1 = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date[0].endDate);
-  const endDate = `${ye1}-${mo1}-${da1}`; 
+  const endDate = `${ye1}-${mo1}-${da1}`;
 
   const navigate = useNavigate();
 
@@ -46,10 +46,10 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
       console.log('pulling room data...')
       console.log(`http://localhost:3001/api/rooms/${uid}/${hotelInfo.id}/${startDate}/${endDate}/${options.adult}`);
       axios // get general hotel info
-          .get(`http://localhost:3001/api/rooms/${uid}/${hotelInfo.id}/${startDate}/${endDate}/${options.adult}`)
-          .then(response => {
-            setRooms(response.data)
-          })
+        .get(`http://localhost:3001/api/rooms/${uid}/${hotelInfo.id}/${startDate}/${endDate}/${options.adult}`)
+        .then(response => {
+          setRooms(response.data)
+        })
     }
   }
 
@@ -70,7 +70,7 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
   const handleMoreImage = () => {
     setNext(next + roomsPerRow);
   };
-  
+
   return (
     <div>
       <Navbar />
@@ -92,7 +92,7 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
               </div>
 
               <div class="hdInfo" dangerouslySetInnerHTML={{ __html: hotelInfo.description }} />
-              
+
               {/* <div class="hdInfo">
                 <p>
                   With a stay at The Fullerton Hotel Singapore, you'll be
@@ -125,34 +125,39 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
           <div className="hotelRoomsWrapper">
             <div className="hotelDetailsSearch">
               <div>
-              <div><Map lat={coords[0]} lng={coords[1]} zoom={15}></Map></div>
+                <div><Map lat={coords[0]} lng={coords[1]} zoom={15}></Map></div>
               </div>
             </div>
 
             <div className="hotelRoomsResult">
-              { rooms.length == 0
-              ? <div class="loader"></div>
-              : rooms.map((e) => {
-                return (
-                  <div key={e.key}>
-                    <RoomItem
-                      key={e.key}
-                      name={e.name}
-                      imageUrl={e.img_link == undefined
-                        ? "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
-                        : e.img_link.high_resolution_url == undefined
+              {rooms.length == 0
+                ? <div class="loader"></div>
+                : rooms.slice(0, next)?.map((e) => {
+                  return (
+                    <div key={e.key}>
+                      <RoomItem
+                        key={e.key}
+                        name={e.name}
+                        imageUrl={e.img_link == undefined
                           ? "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
-                          : e.img_link.high_resolution_url
-                      }
-                      // price={Math.round(
-                      //   data["rooms"][key]["coverted_max_cash_payment"] * 3
-                      // )}
-                      price={e.price}
-                      handleBookNow={handleBookButton}
-                    />
-                  </div>
-                );
-              })}
+                          : e.img_link.high_resolution_url == undefined
+                            ? "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
+                            : e.img_link.high_resolution_url
+                        }
+                        // price={Math.round(
+                        //   data["rooms"][key]["coverted_max_cash_payment"] * 3
+                        // )}
+                        price={e.price}
+                        handleBookNow={handleBookButton}
+                      />
+                    </div>
+                  );
+                })}
+                {next < rooms?.length && (
+                    <Button className="btn success" onClick={handleMoreImage}>
+                      Load more
+                    </Button>
+                  )}
             </div>
 
           </div>

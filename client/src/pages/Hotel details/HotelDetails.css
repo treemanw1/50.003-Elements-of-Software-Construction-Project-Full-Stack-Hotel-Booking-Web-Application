@@ -95,6 +95,23 @@
   cursor: pointer;
 }
 
+.btn {
+  border: none;
+  height: 40px;
+  background: none;
+  font-family: "Poppins";
+  font-size: 15px;
+  width: 100%;
+  cursor: pointer;
+  align-items: center;
+}
+
+.success:hover {
+  color: white;
+  align-items: left;
+  background-color: rgb(76, 148, 98, 1);
+}
+
 .hotelRoomsResult {
   flex: 2;
 }

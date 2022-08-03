@@ -154,6 +154,7 @@
 
 .btn {
   border: none;
+  height: 40px;
   background: none;
   font-family: "Poppins";
   font-size: 15px;
@@ -162,9 +163,10 @@
   align-items: center;
 }
 
-.success {
-  color: black;
+.success:hover {
+  color: white;
   align-items: left;
+  background-color: rgb(76, 148, 98, 1);
 }
 
 .loader {
