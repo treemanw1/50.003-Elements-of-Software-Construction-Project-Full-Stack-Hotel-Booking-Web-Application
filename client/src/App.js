@@ -1,3 +1,4 @@
+import React from 'react'
 import {
   BrowserRouter,
   Routes,
@@ -9,6 +10,12 @@ import HotelDetails from "./pages/Hotel details/HotelDetails";
 // import Hotel from "./pages/hotel/Hotel";
 import List from "./pages/list/List";
 
+// import Navbar from "./components/Navbar"
+import Book from "./pages/booking/Book"
+import Login from "./components/Login"
+import Register from "./pages/register/Register"
+import UserDetails from "./components/UserDetails"
+
 function App() {
   return (
     <BrowserRouter>
@@ -18,6 +25,10 @@ function App() {
         <Route path="/HotelDetails" element={<HotelDetails/>}/>
         <Route path="/hotels" element={<List/>}/>
         {/* <Route path="/hotels/:id" element={<Hotel/>}/> */}
+        <Route exact path="/book" element={<Book/>}></Route>
+        <Route exact path="/login" element={<Login/>}></Route>
+        <Route exact path="/register" element={<Register/>}></Route>
+        <Route exact path="/userdetails" element={<UserDetails/>}></Route>
       </Routes>
     </BrowserRouter>
   );
