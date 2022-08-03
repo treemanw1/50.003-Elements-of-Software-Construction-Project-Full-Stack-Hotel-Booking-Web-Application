@@ -50,7 +50,10 @@ const List = () => {
       if (hotels.length===0 | hotelPrices.length===0) {
         console.log("axios pulling all...");  
         console.log(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`);
+        console.log(`https://hotelapi.loyalty.dev/api/hotels?destination_id=${uid}&checkin=${startDate}&checkout=${endDate}&guests=${options.adult}`);
         console.log(`http://localhost:3001/api/hotelsPricing/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`)
+
+
         axios.all([axios.get(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`),
           axios.get(`http://localhost:3001/api/hotelsPricing/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`)])
           .then(axios.spread((hotelResponse, hotelPricingResponse) => {
