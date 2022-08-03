@@ -55,8 +55,8 @@ const Home = ({ type }) => {
   }, [])
 
   // console.log("destinationData:", destinationData);
-  // console.log("noFilteredDestinations: ", noFilteredDestinations);
-  // console.log("dropdownDisplay:", dropdownDisplay);
+  console.log("noFilteredDestinations: ", noFilteredDestinations);
+  console.log("dropdownDisplay:", dropdownDisplay);
 
   const handleOption = (name, operation) => {
     setOptions((prev) => {
@@ -85,13 +85,13 @@ const Home = ({ type }) => {
       <div className="homeContainer">
         <div class="childHomeContainer">
           <div className="question">
-            <div class="text">Where</div>
-            <div class="text">are you</div>
-            <div class="text">travelling to?</div>
+            <div data-testid = "Where" class="text">Where</div>
+            <div data-testid = "are you" class="text">are you</div>
+            <div data-testid = "travelling to?" class="text">travelling to?</div>
           </div>
           <div className="search">
             <div className="headerSearchItem1">
-              <div className="spaceItem">DESTINATION</div>
+              <div data-testid = "DESTINATION" className="spaceItem">DESTINATION</div>
                 <Single
                 options={dropdownDisplay}
                 onInputChange={(handleInputChange)}
@@ -104,9 +104,9 @@ const Home = ({ type }) => {
             </div>
 
             <div className="spaceItem">
-              <div className="spaceItem">CHECK-IN CHECK-OUT DATES</div>
-              <div className="dateItem">
-                <span
+              <div data-testid = "checkin" className="spaceItem">CHECK-IN CHECK-OUT DATES</div>
+              <div  className="dateItem">
+                <span data-testid = "date-span"
                   onClick={() => setOpenDate(!openDate)}
                   className="dateItem"
                 >{`${format(date[0].startDate, "MMM dd, yyyy")} to ${format(
@@ -115,6 +115,7 @@ const Home = ({ type }) => {
                 )}`}</span>
                 {openDate && (
                   <DateRange
+                    data-testid = "DateRange"
                     editableDateInputs={true}
                     onChange={(item) => setDate([item.selection])}
                     moveRangeOnFirstSelection={false}
@@ -128,9 +129,9 @@ const Home = ({ type }) => {
 
             <div className="searchContainer">
               <div className="childSearchContainer">
-                <div className="spaceItem"> ADULTS </div>
-                <div className="countItem">
-                  <span
+                <div data-testid = "ADULTS" className="spaceItem"> ADULTS </div>
+                <div data-testid = "count" className="countItem">
+                  <span data-testid = "adult-span"
                     onClick={() => setOpenOptions(!openOptions)}
                     className="countItem"
                   >{`${options.adult}`}</span>
@@ -140,6 +141,7 @@ const Home = ({ type }) => {
                         <span className="optionText">Adults</span>
                         <div className="optionCounter">
                           <button
+                            data-testid = "adult-minus"
                             disabled={options.adult <= 1}
                             className="optionCounterButton"
                             onClick={() => handleOption("adult", "d")}
@@ -150,6 +152,7 @@ const Home = ({ type }) => {
                             {options.adult}
                           </span>
                           <button
+                          data-testid="adult-plus"
                             className="optionCounterButton"
                             onClick={() => handleOption("adult", "i")}
                           >
@@ -163,9 +166,9 @@ const Home = ({ type }) => {
               </div>
 
               <div className="childSearchContainer">
-                <div className="spaceItem"> CHILDREN </div>
+                <div data-testid = "CHILDREN" className="spaceItem"> CHILDREN </div>
                 <div className="countItem">
-                  <span
+                  <span data-testid = "children-span"
                     onClick={() => setOpenOptions(!openOptions)}
                     className="countItem"
                     // {`${options.adult} adult · ${options.children} children · ${options.room} room`}
@@ -175,7 +178,7 @@ const Home = ({ type }) => {
                       <div className="optionItem">
                         <span className="optionText">Children</span>
                         <div className="optionCounter">
-                          <button
+                          <button data-testid = "children-minus"
                             disabled={options.children <= 0}
                             className="optionCounterButton"
                             onClick={() => handleOption("children", "d")}
@@ -185,7 +188,7 @@ const Home = ({ type }) => {
                           <span className="optionCounterNumber">
                             {options.children}
                           </span>
-                          <button
+                          <button data-testid = "children-plus"
                             className="optionCounterButton"
                             onClick={() => handleOption("children", "i")}
                           >
@@ -199,9 +202,9 @@ const Home = ({ type }) => {
               </div>
 
               <div className="childSearchContainer">
-                <div className="spaceItem"> ROOMS </div>
+                <div data-testid = "ROOMS" className="spaceItem"> ROOMS </div>
                 <div className="countItem">
-                  <span
+                  <span data-testid = "rooms-span"
                     onClick={() => setOpenOptions(!openOptions)}
                     className="countItem"
                   >
@@ -212,7 +215,7 @@ const Home = ({ type }) => {
                       <div className="optionItem">
                         <span className="optionText">Rooms</span>
                         <div className="optionCounter">
-                          <button
+                          <button data-testid = "rooms-minus"
                             disabled={options.room <= 1}
                             className="optionCounterButton"
                             onClick={() => handleOption("room", "d")}
@@ -222,7 +225,7 @@ const Home = ({ type }) => {
                           <span className="optionCounterNumber">
                             {options.room}
                           </span>
-                          <button
+                          <button data-testid = "rooms-plus"
                             className="optionCounterButton"
                             onClick={() => handleOption("room", "i")}
                           >
@@ -236,7 +239,7 @@ const Home = ({ type }) => {
               </div>
             </div>
             <div className="checkItem">
-              <button className="searchButton" onClick={handleSearch}>
+              <button data-testid = "SearchBtn" className="searchButton" onClick={handleSearch}>
                 Search
               </button>
             </div>

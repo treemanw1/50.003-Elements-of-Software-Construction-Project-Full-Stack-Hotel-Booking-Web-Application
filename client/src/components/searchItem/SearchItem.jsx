@@ -46,7 +46,7 @@ const SearchItem = ({
           <span className="siPrice">SGD {price}</span>
           <span className="siSubDetails">1 room, 3 nights</span>
         </div>
-        <button className="siCheckButton" onClick={handleBookNow}>
+        <button data-testid = "selectRoom" className="siCheckButton" onClick={handleBookNow}>
           Select Room
         </button>
       </div>

@@ -61,7 +61,7 @@ const Header = ({ type }) => {
                 <div className="destinationItem">
                   <div className="textItem">DESTINATION</div>
                   <div className="destinationSearchItem">
-                    <input
+                    <input data-testid = "SearchBar"
                       type="text"
                       color="black"
                       placeholder="Enter Destination"
@@ -98,7 +98,7 @@ const Header = ({ type }) => {
                   <div className="childSearchContainer">
                     <div className="spaceItem"> ADULTS </div>
                     <div className="countItem">
-                      <span
+                      <span data-testid="adult-span-header"
                         onClick={() => setOpenOptions(!openOptions)}
                         className="countItem"
                       >{`${options.adult}`}</span>
@@ -107,7 +107,7 @@ const Header = ({ type }) => {
                           <div className="optionItem">
                             <span className="optionText">Adults</span>
                             <div className="optionCounter">
-                              <button
+                              <button data-testid="adult-minus-header"
                                 disabled={options.adult <= 1}
                                 className="optionCounterButton"
                                 onClick={() => handleOption("adult", "d")}
@@ -117,7 +117,7 @@ const Header = ({ type }) => {
                               <span className="optionCounterNumber">
                                 {options.adult}
                               </span>
-                              <button
+                              <button data-testid="adult-plus-header"
                                 className="optionCounterButton"
                                 onClick={() => handleOption("adult", "i")}
                               >
@@ -133,7 +133,7 @@ const Header = ({ type }) => {
                   <div className="childSearchContainer">
                     <div className="spaceItem"> CHILDREN </div>
                     <div className="countItem">
-                      <span
+                      <span data-testid="children-span-header"
                         onClick={() => setOpenOptions(!openOptions)}
                         className="countItem"
                         // {`${options.adult} adult · ${options.children} children · ${options.room} room`}
@@ -143,7 +143,7 @@ const Header = ({ type }) => {
                           <div className="optionItem">
                             <span className="optionText">Children</span>
                             <div className="optionCounter">
-                              <button
+                              <button data-testid="children-minus-header"
                                 disabled={options.children <= 0}
                                 className="optionCounterButton"
                                 onClick={() => handleOption("children", "d")}
@@ -153,7 +153,7 @@ const Header = ({ type }) => {
                               <span className="optionCounterNumber">
                                 {options.children}
                               </span>
-                              <button
+                              <button data-testid="children-plus-header"
                                 className="optionCounterButton"
                                 onClick={() => handleOption("children", "i")}
                               >
@@ -169,7 +169,7 @@ const Header = ({ type }) => {
                   <div className="childSearchContainer">
                     <div className="spaceItem"> ROOMS </div>
                     <div className="countItem">
-                      <span
+                      <span data-testid="rooms-span-header"
                         onClick={() => setOpenOptions(!openOptions)}
                         className="countItem"
                       >
@@ -180,7 +180,7 @@ const Header = ({ type }) => {
                           <div className="optionItem">
                             <span className="optionText">Rooms</span>
                             <div className="optionCounter">
-                              <button
+                              <button data-testid="rooms-minus-header"
                                 disabled={options.room <= 1}
                                 className="optionCounterButton"
                                 onClick={() => handleOption("room", "d")}
@@ -190,7 +190,7 @@ const Header = ({ type }) => {
                               <span className="optionCounterNumber">
                                 {options.room}
                               </span>
-                              <button
+                              <button data-testid="rooms-plus-header"
                                 className="optionCounterButton"
                                 onClick={() => handleOption("room", "i")}
                               >
@@ -204,7 +204,7 @@ const Header = ({ type }) => {
                   </div>
                 </div>
                 <div className="updateItem">
-                  <button className="searchBtn" onClick={handleSearch}>
+                  <button data-testid ="modifySearchBtn" className="searchBtn" onClick={handleSearch}>
                     Modify Search
                   </button>
                 </div>

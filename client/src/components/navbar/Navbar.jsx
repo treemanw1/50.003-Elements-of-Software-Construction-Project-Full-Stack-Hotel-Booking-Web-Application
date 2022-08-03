@@ -22,16 +22,14 @@ const Navbar = () => {
             <div className="logoImage">
               <img src={logo} alt="Logo" />
             </div>
-            <button className="logo" onClick={handleDestinationSearch}>
+            <button data-testid="trivago" className="logo" onClick={handleDestinationSearch}>
               Trivago
             </button>
           </div>
         </div>
         <div className="navItems">
-          <button className="navButton" onClick={handleHotelSearch}>
-            Hotel Search
-          </button>
-          <button className="navButton" onClick={handleRegister}>
+          
+          <button data-testid= "RegBtn" className="navButton" onClick={handleRegister}>
             Register
           </button>
           <button className="navButton">Login</button>
