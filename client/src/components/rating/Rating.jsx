@@ -1,4 +1,4 @@
-import "../../pages/list/list.css";
+import "../../pages/Hotels/hotels.css";
 import Star from "../../components/star/Star";
 
 

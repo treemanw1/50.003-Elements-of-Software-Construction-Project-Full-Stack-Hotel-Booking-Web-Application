@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins");
+
+.nfpContainer {
+  height: 60vh;
+  margin: 100px;
+  position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nfpChildContainer {
+  margin: 10px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.6);
+  height: 100%;
+  width: 1024px;
+  display: flex;
+  align-items: center;
+}
+
+.nfpSubChildContainer {
+  height: 95%;
+  width: 100%;
+  margin-left: 15px;
+  margin-right: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  border-radius: 5px;
+}
+
+.nfpheading {
+  font: "Poppins";
+  font-size: 120px;
+  line-height: 70pt;
+  color: black;
+  text-align: center;
+  padding-bottom: 30px;
+  margin-bottom: 10px;
+}
+
+.nfpsubHeading {
+  font-size: 20px;
+  font: "Poppins";
+  line-height: 20pt;
+  color: black;
+  text-align: center;
+}

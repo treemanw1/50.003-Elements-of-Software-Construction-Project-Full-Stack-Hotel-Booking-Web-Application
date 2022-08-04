@@ -1,5 +1,5 @@
 import axios from "axios";
-import "./list.css";
+import "./hotels.css";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import Map from "../../components/map/Map";

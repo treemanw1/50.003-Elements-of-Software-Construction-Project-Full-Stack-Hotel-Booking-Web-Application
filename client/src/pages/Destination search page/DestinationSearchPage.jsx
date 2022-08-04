@@ -1,6 +1,6 @@
 import Header from "../../components/header/Header";
 import Navbar from "../../components/navbar/Navbar";
-import "./DestinationSearchPage.css";
+import "./destinationSearchPage.css";
 
 import { DateRange } from "react-date-range";
 import { useState, useEffect } from "react";

@@ -1,4 +1,4 @@
-import "../../pages/list/list.css";
+import "../../pages/Hotels/hotels.css";
 
 
 const Distance = () => {

@@ -1,7 +1,7 @@
 import React from "react";
 import  ReactDOM  from 'react-dom';
 import { render, fireEvent, screen,within, configure } from "@testing-library/react";
-import List from "../pages/List/List2";
+import Hotels from "../pages/Hotels";
 
 import '@testing-library/jest-dom/extend-expect';
 import {BrowserRouter} from "react-router-dom";
@@ -17,7 +17,7 @@ jest.mock('react-router-dom', () => ({
 it("renders without crashing", () => {
   
     const div = document.createElement("div");
-    ReactDOM.render(List, div);
+    ReactDOM.render(Hotels, div);
 });
 
 

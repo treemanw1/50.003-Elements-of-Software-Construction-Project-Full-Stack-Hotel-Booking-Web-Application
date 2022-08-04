@@ -19,11 +19,11 @@ const Navbar = () => {
       <div className="navContainer">
         <div className="logoContainer">
           <div class="childLogoContainer">
-            <div className="logoImage">
+            {/* <div className="logoImage">
               <img src={logo} alt="Logo" />
-            </div>
+            </div> */}
             <button data-testid="trivago" className="logo" onClick={handleDestinationSearch}>
-              {/* Trivago */}
+            <img src={logo} alt="Logo" height="20" width="100"/>
             </button>
           </div>
         </div>
