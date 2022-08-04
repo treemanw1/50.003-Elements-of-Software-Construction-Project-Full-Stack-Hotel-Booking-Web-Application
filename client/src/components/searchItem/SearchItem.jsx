@@ -12,21 +12,11 @@ const SearchItem = ({
   price,
 }) => {
   const [imgSrc, setImgSrc] = useState(imageUrl);
-  const onError = () =>
-    setImgSrc("https://c.tenor.com/d-OUBVmtG3kAAAAd/gnomed-gnome.gif");
+  const onError = () => setImgSrc("https://www.caspianpolicy.org/no-image.png");
 
   return (
     <div className="searchItem">
-      <img
-        className="siImg"
-        src={
-          imgSrc === "https://c.tenor.com/d-OUBVmtG3kAAAAd/gnomed-gnome.gif"
-            ? "https://www.caspianpolicy.org/no-image.png"
-            : imgSrc
-        }
-        onError={onError}
-        alt="Hotel image"
-      />
+      <img className="siImg" src={imgSrc} onError={onError} alt="Hotel image" />
       <div className="siDesc">
         <h1 className="siTitle">{name}</h1>
         <div className="siSubtitle">
@@ -41,14 +31,14 @@ const SearchItem = ({
           href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"
           crossOrigin="anonymous"
         ></link>
-        {/* <button className="siFeatures">
+        <button className="siFeatures">
           <i class="fas fa-location-arrow fa-fw"></i> Show on Map
-        </button> */}
+        </button>
       </div>
       <div className="siDetails">
         <div className="siDetailTexts">
           <span className="siPrice">SGD {price}</span>
-          <span className="siSubDetails">per night</span>
+          <span className="siSubDetails">1 room, 3 nights</span>
         </div>
         <button
           data-testid="selectRoom"
