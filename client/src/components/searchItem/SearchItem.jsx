@@ -31,14 +31,14 @@ const SearchItem = ({
           href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"
           crossOrigin="anonymous"
         ></link>
-        <button className="siFeatures">
+        {/* <button className="siFeatures">
           <i class="fas fa-location-arrow fa-fw"></i> Show on Map
-        </button>
+        </button> */}
       </div>
       <div className="siDetails">
         <div className="siDetailTexts">
           <span className="siPrice">SGD {price}</span>
-          <span className="siSubDetails">1 room, 3 nights</span>
+          <span className="siSubDetails">per night</span>
         </div>
         <button
           data-testid="selectRoom"
