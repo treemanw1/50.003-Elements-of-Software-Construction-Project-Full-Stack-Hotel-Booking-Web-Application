@@ -29,9 +29,17 @@ const userSchema_bookingdetails= new mongoose.Schema({
     cvv:{
         type:String,
         required: true
+    },
+    hotelInfo:{
+        type:String,
+        required:false
+    },
+    roomInfo:{
+        type:String,
+        required:false
     }
 
- 
+
 
 })
 

@@ -55,8 +55,8 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
 
   useEffect(pullRoomData, [rooms]);
 
-  const handleBookButton = () => {
-    navigate("/booking");
+  const handleBookButton = (roomInfo) => {
+    navigate("/book",  { state: { hotelInfo, roomInfo}});
   };
 
   const { isLoaded } = useLoadScript({
@@ -148,7 +148,7 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
                         //   data["rooms"][key]["coverted_max_cash_payment"] * 3
                         // )}
                         price={e.price}
-                        handleBookNow={handleBookButton}
+                        handleBookNow={handleBookButton(e)}
                       />
                     </div>
                   );

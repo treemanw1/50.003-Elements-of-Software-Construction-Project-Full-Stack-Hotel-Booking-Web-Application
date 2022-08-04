@@ -3,8 +3,11 @@ const router= express.Router();
 const bcrypt= require('bcryptjs');
 const jwt= require('jsonwebtoken');
 
+const authenticate = require("../middleware/authenticate");
+
 require("../db/conn");
 const User= require("../model/userSchema");
+// const { default: App } = require('../../client/src/App');
 // const User= userschema.User;
 
 router.get('/', (req, res) => {
@@ -83,8 +86,8 @@ router.post('/login', async (req, res) => {
 
             token= await userLogin.generateAuthToken();
             
-            res.cookie("jwttoken", token, {
-                expires: new Date(Date.now()+60000000),
+            res.cookie("jwtoken", token, {
+                expires: new Date(Date.now()+6000000000),
                 httpOnly:true
             });
 
@@ -104,6 +107,10 @@ router.post('/login', async (req, res) => {
     } catch(err){
         console.log(err);
     }
+});
+
+router.get('/book', authenticate, (req, res) => {
+    res.send("Hello")
 });
 
 

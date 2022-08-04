@@ -17,6 +17,7 @@ import { useState, useEffect } from "react";
 import { hotelList } from "./info.jsx";
 import { useLoadScript } from "@react-google-maps/api";
 
+
 const imagePerRow = 7;
 const List = () => {
 

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import Navbar from "../../components/navbar/Navbar";
 import "./book.css";
 
@@ -12,6 +13,11 @@ const Book = () => {
     expirydate: "",
     cvv: "",
   });
+
+  const roomsPage = useLocation();
+  const hotelInfo = roomsPage.hotelInfo;
+  const roomInfo = roomsPage.roomInfo;
+
 
   let field, value;
 
@@ -33,6 +39,8 @@ const Book = () => {
       creditcardnumber,
       expirydate,
       cvv,
+      hotelInfo,
+      roomInfo
     } = booking;
 
     const res = await fetch("/book", {
@@ -48,6 +56,8 @@ const Book = () => {
         creditcardnumber,
         expirydate,
         cvv,
+        hotelInfo,
+        roomInfo
       }),
     });
 

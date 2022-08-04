@@ -12,7 +12,7 @@ import List from "./pages/list/List";
 
 // import Navbar from "./components/Navbar"
 import Book from "./pages/booking/Book"
-import Login from "./components/Login"
+import Login from "./pages/login/Login"
 import Register from "./pages/register/Register"
 import UserDetails from "./components/UserDetails"
 
