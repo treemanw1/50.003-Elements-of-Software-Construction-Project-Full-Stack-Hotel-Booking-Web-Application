@@ -74,7 +74,7 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
   useEffect(pullRoomData, [rooms]);
 
   const handleBookButton = () => {
-    navigate("/booking");
+    navigate("/book");
   };
 
   const { isLoaded } = useLoadScript({
