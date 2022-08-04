@@ -1,5 +1,5 @@
 import "./navbar.css";
-import logo from "../../components/navbar/logo.png";
+import logo from "../../components/navbar/ascenda.png";
 import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
@@ -23,7 +23,7 @@ const Navbar = () => {
               <img src={logo} alt="Logo" />
             </div>
             <button data-testid="trivago" className="logo" onClick={handleDestinationSearch}>
-              Trivago
+              {/* Trivago */}
             </button>
           </div>
         </div>

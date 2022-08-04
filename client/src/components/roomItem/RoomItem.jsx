@@ -20,7 +20,7 @@ const RoomItem = ({
       <div className="roomDetails">
         <div className="roomDetailTexts">
           <span className="roomPrice">SGD {price}</span>
-          {/* <span className="roomSubDetails">1 room, 3 nights</span> */}
+          <span className="roomSubDetails">per night</span>
         </div>
         <button className="roomCheckButton" onClick={handleBookNow}>
           Book Now

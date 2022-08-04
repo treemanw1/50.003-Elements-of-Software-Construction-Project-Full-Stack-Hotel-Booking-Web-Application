@@ -92,27 +92,6 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
               </div>
 
               <div class="hdInfo" dangerouslySetInnerHTML={{ __html: hotelInfo.description }} />
-
-              {/* <div class="hdInfo">
-                <p>
-                  With a stay at The Fullerton Hotel Singapore, you'll be
-                  centrally located in Singapore, steps from Cavenagh Bridge and
-                  Anderson Bridge. This 5-star hotel is close to Chinatown
-                  Heritage Center and Universal Studios Singapore.
-                </p>
-                <br />
-                <p>
-                  Make yourself at home in one of the 400 individually furnished
-                  guestrooms, featuring refrigerators and plasma televisions.
-                  Complimentary wired and wireless Internet access keeps you
-                  connected, and satellite programming provides entertainment.
-                  Private bathrooms with separate bathtubs and showers feature
-                  deep soaking bathtubs and complimentary toiletries.
-                  Conveniences include phones, as well as laptop-compatible
-                  safes and desks.
-                </p>
-              </div> */}
-
               <link
                 rel="stylesheet"
                 href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"
@@ -139,9 +118,9 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
                         key={e.key}
                         name={e.name}
                         imageUrl={e.img_link == undefined
-                          ? "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
+                          ? "https://www.caspianpolicy.org/no-image.png"
                           : e.img_link.high_resolution_url == undefined
-                            ? "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
+                            ? "https://www.caspianpolicy.org/no-image.png"
                             : e.img_link.high_resolution_url
                         }
                         // price={Math.round(

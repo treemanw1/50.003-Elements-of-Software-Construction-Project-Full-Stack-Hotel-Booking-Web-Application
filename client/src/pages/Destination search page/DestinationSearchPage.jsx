@@ -153,6 +153,7 @@ const Home = ({ type }) => {
                           </span>
                           <button
                           data-testid="adult-plus"
+                            disabled={options.adult >= 50}
                             className="optionCounterButton"
                             onClick={() => handleOption("adult", "i")}
                           >
@@ -189,6 +190,7 @@ const Home = ({ type }) => {
                             {options.children}
                           </span>
                           <button data-testid = "children-plus"
+                            disabled={options.children >= 50}
                             className="optionCounterButton"
                             onClick={() => handleOption("children", "i")}
                           >
@@ -226,6 +228,7 @@ const Home = ({ type }) => {
                             {options.room}
                           </span>
                           <button data-testid = "rooms-plus"
+                            disabled={options.room >= 25}
                             className="optionCounterButton"
                             onClick={() => handleOption("room", "i")}
                           >
