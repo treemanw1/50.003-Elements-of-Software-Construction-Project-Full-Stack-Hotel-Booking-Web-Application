@@ -1,16 +1,16 @@
 import Header from "../../components/header/Header";
 import Navbar from "../../components/navbar/Navbar";
-import "./DestinationSearchPage.css";
+import "./destinationSearchPage.css";
 
 import { DateRange } from "react-date-range";
 import { useState, useEffect } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import Single from "../../components/single/Single";
 
-import axios from 'axios'
+import axios from "axios";
 
 const Home = ({ type }) => {
   const navigate = useNavigate();
@@ -22,7 +22,8 @@ const Home = ({ type }) => {
       startDate: new Date(),
       endDate: new Date(),
       key: "selection",
-    }]);
+    },
+  ]);
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({
     adult: 1,
@@ -33,26 +34,28 @@ const Home = ({ type }) => {
   // send data to /hotels path in single object state
   const [hotelsData, setHotelsData] = useState({});
 
-  const [destinationCoords, setDestinationCoords] = useState([0,0]);
+  const [destinationCoords, setDestinationCoords] = useState([0, 0]);
 
   // states governing options displayed in CreatableSingle
   const [destinationData, setDestinationData] = useState([]);
   const [noFilteredDestinations, setNoFilteredDestinations] = useState(100);
-  
-  let dropdownDisplay = noFilteredDestinations > 50
-  ? []  // > 50
-  : destinationData.filter(d => d.value.toLowerCase().includes(filterPhrase)) // < 50
+  const [checkSubmitButton, setCheckSubmitButton] = useState(0);
+
+  let dropdownDisplay =
+    noFilteredDestinations > 50
+      ? [] // > 50
+      : destinationData.filter((d) =>
+          d.value.toLowerCase().includes(filterPhrase)
+        ); // < 50 
 
   // pull data from /api/destinations
   useEffect(() => {
     setNoFilteredDestinations(100);
-    axios
-      .get('http://localhost:3001/api/destinations')
-      .then(response => {
-        console.log('data retrieved')
-        setDestinationData(response.data);
-      })
-  }, [])
+    axios.get("http://localhost:3001/api/destinations").then((response) => {
+      console.log("data retrieved");
+      setDestinationData(response.data);
+    });
+  }, []);
 
   // console.log("destinationData:", destinationData);
   console.log("noFilteredDestinations: ", noFilteredDestinations);
@@ -68,13 +71,24 @@ const Home = ({ type }) => {
   };
 
   const handleSearch = () => {
-    navigate("/hotels", { state: { uid, date, options, destinationCoords } });
+    checkSubmitButton != 2
+      ? window.alert("Input DESTINATION and CHECK-IN CHECK-OUT DATES!")
+      : navigate("/hotels", {
+          state: { uid, date, options, destinationCoords },
+        });
+  };
+
+  const handleSubmit = (item) => {
+    setDate([item.selection]);
+    setCheckSubmitButton(2);
   };
 
   // sets destination phrase
   const handleInputChange = (phrase) => {
-    setNoFilteredDestinations(destinationData.filter(d => d.value.toLowerCase().includes
-      (phrase)).length);
+    setNoFilteredDestinations(
+      destinationData.filter((d) => d.value.toLowerCase().includes(phrase))
+        .length
+    );
     setFilterPhrase(phrase);
   };
 
@@ -85,39 +99,52 @@ const Home = ({ type }) => {
       <div className="homeContainer">
         <div class="childHomeContainer">
           <div className="question">
-            <div data-testid = "Where" class="text">Where</div>
-            <div data-testid = "are you" class="text">are you</div>
-            <div data-testid = "travelling to?" class="text">travelling to?</div>
+            <div data-testid="Where" class="text">
+              Where
+            </div>
+            <div data-testid="are you" class="text">
+              are you
+            </div>
+            <div data-testid="travelling to?" class="text">
+              travelling to?
+            </div>
           </div>
           <div className="search">
             <div className="headerSearchItem1">
-              <div data-testid = "DESTINATION" className="spaceItem">DESTINATION</div>
-                <Single
+              <div data-testid="DESTINATION" className="spaceItem">
+                DESTINATION
+              </div>
+              <Single
                 options={dropdownDisplay}
-                onInputChange={(handleInputChange)}
-                onChange={(newValue)=> {
+                onInputChange={handleInputChange}
+                onChange={(newValue) => {
                   setUid(newValue.uid);
-                  setDestinationCoords([newValue.lat, newValue.lng])
-                }
-                } // activates when selecting destination
-                />
+                  setDestinationCoords([newValue.lat, newValue.lng]);
+                  setCheckSubmitButton(1);
+                }} // activates when selecting destination
+              />
             </div>
 
             <div className="spaceItem">
-              <div data-testid = "checkin" className="spaceItem">CHECK-IN CHECK-OUT DATES</div>
-              <div  className="dateItem">
-                <span data-testid = "date-span"
+              <div data-testid="checkin" className="spaceItem">
+                CHECK-IN CHECK-OUT DATES
+              </div>
+              <div className="dateItem">
+                <span
+                  data-testid="date-span"
                   onClick={() => setOpenDate(!openDate)}
                   className="dateItem"
-                >{`${format(date[0].startDate, "MMM dd, yyyy")} to ${format(
-                  date[0].endDate,
-                  "MMM dd, yyyy"
-                )}`}</span>
+                >
+                  {`${format(date[0].startDate, "MMM dd, yyyy")} to ${format(
+                    date[0].endDate,
+                    "MMM dd, yyyy"
+                  )}`}
+                </span>
                 {openDate && (
                   <DateRange
-                    data-testid = "DateRange"
+                    data-testid="DateRange"
                     editableDateInputs={true}
-                    onChange={(item) => setDate([item.selection])}
+                    onChange={handleSubmit}
                     moveRangeOnFirstSelection={false}
                     ranges={date}
                     className="date"
@@ -129,9 +156,13 @@ const Home = ({ type }) => {
 
             <div className="searchContainer">
               <div className="childSearchContainer">
-                <div data-testid = "ADULTS" className="spaceItem"> ADULTS </div>
-                <div data-testid = "count" className="countItem">
-                  <span data-testid = "adult-span"
+                <div data-testid="ADULTS" className="spaceItem">
+                  {" "}
+                  ADULTS{" "}
+                </div>
+                <div data-testid="count" className="countItem">
+                  <span
+                    data-testid="adult-span"
                     onClick={() => setOpenOptions(!openOptions)}
                     className="countItem"
                   >{`${options.adult}`}</span>
@@ -141,7 +172,7 @@ const Home = ({ type }) => {
                         <span className="optionText">Adults</span>
                         <div className="optionCounter">
                           <button
-                            data-testid = "adult-minus"
+                            data-testid="adult-minus"
                             disabled={options.adult <= 1}
                             className="optionCounterButton"
                             onClick={() => handleOption("adult", "d")}
@@ -152,7 +183,8 @@ const Home = ({ type }) => {
                             {options.adult}
                           </span>
                           <button
-                          data-testid="adult-plus"
+                            data-testid="adult-plus"
+                            disabled={options.adult >= 50}
                             className="optionCounterButton"
                             onClick={() => handleOption("adult", "i")}
                           >
@@ -166,9 +198,13 @@ const Home = ({ type }) => {
               </div>
 
               <div className="childSearchContainer">
-                <div data-testid = "CHILDREN" className="spaceItem"> CHILDREN </div>
+                <div data-testid="CHILDREN" className="spaceItem">
+                  {" "}
+                  CHILDREN{" "}
+                </div>
                 <div className="countItem">
-                  <span data-testid = "children-span"
+                  <span
+                    data-testid="children-span"
                     onClick={() => setOpenOptions(!openOptions)}
                     className="countItem"
                     // {`${options.adult} adult · ${options.children} children · ${options.room} room`}
@@ -178,7 +214,8 @@ const Home = ({ type }) => {
                       <div className="optionItem">
                         <span className="optionText">Children</span>
                         <div className="optionCounter">
-                          <button data-testid = "children-minus"
+                          <button
+                            data-testid="children-minus"
                             disabled={options.children <= 0}
                             className="optionCounterButton"
                             onClick={() => handleOption("children", "d")}
@@ -188,7 +225,9 @@ const Home = ({ type }) => {
                           <span className="optionCounterNumber">
                             {options.children}
                           </span>
-                          <button data-testid = "children-plus"
+                          <button
+                            data-testid="children-plus"
+                            disabled={options.children >= 50}
                             className="optionCounterButton"
                             onClick={() => handleOption("children", "i")}
                           >
@@ -202,9 +241,13 @@ const Home = ({ type }) => {
               </div>
 
               <div className="childSearchContainer">
-                <div data-testid = "ROOMS" className="spaceItem"> ROOMS </div>
+                <div data-testid="ROOMS" className="spaceItem">
+                  {" "}
+                  ROOMS{" "}
+                </div>
                 <div className="countItem">
-                  <span data-testid = "rooms-span"
+                  <span
+                    data-testid="rooms-span"
                     onClick={() => setOpenOptions(!openOptions)}
                     className="countItem"
                   >
@@ -215,7 +258,8 @@ const Home = ({ type }) => {
                       <div className="optionItem">
                         <span className="optionText">Rooms</span>
                         <div className="optionCounter">
-                          <button data-testid = "rooms-minus"
+                          <button
+                            data-testid="rooms-minus"
                             disabled={options.room <= 1}
                             className="optionCounterButton"
                             onClick={() => handleOption("room", "d")}
@@ -225,7 +269,9 @@ const Home = ({ type }) => {
                           <span className="optionCounterNumber">
                             {options.room}
                           </span>
-                          <button data-testid = "rooms-plus"
+                          <button
+                            data-testid="rooms-plus"
+                            disabled={options.room >= 25}
                             className="optionCounterButton"
                             onClick={() => handleOption("room", "i")}
                           >
@@ -239,10 +285,21 @@ const Home = ({ type }) => {
               </div>
             </div>
             <div className="checkItem">
-              <button data-testid = "SearchBtn" className="searchButton" onClick={handleSearch}>
+              <button
+                data-testid="SearchBtn"
+                className="searchButton"
+                onClick={handleSearch}
+              >
                 Search
               </button>
             </div>
+            <Link
+              to={{
+                pathname: "/hotels",
+                state: 'Singapore',
+              }}
+            >
+            </Link>
           </div>
         </div>
       </div>
