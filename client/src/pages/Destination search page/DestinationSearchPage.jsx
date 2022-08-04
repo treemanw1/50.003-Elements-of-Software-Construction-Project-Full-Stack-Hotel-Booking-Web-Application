@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 import Single from "../../components/single/Single";
 
 import axios from "axios";
@@ -46,7 +46,7 @@ const Home = ({ type }) => {
       ? [] // > 50
       : destinationData.filter((d) =>
           d.value.toLowerCase().includes(filterPhrase)
-        ); // < 50
+        ); // < 50 
 
   // pull data from /api/destinations
   useEffect(() => {
@@ -151,7 +151,6 @@ const Home = ({ type }) => {
                     minDate={new Date()}
                   />
                 )}
-                {console.log("ABEHEE2", checkSubmitButton)}
               </div>
             </div>
 
@@ -286,7 +285,6 @@ const Home = ({ type }) => {
               </div>
             </div>
             <div className="checkItem">
-              {console.log("ABEHEE", checkSubmitButton)}
               <button
                 data-testid="SearchBtn"
                 className="searchButton"
@@ -295,6 +293,13 @@ const Home = ({ type }) => {
                 Search
               </button>
             </div>
+            <Link
+              to={{
+                pathname: "/hotels",
+                state: 'Singapore',
+              }}
+            >
+            </Link>
           </div>
         </div>
       </div>

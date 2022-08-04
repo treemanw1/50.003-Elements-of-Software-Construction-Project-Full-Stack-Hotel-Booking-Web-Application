@@ -1,5 +1,5 @@
 import "./HotelDetails.css";
-import axios from 'axios'
+import axios from "axios";
 import Navbar from "../../components/navbar/Navbar";
 import Header from "../../components/header/Header";
 import Map from "../../components/map/Map";
@@ -28,30 +28,48 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
   // const [date, setDate] = useState(location.state.date);
   const date = location.state.date;
 
-  let ye0 = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date[0].startDate);
-  let mo0 = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(date[0].startDate);
-  let da0 = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date[0].startDate);
+  let ye0 = new Intl.DateTimeFormat("en", { year: "numeric" }).format(
+    date[0].startDate
+  );
+  let mo0 = new Intl.DateTimeFormat("en", { month: "numeric" }).format(
+    date[0].startDate
+  );
+  let da0 = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(
+    date[0].startDate
+  );
   const startDate = `${ye0}-${mo0}-${da0}`;
 
-  let ye1 = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date[0].endDate);
-  let mo1 = new Intl.DateTimeFormat('en', { month: 'numeric' }).format(date[0].endDate);
-  let da1 = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date[0].endDate);
+  let ye1 = new Intl.DateTimeFormat("en", { year: "numeric" }).format(
+    date[0].endDate
+  );
+  let mo1 = new Intl.DateTimeFormat("en", { month: "numeric" }).format(
+    date[0].endDate
+  );
+  let da1 = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(
+    date[0].endDate
+  );
   const endDate = `${ye1}-${mo1}-${da1}`;
 
   const navigate = useNavigate();
 
+  // const { state } = this.props.location;
+
   const pullRoomData = () => {
     if (rooms.length === 0) {
-      console.log('hotelInfo:', hotelInfo);
-      console.log('pulling room data...')
-      console.log(`http://localhost:3001/api/rooms/${uid}/${hotelInfo.id}/${startDate}/${endDate}/${options.adult}`);
+      console.log("hotelInfo:", hotelInfo);
+      console.log("pulling room data...");
+      console.log(
+        `http://localhost:3001/api/rooms/${uid}/${hotelInfo.id}/${startDate}/${endDate}/${options.adult}`
+      );
       axios // get general hotel info
-        .get(`http://localhost:3001/api/rooms/${uid}/${hotelInfo.id}/${startDate}/${endDate}/${options.adult}`)
-        .then(response => {
-          setRooms(response.data)
-        })
+        .get(
+          `http://localhost:3001/api/rooms/${uid}/${hotelInfo.id}/${startDate}/${endDate}/${options.adult}`
+        )
+        .then((response) => {
+          setRooms(response.data);
+        });
     }
-  }
+  };
 
   useEffect(pullRoomData, [rooms]);
 
@@ -65,7 +83,7 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
 
   if (!isLoaded) return <div>Loading...</div>;
 
-  console.log('rooms:', rooms);
+  console.log("rooms:", rooms);
 
   const handleMoreImage = () => {
     setNext(next + roomsPerRow);
@@ -75,7 +93,9 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
     <div>
       <Navbar />
       <div className="hotelDetailsBackground">
-        <Header />
+        <div>
+          <Header destinationValue={"Enter Destination"}></Header>
+        </div>
         <div className="hotelDetailsResult">
           <div className="hotelDetailsWrapper">
             <img
@@ -91,7 +111,10 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
                 <Star rating={hotelInfo.rating}></Star>
               </div>
 
-              <div class="hdInfo" dangerouslySetInnerHTML={{ __html: hotelInfo.description }} />
+              <div
+                class="hdInfo"
+                dangerouslySetInnerHTML={{ __html: hotelInfo.description }}
+              />
               <link
                 rel="stylesheet"
                 href="https://use.fontawesome.com/releases/v5.12.1/css/all.css"
@@ -104,41 +127,42 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
           <div className="hotelRoomsWrapper">
             <div className="hotelDetailsSearch">
               <div>
-                <div><Map lat={coords[0]} lng={coords[1]} zoom={15}></Map></div>
+                <div>
+                  <Map lat={coords[0]} lng={coords[1]} zoom={15}></Map>
+                </div>
               </div>
             </div>
 
             <div className="hotelRoomsResult">
-              {rooms.length == 0
-                ? <div class="loader"></div>
-                : rooms.slice(0, next)?.map((e) => {
+              {rooms.length == 0 ? (
+                <div class="loader"></div>
+              ) : (
+                rooms.slice(0, next)?.map((e) => {
                   return (
                     <div key={e.key}>
                       <RoomItem
                         key={e.key}
                         name={e.name}
-                        imageUrl={e.img_link == undefined
-                          ? "https://www.caspianpolicy.org/no-image.png"
-                          : e.img_link.high_resolution_url == undefined
+                        imageUrl={
+                          e.img_link == undefined
+                            ? "https://www.caspianpolicy.org/no-image.png"
+                            : e.img_link.high_resolution_url == undefined
                             ? "https://www.caspianpolicy.org/no-image.png"
                             : e.img_link.high_resolution_url
                         }
-                        // price={Math.round(
-                        //   data["rooms"][key]["coverted_max_cash_payment"] * 3
-                        // )}
                         price={e.price}
                         handleBookNow={handleBookButton}
                       />
                     </div>
                   );
-                })}
-                {next < rooms?.length && (
-                    <Button className="btn success" onClick={handleMoreImage}>
-                      Load more
-                    </Button>
-                  )}
+                })
+              )}
+              {next < rooms?.length && (
+                <Button className="btn success" onClick={handleMoreImage}>
+                  Load more
+                </Button>
+              )}
             </div>
-
           </div>
         </div>
       </div>

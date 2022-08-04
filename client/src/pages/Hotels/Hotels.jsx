@@ -158,7 +158,7 @@ const List = () => {
     <div>
       <Navbar />
       <div className="listBackground">
-        <Header />
+        <Header destinationValue={"Enter Destination"} />
         <div className="listContainer">
           <div className="listWrapper">
             <div className="listSearch">
@@ -169,7 +169,7 @@ const List = () => {
                   zoom={12}
                 ></Map>
               </div>
-              <div className="filter">
+              {/* <div className="filter">
                 <div className="headerSearchItem1">
                   <div className="spaceItem">HOTEL NAME</div>
                   <div className="filterSearchInput">
@@ -192,7 +192,7 @@ const List = () => {
                   <div className="spaceItem">DISTANCE TO CENTER</div>
                   <Distance></Distance>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="listResult">
