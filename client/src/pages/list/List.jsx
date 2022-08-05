@@ -93,7 +93,7 @@ const List = () => {
 
   useEffect(initializeHotelDisplay, [hotelPrices]) // initialize when hotelPrices changes
 
-  // console.log('hotel display:', hotelDisplay);
+  console.log('API KEY:', process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,

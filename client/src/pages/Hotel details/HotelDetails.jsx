@@ -151,7 +151,7 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
                             : e.img_link.high_resolution_url
                         }
                         price={e.price}
-                        handleBookNow={handleBookButton(e)}
+                        handleBookNow={() => handleBookButton(e)}
                       />
                     </div>
                   );
