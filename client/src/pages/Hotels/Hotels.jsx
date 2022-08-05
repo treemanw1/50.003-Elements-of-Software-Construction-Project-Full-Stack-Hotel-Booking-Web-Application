@@ -82,9 +82,9 @@ const List = () => {
         ])
         .then(
           axios.spread((hotelResponse, hotelPricingResponse) => {
-            console.log("RESPONSES:");
-            console.log(hotelResponse.data);
-            console.log(hotelPricingResponse.data);
+            // console.log("RESPONSES:");
+            // console.log(hotelResponse.data);
+            // console.log(hotelPricingResponse.data);
             setHotelPrices(hotelPricingResponse.data);
             setHotels(hotelResponse.data);
           })

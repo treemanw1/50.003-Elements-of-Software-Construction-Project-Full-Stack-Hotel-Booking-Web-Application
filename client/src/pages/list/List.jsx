@@ -17,7 +17,6 @@ import { useState, useEffect } from "react";
 import { hotelList } from "./info.jsx";
 import { useLoadScript } from "@react-google-maps/api";
 
-
 const imagePerRow = 7;
 const List = () => {
 
@@ -61,9 +60,9 @@ const List = () => {
       axios.all([axios.get(`http://localhost:3001/api/hotels/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`),
       axios.get(`http://localhost:3001/api/hotelsPricing/destinationID/${uid}/${startDate}/${endDate}/${options.adult}`)])
         .then(axios.spread((hotelResponse, hotelPricingResponse) => {
-          console.log("RESPONSES:");
-          console.log(hotelResponse.data);
-          console.log(hotelPricingResponse.data);
+          // console.log("RESPONSES:");
+          // console.log(hotelResponse.data);
+          // console.log(hotelPricingResponse.data);
           setHotelPrices(hotelPricingResponse.data);
           setHotels(hotelResponse.data);
         }))
@@ -93,7 +92,7 @@ const List = () => {
 
   useEffect(initializeHotelDisplay, [hotelPrices]) // initialize when hotelPrices changes
 
-  console.log('API KEY:', process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
+  // console.log('API KEY:', process.env.REACT_APP_GOOGLE_MAPS_API_KEY);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,

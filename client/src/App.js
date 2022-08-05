@@ -5,7 +5,7 @@ import DestinationSearchPage from "./pages/Destination search page/DestinationSe
 // import HotelSearchPage from "./pages/Hotel search page/HotelSearchPage";
 import HotelDetails from "./pages/Hotel details/HotelDetails";
 // import Hotel from "./pages/hotel/Hotel";
-import List from "./pages/Hotels/Hotels";
+import Hotels from "./pages/Hotels/Hotels";
 
 // import Navbar from "./components/Navbar"
 import Book from "./pages/booking/Book";
@@ -20,7 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<DestinationSearchPage />} />
         <Route path="/HotelDetails" element={<HotelDetails />} />
-        <Route path="/hotels" element={<List />} />
+        <Route path="/hotels" element={<Hotels />} />
         <Route exact path="/book" element={<Book />}></Route>
         <Route exact path="/login" element={<Login />}></Route>
         <Route exact path="/register" element={<Register />}></Route>
