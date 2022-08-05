@@ -1,23 +1,20 @@
 import axios from 'axios'
 import "./list.css";
-import Navbar from "../../components/navbar/Navbar";
-import Header from "../../components/header/Header";
+import loadable from '@loadable/component'
 import Map from "../../components/map/Map";
-import Star from "../../components/star/Star";
 import Rating from "../../components/rating/Rating";
 import Distance from "../../components/distance/Distance";
-
-import SearchItem from "../../components/searchItem/SearchItem";
-import { Button } from "react-bootstrap";
-import HotelDisplay from "../../components/hotelDisplay/HotelDisplay"
-
-import { renderMatches, useLocation, useNavigate } from "react-router-dom";
 import { render } from 'react-dom'
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { hotelList } from "./info.jsx";
-import { useLoadScript } from "@react-google-maps/api";
+import { useLoadScript } from "@react-google-maps/api"
 
-const imagePerRow = 7;
+import { Button } from "react-bootstrap";
+const Navbar = loadable(() => import('../../components/navbar/Navbar')) 
+const Header = loadable(() => import('../../components/header/Header')) 
+const SearchItem = loadable(() => import('../../components/searchItem/SearchItem')) 
+
+const imagePerRow = 10;
 const List = () => {
 
   const location = useLocation();
@@ -87,7 +84,7 @@ const List = () => {
       setHotelDisplay(hotelTemp);
     }
   }
-
+kjj
   useEffect(pullHotelData, [hotelPrices]);
 
   useEffect(initializeHotelDisplay, [hotelPrices]) // initialize when hotelPrices changes
@@ -193,9 +190,12 @@ const List = () => {
                   );
                 })}
                   {next < hotels?.length && (
-                    <Button className="btn success" onClick={handleMoreImage}>
-                      Load more
+                    <div>
+                      {hotels.length<=imagePerRow ? <div>Showing {hotels.length} results of {imagePerRow} results</div> : <div>Showing {next} results of {hotels.length} results</div>}
+                      <Button data-testid= "loadMoreBtn" className="btn success" onClick={handleMoreImage}>
+                      Load more ds
                     </Button>
+                    </div>
                   )}
                 </>
               }

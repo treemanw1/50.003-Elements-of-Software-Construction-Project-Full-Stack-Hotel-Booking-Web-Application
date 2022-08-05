@@ -1,16 +1,18 @@
-import Header from "../../components/header/Header";
-import Navbar from "../../components/navbar/Navbar";
-import "./DestinationSearchPage.css";
 
+import React from 'react';
+import "./DestinationSearchPage.css";
+import loadable from '@loadable/component'
 import { DateRange } from "react-date-range";
 import { useState, useEffect } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import { useNavigate,Link } from "react-router-dom";
-import Single from "../../components/single/Single";
-
 import axios from "axios";
+const Navbar = loadable(() => import('../../components/navbar/Navbar')) 
+const Single = loadable(() => import('../../components/single/Single')) 
+
+
 
 const Home = ({ type }) => {
   const navigate = useNavigate();
@@ -93,7 +95,7 @@ const Home = ({ type }) => {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <Navbar />
       {/* <Test/>  */}
       <div className="homeContainer">
@@ -303,7 +305,8 @@ const Home = ({ type }) => {
           </div>
         </div>
       </div>
-    </div>
+   
+    </React.Fragment>
   );
 };
 

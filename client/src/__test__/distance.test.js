@@ -1,10 +1,25 @@
 import React from "react";
-import  ReactDOM  from 'react-dom';
 import '@testing-library/jest-dom/extend-expect';
 import Distance from "../components/distance/Distance";
 import { fireEvent, render, screen } from "@testing-library/react";
 const mockedUsedNavigate = jest.fn();
 import userEvent from "@testing-library/user-event";
+
+import { unmountComponentAtNode } from "react-dom";
+
+let container = null;
+beforeEach(() => {
+  // setup a DOM element as a render target
+  container = document.createElement("div");
+  document.body.appendChild(container);
+});
+
+afterEach(() => {
+  // cleanup on exiting
+  unmountComponentAtNode(container);
+  container.remove();
+  container = null;
+});
 
 jest.mock('react-router-dom', () => ({
    ...jest.requireActual('react-router-dom') ,
@@ -14,7 +29,7 @@ jest.mock('react-router-dom', () => ({
 it("renders without crashing", () => {
   
     const div = document.createElement("div");
-    ReactDOM.render(<Distance></Distance>, div);
+    render(<Distance></Distance>, div);
 
 });
 

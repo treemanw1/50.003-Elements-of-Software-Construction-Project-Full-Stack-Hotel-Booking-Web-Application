@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
-
+#preload-01 { background-image: url(../../components/navbar/background3.jpg) no-repeat -9999px -9999px; }
 body {
-  background-image: url(../../components/navbar/background3.jpg);
+  background-image: url(../../components/navbar/background3.jpg );
   background-repeat: no-repeat;
   background-size: cover;
 }

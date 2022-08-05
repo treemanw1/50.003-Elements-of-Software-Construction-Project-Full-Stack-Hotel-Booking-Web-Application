@@ -1,11 +1,10 @@
 import React from "react";
-import  ReactDOM  from 'react-dom';
 import { render, fireEvent, screen,within, configure } from "@testing-library/react";
 import DestinationSearchPage from "../pages/Destination search page/DestinationSearchPage";
-
+import { unmountComponentAtNode } from "react-dom";
 import '@testing-library/jest-dom/extend-expect';
 import {BrowserRouter} from "react-router-dom";
-import userEvent from "@testing-library/user-event";
+import { MemoryRouter } from 'react-router-dom';
 const mockedUsedNavigate = jest.fn();
 
 jest.mock('react-router-dom', () => ({
@@ -14,14 +13,27 @@ jest.mock('react-router-dom', () => ({
 }));
 
 
+let container = null;
+beforeEach(() => {
+  // setup a DOM element as a render target
+  container = document.createElement("div");
+  document.body.appendChild(container);
+});
+
+afterEach(() => {
+    // cleanup on exiting
+    unmountComponentAtNode(container);
+    container.remove();
+    container = null;
+  });
+
 it("renders without crashing", () => {
-  
     const div = document.createElement("div");
-    ReactDOM.render(<DestinationSearchPage></DestinationSearchPage>, div);
+    render(<DestinationSearchPage></DestinationSearchPage>, {wrapper: MemoryRouter},div);
 });
 
 it('should be enabled', () => {
-    const { getByTestId } = render(<DestinationSearchPage />);
+    const { getByTestId } = render(<DestinationSearchPage />,{wrapper: MemoryRouter});
     expect(getByTestId('Where')).toHaveTextContent("Where")
     expect(getByTestId('are you')).toHaveTextContent("are you")
     expect(getByTestId('travelling to?')).toHaveTextContent("travelling to?")
@@ -32,23 +44,6 @@ it('should be enabled', () => {
     expect(getByTestId('ROOMS')).toHaveTextContent("ROOMS")
     
   });
-
-  it('SearchBtn redirects after click', () => {
-
-      render(
-          <BrowserRouter>
-              <DestinationSearchPage/>
-          </BrowserRouter>
-      )
-      const search = screen.getByTestId('SearchBtn');
-      expect(search).toBeEnabled();
-      fireEvent.click(search);
-      
-
-      // TODO something something check useNavigate
-      // https://blog.logrocket.com/testing-react-router-usenavigate-hook-react-testing-library/
-      expect(mockedUsedNavigate).toBeCalledTimes(1);
-  })
 
 
   it('- button disabled at first in adult count', () => {
@@ -160,18 +155,22 @@ it('+/- button increases/decreases adult count', () => {
   
 })
 /*
-it('Date Picker opens onClick', () => {
+it('SearchBtn redirects after click', () => {
+
     render(
         <BrowserRouter>
             <DestinationSearchPage/>
         </BrowserRouter>
     )
-    const span = screen.getByTestId('date-span');
-    fireEvent.click(span);
-    const date = screen.getByTestId('DateRange');
-    expect(date).toBeInTheDocument();
-  });
+    const search = screen.getByTestId('SearchBtn');
+    expect(search).toBeEnabled();
+    fireEvent.click(search);
+    
 
+    // TODO something something check useNavigate
+    // https://blog.logrocket.com/testing-react-router-usenavigate-hook-react-testing-library/
+    expect(mockedUsedNavigate).toBeCalledTimes(1);
+})
 */
 
 /*
