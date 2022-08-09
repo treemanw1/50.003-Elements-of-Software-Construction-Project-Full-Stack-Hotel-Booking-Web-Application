@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, fireEvent, cleanup, screen, within, configure, waitForElement, waitFor } from '@testing-library/react';
-import '@babel/polyfill';
+
 
 import '@testing-library/jest-dom/extend-expect';
 import Single from '../components/single/Single';

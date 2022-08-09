@@ -54,14 +54,14 @@ const Home = ({ type }) => {
   useEffect(() => {
     setNoFilteredDestinations(100);
     axios.get("http://localhost:3001/api/destinations").then((response) => {
-      console.log("data retrieved");
+      //console.log("data retrieved");
       setDestinationData(response.data);
     });
   }, []);
 
   // console.log("destinationData:", destinationData);
-  console.log("noFilteredDestinations: ", noFilteredDestinations);
-  console.log("dropdownDisplay:", dropdownDisplay);
+ // console.log("noFilteredDestinations: ", noFilteredDestinations);
+  //console.log("dropdownDisplay:", dropdownDisplay);
 
   const handleOption = (name, operation) => {
     setOptions((prev) => {

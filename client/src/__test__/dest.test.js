@@ -1,4 +1,6 @@
 import React from "react";
+import { act } from 'react-dom/test-utils';
+require('dotenv').config();
 import { render, fireEvent, screen,within, configure } from "@testing-library/react";
 import DestinationSearchPage from "../pages/Destination search page/DestinationSearchPage";
 import { unmountComponentAtNode } from "react-dom";
@@ -6,6 +8,10 @@ import '@testing-library/jest-dom/extend-expect';
 import {BrowserRouter} from "react-router-dom";
 import { MemoryRouter } from 'react-router-dom';
 const mockedUsedNavigate = jest.fn();
+
+const app = require('../../../server/testserver')
+const supertest = require('supertest');
+const request = supertest(app)
 
 jest.mock('react-router-dom', () => ({
    ...jest.requireActual('react-router-dom') ,
@@ -27,9 +33,48 @@ afterEach(() => {
     container = null;
   });
 
+  it('gets the test endpoint /', async() => {
+    const response = await request.get('/')
+  
+    expect(response.status).toBe(200)
+  
+ 
+  })
+
+  it('gets the test endpoint /api/destinations', async() => {
+    const response = await request.get('/api/destinations')
+    
+  
+    expect(response.status).toBe(200)
+  
+ 
+  }, 20000)
+
+  it('gets the test endpoint query regular hotel info', async() => {
+    const response = await request.get('/api/hotels/destinationID/:H1cz/:2022-08-31/:2022-09-01/:1')
+    console.log(response.body)
+    expect(response.status).toBe(200)
+    
+ 
+  }, 20000)
+
+  it('gets the test endpoint hotel info + pricing', async() => {
+    const response = await request.get('/api/hotelsPricing/destinationID/:RsBU/:2022-08-31/:2022-09-01/:1')
+    
+    expect(response.status).toBe(200)
+    
+ 
+  }, 20000)
+
+  
+
 it("renders without crashing", () => {
     const div = document.createElement("div");
-    render(<DestinationSearchPage></DestinationSearchPage>, {wrapper: MemoryRouter},div);
+    
+    act(() => {
+        /* fire events that update state */
+        render(<DestinationSearchPage></DestinationSearchPage>, {wrapper: MemoryRouter},div);
+      });
 });
 
 it('should be enabled', () => {
@@ -47,12 +92,15 @@ it('should be enabled', () => {
 
 
   it('- button disabled at first in adult count', () => {
-
-    render(
-        <BrowserRouter>
-            <DestinationSearchPage/>
-        </BrowserRouter>
-    )
+    act(() => {
+        /* fire events that update state */
+        render(
+            <BrowserRouter>
+                <DestinationSearchPage/>
+            </BrowserRouter>
+        )
+      });
+    
     const span = screen.getByTestId('adult-span');
     fireEvent.click(span);
    
@@ -62,12 +110,15 @@ it('should be enabled', () => {
 })
 
   it('+/- button increases/decreases adult count', () => {
-
-    render(
-        <BrowserRouter>
-            <DestinationSearchPage/>
-        </BrowserRouter>
-    )
+    act(() => {
+        /* fire events that update state */
+        render(
+            <BrowserRouter>
+                <DestinationSearchPage/>
+            </BrowserRouter>
+        )
+      });
+    
     const span = screen.getByTestId('adult-span');
     fireEvent.click(span);
     const plus = screen.getByTestId('adult-plus');
@@ -83,12 +134,15 @@ it('should be enabled', () => {
 })
 
 it('- button disabled at first in children count', () => {
-
-    render(
-        <BrowserRouter>
-            <DestinationSearchPage/>
-        </BrowserRouter>
-    )
+    act(() => {
+        /* fire events that update state */
+        render(
+            <BrowserRouter>
+                <DestinationSearchPage/>
+            </BrowserRouter>
+        )
+      });
+    
     const span = screen.getByTestId('children-span');
     fireEvent.click(span);
    
@@ -98,12 +152,15 @@ it('- button disabled at first in children count', () => {
 })
 
 it('+/- button increases/decreases children count', () => {
-
-  render(
-      <BrowserRouter>
-          <DestinationSearchPage/>
-      </BrowserRouter>
-  )
+    act(() => {
+        /* fire events that update state */
+        render(
+            <BrowserRouter>
+                <DestinationSearchPage/>
+            </BrowserRouter>
+        )
+      });
+ 
   const span = screen.getByTestId('children-span');
   fireEvent.click(span);
   const plus = screen.getByTestId('children-plus');
@@ -119,12 +176,15 @@ it('+/- button increases/decreases children count', () => {
 })
 
 it('- button disabled at first in rooms count', () => {
-
-    render(
-        <BrowserRouter>
-            <DestinationSearchPage/>
-        </BrowserRouter>
-    )
+    act(() => {
+        /* fire events that update state */
+        render(
+            <BrowserRouter>
+                <DestinationSearchPage/>
+            </BrowserRouter>
+        )
+      });
+    
     const span = screen.getByTestId('rooms-span');
     fireEvent.click(span);
    
@@ -135,12 +195,15 @@ it('- button disabled at first in rooms count', () => {
 
 
 it('+/- button increases/decreases adult count', () => {
-
-  render(
-      <BrowserRouter>
-          <DestinationSearchPage/>
-      </BrowserRouter>
-  )
+    act(() => {
+        /* fire events that update state */
+        render(
+            <BrowserRouter>
+                <DestinationSearchPage/>
+            </BrowserRouter>
+        )
+      });
+  
   const span = screen.getByTestId('rooms-span');
   fireEvent.click(span);
   const plus = screen.getByTestId('rooms-plus');
@@ -154,7 +217,7 @@ it('+/- button increases/decreases adult count', () => {
   // https://blog.logrocket.com/testing-react-router-usenavigate-hook-react-testing-library/
   
 })
-/*
+
 it('SearchBtn redirects after click', () => {
 
     render(
@@ -169,9 +232,10 @@ it('SearchBtn redirects after click', () => {
 
     // TODO something something check useNavigate
     // https://blog.logrocket.com/testing-react-router-usenavigate-hook-react-testing-library/
-    expect(mockedUsedNavigate).toBeCalledTimes(1);
+    const alertMock = jest.spyOn(window,'alert').mockImplementation(); 
+    expect(alertMock).toBeCalledTimes(1);
 })
-*/
+
 
 /*
 You don't need to test the browser's behavior in tests. Because this behavior has already been tested by the Mozilla, Google, etc before the release. All you need to do is to test that the behavior is triggered correctly. In your situation it will be something like this:

@@ -15,7 +15,7 @@ const Single = ({options, onInputChange, onChange}) => {
   return (
     // <div style={style}>
     <div data-testid="my-select-component" style={style}>
-      <Select options={options} onInputChange={onInputChange} onChange={onChange}/>
+      <Select options={options} onInputChange={onInputChange} onChange={onChange} placeholder="Select an option"/>
       </div>
   );
 }
