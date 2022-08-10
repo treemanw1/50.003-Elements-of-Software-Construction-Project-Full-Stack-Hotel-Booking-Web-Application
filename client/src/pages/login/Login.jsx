@@ -40,7 +40,7 @@ const Login= (e) => {
         window.alert("Invalid Credentials");
     }else{
         window.alert("Login Succesful");
-        navigate("/DestinationSearch");
+        navigate("/");
     }
     }
 
