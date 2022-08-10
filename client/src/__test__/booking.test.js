@@ -1,10 +1,27 @@
 import React from "react";
-import  ReactDOM  from 'react-dom';
+
 import '@testing-library/jest-dom/extend-expect';
 import {BrowserRouter} from "react-router-dom";
 import Book from '../pages/booking/Book'
 import { fireEvent, render, screen } from "@testing-library/react";
+import { MemoryRouter } from 'react-router-dom';
 const mockedUsedNavigate = jest.fn();
+
+import { unmountComponentAtNode } from "react-dom";
+
+let container = null;
+beforeEach(() => {
+  // setup a DOM element as a render target
+  container = document.createElement("div");
+  document.body.appendChild(container);
+});
+
+afterEach(() => {
+  // cleanup on exiting
+  unmountComponentAtNode(container);
+  container.remove();
+  container = null;
+});
 
 jest.mock('react-router-dom', () => ({
    ...jest.requireActual('react-router-dom') ,
@@ -14,7 +31,7 @@ jest.mock('react-router-dom', () => ({
 it("renders without crashing", () => {
   
     const div = document.createElement("div");
-    ReactDOM.render(<Book></Book>, div);
+    render(<Book></Book>, {wrapper: MemoryRouter});
 
 });
 

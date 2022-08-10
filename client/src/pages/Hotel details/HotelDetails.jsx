@@ -158,9 +158,12 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
                 })
               )}
               {next < rooms?.length && (
+                <div>
+                {rooms.length<=roomsPerRow ? <div>Showing {rooms.length} results of {roomsPerRow} results</div> : <div>Showing {next} results of {rooms.length} results</div>}
                 <Button className="btn success" onClick={handleMoreImage}>
                   Load more
                 </Button>
+              </div>
               )}
             </div>
           </div>
