@@ -19,8 +19,8 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<DestinationSearchPage />} />
-        <Route path="/HotelDetails" element={<HotelDetails />} />
         <Route path="/hotels" element={<Hotels />} />
+        <Route path="/HotelDetails" element={<HotelDetails />} />
         <Route exact path="/book" element={<Book />}></Route>
         <Route exact path="/login" element={<Login />}></Route>
         <Route exact path="/register" element={<Register />}></Route>

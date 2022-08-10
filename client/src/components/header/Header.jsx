@@ -59,7 +59,7 @@ const Header = ({ destinationValue }) => {
             </div>
 
             <div className="textItem">
-              <div className="textItem">CHECKING DATES</div>
+              <div className="textItem">CHECK-IN CHECK-OUT DATES</div>
               <div className="dateItem">
                 <span
                   onClick={() => setOpenDate(!openDate)}

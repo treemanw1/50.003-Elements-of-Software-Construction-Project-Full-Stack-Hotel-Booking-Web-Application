@@ -288,8 +288,7 @@ const Home = ({ type }) => {
               <button
                 data-testid="SearchBtn"
                 className="searchButton"
-                onClick={handleSearch}
-              >
+                onClick={handleSearch}>
                 Search
               </button>
             </div>
