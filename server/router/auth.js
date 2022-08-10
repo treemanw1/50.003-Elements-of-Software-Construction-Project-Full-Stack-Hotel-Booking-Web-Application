@@ -71,6 +71,14 @@ router.post('/register', async (req, res) => {
 //login workflow
 
 router.post('/login', async (req, res) => {
+    const {emailaddress, password}= req.body;
+ 
+    if (!emailaddress || !password){
+        return res.status(422).json({error:"Fill in all the required fields"})
+        window.alert("Fill in all the required fields!")
+    }
+
+    
     try{
         let token;
         const {emailaddress, password} = req.body;
