@@ -9,7 +9,7 @@ import Hotels from "./pages/Hotels/Hotels";
 
 // import Navbar from "./components/Navbar"
 import Book from "./pages/booking/Book";
-import Login from "./components/Login";
+import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 // import UserDetails from "./pages/about/About";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";

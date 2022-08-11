@@ -45,6 +45,9 @@ router.post('/register', async (req, res) => {
     if(!firstname || !lastname || !phonenumber || !emailaddress || !password || !confirmpassword){
         return res.status(422).json({error:"Fill in all the required fields!"});
     }
+    if(password.length<6){
+        return res.status(425).json({error:"Password too short!"})
+    }
     
     try{
         const userExists= await User.findOne({emailaddress:emailaddress});
@@ -73,7 +76,7 @@ router.post('/login', async (req, res) => {
     const {emailaddress, password}= req.body;
  
     if (!emailaddress || !password){
-        window.alert("Fill in all the required fields!")
+        //window.alert("Fill in all the required fields!")
         return res.status(422).json({error:"Fill in all the required fields"})
         
     }

@@ -29,6 +29,10 @@ const userSchema_bookingdetails= new mongoose.Schema({
     cvv:{
         type:String,
         required: true
+    },
+    specialrequests:{
+        type:String,
+        required:true
     }
 
  

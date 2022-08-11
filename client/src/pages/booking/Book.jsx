@@ -11,6 +11,7 @@ const Book = () => {
     creditcardnumber: "",
     expirydate: "",
     cvv: "",
+    specialrequests: ""
   });
 
   let field, value;
@@ -33,6 +34,7 @@ const Book = () => {
       creditcardnumber,
       expirydate,
       cvv,
+      specialrequests,
     } = booking;
 
     const res = await fetch("/book", {
@@ -48,6 +50,7 @@ const Book = () => {
         creditcardnumber,
         expirydate,
         cvv,
+        specialrequests,
       }),
     });
 
@@ -82,6 +85,7 @@ const Book = () => {
                     id="firstname"
                     value={booking.firstname}
                     onChange={handleInputs}
+                    placeholder="Enter your First Name"
                   />
                 </div>
                 <div data-testid="secondbook">
@@ -93,6 +97,7 @@ const Book = () => {
                     id="lastname"
                     value={booking.lastname}
                     onChange={handleInputs}
+                    placeholder="Enter your Last Name"
                   />
                 </div>
                 <div data-testid="thirdbook">
@@ -104,6 +109,7 @@ const Book = () => {
                     id="phonenumber"
                     value={booking.phonenumber}
                     onChange={handleInputs}
+                    placeholder="Enter your Phone Number"
                   />
                 </div>
                 <div data-testid="fourthbook">
@@ -115,6 +121,7 @@ const Book = () => {
                     id="emailaddress"
                     value={booking.emailaddress}
                     onChange={handleInputs}
+                    placeholder="Enter your Email Address"
                   />
                 </div>
                 <div data-testid="fifthbook">
@@ -126,6 +133,7 @@ const Book = () => {
                     id="creditcardnumber"
                     value={booking.creditcardnumber}
                     onChange={handleInputs}
+                    placeholder="Enter Credit Card Number"
                   />
                 </div>
                 <div data-testid="sixthbook">
@@ -137,6 +145,7 @@ const Book = () => {
                     id="expirydate"
                     value={booking.expirydate}
                     onChange={handleInputs}
+                    placeholder="Enter CC's Expiry Date on Back"
                   />
                 </div>
                 <div data-testid="seventhbook">
@@ -148,6 +157,19 @@ const Book = () => {
                     id="cvv"
                     value={booking.cvv}
                     onChange={handleInputs}
+                    placeholder="Enter CC's CCV"
+                  />
+                </div>
+                <div data-testid="eighthbook">
+                  <label for="specialrequests">Special Requests</label>
+                  <input
+                  data-testid="specialrequests-book"
+                    type="text"
+                    class="form-control"
+                    id="specialrequests"
+                    value={booking.specialrequests}
+                    onChange={handleInputs}
+                    placeholder="Enter any Special Requests (None if NA)"
                   />
                 </div>
               </form>
