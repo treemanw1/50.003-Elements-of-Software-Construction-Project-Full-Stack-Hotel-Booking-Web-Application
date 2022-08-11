@@ -22,6 +22,7 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
   const uid = location.state.uid;
   const [options, setOptions] = useState(location.state.options);
   const hotelInfo = location.state.hotelInfo;
+  const destinationName = location.state.destinationName;
 
   const [rooms, setRooms] = useState([]);
 
@@ -95,7 +96,7 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
       <div className="hotelDetailsBackground">
         <div>
           <Header
-            destinationValue={location.state.destinationName}
+            destinationValue={destinationName}
             dateValue={
               new Intl.DateTimeFormat("en-GB", {
                 dateStyle: "medium",
@@ -173,11 +174,19 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
               )}
               {next < rooms?.length && (
                 <div>
-                {rooms.length<=roomsPerRow ? <div>Showing {rooms.length} results of {roomsPerRow} results</div> : <div>Showing {next} results of {rooms.length} results</div>}
-                <Button className="btn success" onClick={handleMoreImage}>
-                  Load more
-                </Button>
-              </div>
+                  {rooms.length <= roomsPerRow ? (
+                    <div>
+                      Showing {rooms.length} results of {roomsPerRow} results
+                    </div>
+                  ) : (
+                    <div>
+                      Showing {next} results of {rooms.length} results
+                    </div>
+                  )}
+                  <Button className="btn success" onClick={handleMoreImage}>
+                    Load more
+                  </Button>
+                </div>
               )}
             </div>
           </div>

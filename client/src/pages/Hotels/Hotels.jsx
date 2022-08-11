@@ -1,20 +1,21 @@
-import axios from 'axios'
+import axios from "axios";
 import "./hotels.css";
-import loadable from '@loadable/component'
+import loadable from "@loadable/component";
 import Map from "../../components/map/Map";
-import { render } from 'react-dom'
+import { render } from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { useLoadScript } from "@react-google-maps/api"
+import { useLoadScript } from "@react-google-maps/api";
 
 import { Button } from "react-bootstrap";
-const Navbar = loadable(() => import('../../components/navbar/Navbar')) 
-const Header = loadable(() => import('../../components/header/Header')) 
-const SearchItem = loadable(() => import('../../components/searchItem/SearchItem')) 
+const Navbar = loadable(() => import("../../components/navbar/Navbar"));
+const Header = loadable(() => import("../../components/header/Header"));
+const SearchItem = loadable(() =>
+  import("../../components/searchItem/SearchItem")
+);
 
 const imagePerRow = 10;
 const List = () => {
-
   const location = useLocation();
   const [hotels, setHotels] = useState([]);
   const [hotelPrices, setHotelPrices] = useState([]);
@@ -27,6 +28,7 @@ const List = () => {
   const uid = location.state.uid;
   const [options, setOptions] = useState(location.state.options);
   const destinationCoords = location.state.destinationCoords;
+  const destinationName = location.state.destinationName;
 
   const date = location.state.date;
   let ye0 = new Intl.DateTimeFormat("en", { year: "numeric" }).format(
@@ -50,9 +52,6 @@ const List = () => {
     date[0].endDate
   );
   const endDate = `${ye1}-${mo1}-${da1}`;
-
-  const destinationName = location.state.destinationName
-  console.log(destinationName);
 
   const [next, setNext] = useState(imagePerRow);
   const navigate = useNavigate();
@@ -133,7 +132,7 @@ const List = () => {
   useEffect(() => {
     if (coords[0] !== 0 && coords[1] !== 0)
       navigate("/HotelDetails", {
-        state: { hotelInfo, uid, date, options, coords },
+        state: { hotelInfo, uid, date, options, coords, destinationName },
       });
   }, [coords]);
 
@@ -158,7 +157,21 @@ const List = () => {
     <div>
       <Navbar />
       <div className="listBackground">
-        <Header destinationValue={"Enter Destination"} />
+        <Header
+          destinationValue={destinationName}
+          dateValue={
+            new Intl.DateTimeFormat("en-GB", {
+              dateStyle: "medium",
+            }).format(date[0].startDate) +
+            " to " +
+            new Intl.DateTimeFormat("en-GB", {
+              dateStyle: "medium",
+            }).format(date[0].endDate)
+          }
+          adultsValue={options.adult}
+          childrenValue={options.children}
+          roomValue={options.room}
+        ></Header>
         <div className="listContainer">
           <div className="listWrapper">
             <div className="listSearch">
@@ -243,16 +256,28 @@ const List = () => {
                   })}
                   {next < hotels?.length && (
                     <div>
-                      {hotels.length<=imagePerRow ? <div>Showing {hotels.length} results of {imagePerRow} results</div> : <div>Showing {next} results of {hotels.length} results</div>}
-                      <Button data-testid= "loadMoreBtn" className="btn success" onClick={handleMoreImage}>
-                      Load more
-                    </Button>
+                      {hotels.length <= imagePerRow ? (
+                        <div>
+                          Showing {hotels.length} results of {imagePerRow}{" "}
+                          results
+                        </div>
+                      ) : (
+                        <div>
+                          Showing {next} results of {hotels.length} results
+                        </div>
+                      )}
+                      <Button
+                        data-testid="loadMoreBtn"
+                        className="btn success"
+                        onClick={handleMoreImage}
+                      >
+                        Load more
+                      </Button>
                     </div>
                   )}
                 </>
               )}
             </div>
-
           </div>
         </div>
       </div>

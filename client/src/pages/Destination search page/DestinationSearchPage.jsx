@@ -1,18 +1,16 @@
-
-import React from 'react';
+import React from "react";
 import "./DestinationSearchPage.css";
-import loadable from '@loadable/component'
+import loadable from "@loadable/component";
 import { DateRange } from "react-date-range";
 import { useState, useEffect } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import Login from '../login/Login';
-const Navbar = loadable(() => import('../../components/navbar/Navbar')) 
-const Single = loadable(() => import('../../components/single/Single')) 
-
+const Navbar = loadable(() => import("../../components/navbar/Navbar"));
+const Single = loadable(() => import("../../components/single/Single"));
+const Header = loadable(() => import("../../components/header/Header"));
 
 const Home = ({ type }) => {
   const navigate = useNavigate();
@@ -121,7 +119,7 @@ const Home = ({ type }) => {
                   console.log("newValue:", newValue);
                   setUid(newValue.uid);
                   setDestinationCoords([newValue.lat, newValue.lng]);
-                  setDestinationName(newValue.value)
+                  setDestinationName(newValue.value);
                   setCheckSubmitButton(1);
                 }} // activates when selecting destination
               />
@@ -290,7 +288,8 @@ const Home = ({ type }) => {
               <button
                 data-testid="SearchBtn"
                 className="searchButton"
-                onClick={handleSearch}>
+                onClick={handleSearch}
+              >
                 Search
               </button>
             </div>
@@ -303,7 +302,6 @@ const Home = ({ type }) => {
           </div>
         </div>
       </div>
-   
     </React.Fragment>
   );
 };
