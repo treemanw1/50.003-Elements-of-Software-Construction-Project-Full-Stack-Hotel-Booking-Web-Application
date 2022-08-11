@@ -105,6 +105,7 @@ const Login= (e) => {
             <input data-testid="email" type="email" class="form-control" id="emailaddress" 
             value={email}
             onChange= {handleInputs}
+            placeholder="Enter your registered Email Address"
             />
         </div>
 
@@ -112,6 +113,7 @@ const Login= (e) => {
             <label for="password">Password</label>
             <input data-testid="password" type="password" class="form-control" id="password"
             onChange={handleInputs}
+            placeholder="Enter your Password"
             />
         </div>
         
