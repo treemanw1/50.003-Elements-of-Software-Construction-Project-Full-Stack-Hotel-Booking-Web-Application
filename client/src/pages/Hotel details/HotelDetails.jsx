@@ -73,8 +73,8 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
 
   useEffect(pullRoomData, [rooms]);
 
-  const handleBookButton = () => {
-    navigate("/book");
+  const handleBookButton = (roomInfo) => {
+    navigate("/book", { state: { hotelInfo, roomInfo } });
   };
 
   const { isLoaded } = useLoadScript({
@@ -94,7 +94,21 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
       <Navbar />
       <div className="hotelDetailsBackground">
         <div>
-          <Header destinationValue={"Enter Destination"}></Header>
+          <Header
+            destinationValue={location.state.destinationName}
+            dateValue={
+              new Intl.DateTimeFormat("en-GB", {
+                dateStyle: "medium",
+              }).format(date[0].startDate) +
+              " to " +
+              new Intl.DateTimeFormat("en-GB", {
+                dateStyle: "medium",
+              }).format(date[0].endDate)
+            }
+            adultsValue={options.adult}
+            childrenValue={options.children}
+            roomValue={options.room}
+          ></Header>
         </div>
         <div className="hotelDetailsResult">
           <div className="hotelDetailsWrapper">
@@ -151,7 +165,7 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
                             : e.img_link.high_resolution_url
                         }
                         price={e.price}
-                        handleBookNow={handleBookButton}
+                        handleBookNow={() => handleBookButton(e)}
                       />
                     </div>
                   );

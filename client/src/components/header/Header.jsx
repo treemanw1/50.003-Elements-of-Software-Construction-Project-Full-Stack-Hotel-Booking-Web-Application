@@ -6,7 +6,13 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 
-const Header = ({ destinationValue }) => {
+const Header = ({
+  destinationValue,
+  dateValue,
+  adultsValue,
+  childrenValue,
+  roomValue,
+}) => {
   const [destination, setDestination] = useState("");
   const [openDate, setOpenDate] = useState(false);
   const [date, setDate] = useState([
@@ -43,14 +49,13 @@ const Header = ({ destinationValue }) => {
       <div>
         <div className="headerContainer">
           <div class="childHeaderContainer">
-            <div className="destinationItem">
-              <div className="textItem">DESTINATION</div>
-              <div className="destinationSearchItem">
+            <div className="textItem">
+              <div className="subTextItem">DESTINATION</div>
+              <div className="SearchItem">
                 <input
                   data-testid="SearchBar"
                   type="text"
                   color="black"
-                  placeholder="Enter Destination"
                   className="headerSearchInput"
                   value={destinationValue}
                   disabled={true}
@@ -59,25 +64,15 @@ const Header = ({ destinationValue }) => {
             </div>
 
             <div className="textItem">
-              <div className="textItem">CHECKING DATES</div>
-              <div className="dateItem">
-                <span
-                  onClick={() => setOpenDate(!openDate)}
-                  className="dateItem"
-                >{`${format(date[0].startDate, "MMM dd, yyyy")} to ${format(
-                  date[0].endDate,
-                  "MMM dd, yyyy"
-                )}`}</span>
-                {openDate && (
-                  <DateRange
-                    editableDateInputs={true}
-                    onChange={(item) => setDate([item.selection])}
-                    moveRangeOnFirstSelection={false}
-                    ranges={date}
-                    className="date"
-                    minDate={new Date()}
-                  />
-                )}
+              <div className="subTextItem">CHECKING DATES</div>
+              <div className="SearchItem">
+                <input
+                  type="text"
+                  color="black"
+                  className="headerSearchInput"
+                  value={dateValue}
+                  disabled={true}
+                />
               </div>
             </div>
 
@@ -85,117 +80,39 @@ const Header = ({ destinationValue }) => {
               <div className="childSearchContainer">
                 <div className="spaceItem"> ADULTS </div>
                 <div className="countItem">
-                  <span
-                    data-testid="adult-span-header"
-                    onClick={() => setOpenOptions(!openOptions)}
-                    className="countItem"
-                  >{`${options.adult}`}</span>
-                  {openOptions && (
-                    <div className="options">
-                      <div className="optionItem">
-                        <span className="optionText">Adults</span>
-                        <div className="optionCounter">
-                          <button
-                            data-testid="adult-minus-header"
-                            disabled={options.adult <= 1}
-                            className="optionCounterButton"
-                            onClick={() => handleOption("adult", "d")}
-                          >
-                            -
-                          </button>
-                          <span className="optionCounterNumber">
-                            {options.adult}
-                          </span>
-                          <button
-                            data-testid="adult-plus-header"
-                            className="optionCounterButton"
-                            onClick={() => handleOption("adult", "i")}
-                          >
-                            +
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  <input
+                    type="text"
+                    color="black"
+                    className="headerSearchInput"
+                    value={adultsValue}
+                    disabled={true}
+                  />
                 </div>
               </div>
 
               <div className="childSearchContainer">
                 <div className="spaceItem"> CHILDREN </div>
                 <div className="countItem">
-                  <span
-                    data-testid="children-span-header"
-                    onClick={() => setOpenOptions(!openOptions)}
-                    className="countItem"
-                    // {`${options.adult} adult · ${options.children} children · ${options.room} room`}
-                  >{`${options.children}`}</span>
-                  {openOptions && (
-                    <div className="options">
-                      <div className="optionItem">
-                        <span className="optionText">Children</span>
-                        <div className="optionCounter">
-                          <button
-                            data-testid="children-minus-header"
-                            disabled={options.children <= 0}
-                            className="optionCounterButton"
-                            onClick={() => handleOption("children", "d")}
-                          >
-                            -
-                          </button>
-                          <span className="optionCounterNumber">
-                            {options.children}
-                          </span>
-                          <button
-                            data-testid="children-plus-header"
-                            className="optionCounterButton"
-                            onClick={() => handleOption("children", "i")}
-                          >
-                            +
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  <input
+                    type="text"
+                    color="black"
+                    className="headerSearchInput"
+                    value={childrenValue}
+                    disabled={true}
+                  />
                 </div>
               </div>
 
               <div className="childSearchContainer">
                 <div className="spaceItem"> ROOMS </div>
                 <div className="countItem">
-                  <span
-                    data-testid="rooms-span-header"
-                    onClick={() => setOpenOptions(!openOptions)}
-                    className="countItem"
-                  >
-                    {`${options.room}`}
-                  </span>
-                  {openOptions && (
-                    <div className="options">
-                      <div className="optionItem">
-                        <span className="optionText">Rooms</span>
-                        <div className="optionCounter">
-                          <button
-                            data-testid="rooms-minus-header"
-                            disabled={options.room <= 1}
-                            className="optionCounterButton"
-                            onClick={() => handleOption("room", "d")}
-                          >
-                            -
-                          </button>
-                          <span className="optionCounterNumber">
-                            {options.room}
-                          </span>
-                          <button
-                            data-testid="rooms-plus-header"
-                            className="optionCounterButton"
-                            onClick={() => handleOption("room", "i")}
-                          >
-                            +
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  <input
+                    type="text"
+                    color="black"
+                    className="headerSearchInput"
+                    value={roomValue}
+                    disabled={true}
+                  />
                 </div>
               </div>
             </div>
