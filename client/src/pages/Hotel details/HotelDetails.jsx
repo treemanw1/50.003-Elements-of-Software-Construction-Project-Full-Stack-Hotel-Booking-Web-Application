@@ -174,7 +174,7 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
               )}
               {next < rooms?.length && (
                 <div>
-                  {rooms.length <= roomsPerRow ? (
+                  {/* {rooms.length <= roomsPerRow ? (
                     <div>
                       Showing {rooms.length} results of {roomsPerRow} results
                     </div>
@@ -182,9 +182,17 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
                     <div>
                       Showing {next} results of {rooms.length} results
                     </div>
-                  )}
+                  )} */}
                   <Button className="btn success" onClick={handleMoreImage}>
-                    Load more
+                    {rooms.length <= roomsPerRow ? (
+                      <div>
+                        Showing {rooms.length} results of {roomsPerRow} results
+                      </div>
+                    ) : (
+                      <div>
+                        Showing {next} results of {rooms.length} results
+                      </div>
+                    )}
                   </Button>
                 </div>
               )}

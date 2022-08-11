@@ -256,7 +256,7 @@ const List = () => {
                   })}
                   {next < hotels?.length && (
                     <div>
-                      {hotels.length <= imagePerRow ? (
+                      {/* {hotels.length <= imagePerRow ? (
                         <div>
                           Showing {hotels.length} results of {imagePerRow}{" "}
                           results
@@ -265,13 +265,22 @@ const List = () => {
                         <div>
                           Showing {next} results of {hotels.length} results
                         </div>
-                      )}
+                      )} */}
                       <Button
                         data-testid="loadMoreBtn"
                         className="btn success"
                         onClick={handleMoreImage}
                       >
-                        Load more
+                        {hotels.length <= imagePerRow ? (
+                          <div>
+                            Showing {hotels.length} results of {imagePerRow}{" "}
+                            results
+                          </div>
+                        ) : (
+                          <div>
+                            Showing {next} results of {hotels.length} results
+                          </div>
+                        )}
                       </Button>
                     </div>
                   )}
