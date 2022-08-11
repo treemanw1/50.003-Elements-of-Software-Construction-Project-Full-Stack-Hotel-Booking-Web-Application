@@ -271,16 +271,7 @@ const List = () => {
                         className="btn success"
                         onClick={handleMoreImage}
                       >
-                        {hotels.length <= imagePerRow ? (
-                          <div>
-                            Showing {hotels.length} results of {imagePerRow}{" "}
-                            results
-                          </div>
-                        ) : (
-                          <div>
-                            Showing {next} results of {hotels.length} results
-                          </div>
-                        )}
+                        Load more
                       </Button>
                     </div>
                   )}

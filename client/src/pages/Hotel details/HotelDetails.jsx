@@ -184,15 +184,7 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
                     </div>
                   )} */}
                   <Button className="btn success" onClick={handleMoreImage}>
-                    {rooms.length <= roomsPerRow ? (
-                      <div>
-                        Showing {rooms.length} results of {roomsPerRow} results
-                      </div>
-                    ) : (
-                      <div>
-                        Showing {next} results of {rooms.length} results
-                      </div>
-                    )}
+                    Load more
                   </Button>
                 </div>
               )}

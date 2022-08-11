@@ -9,7 +9,7 @@ import Hotels from "./pages/Hotels/Hotels";
 
 // import Navbar from "./components/Navbar"
 import Book from "./pages/booking/Book";
-import Login from "./components/Login";
+import Login from "./pages/Login/Login";
 import Register from "./pages/register/Register";
 // import UserDetails from "./pages/about/About";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
@@ -25,7 +25,7 @@ function App() {
         <Route exact path="/login" element={<Login />}></Route>
         <Route exact path="/register" element={<Register />}></Route>
         {/* <Route exact path="/userdetails" element={<UserDetails />}></Route> */}
-        <Route path="*" element={<NotFoundPage/>} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
