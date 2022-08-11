@@ -1,16 +1,18 @@
-import Header from "../../components/header/Header";
-import Navbar from "../../components/navbar/Navbar";
-import "./destinationSearchPage.css";
 
+import React from 'react';
+import "./DestinationSearchPage.css";
+import loadable from '@loadable/component'
 import { DateRange } from "react-date-range";
 import { useState, useEffect } from "react";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
-import { useNavigate, Link } from "react-router-dom";
-import Single from "../../components/single/Single";
-
+import { useNavigate,Link } from "react-router-dom";
 import axios from "axios";
+import Login from '../login/Login';
+const Navbar = loadable(() => import('../../components/navbar/Navbar')) 
+const Single = loadable(() => import('../../components/single/Single')) 
+
 
 const Home = ({ type }) => {
   const navigate = useNavigate();
@@ -31,12 +33,14 @@ const Home = ({ type }) => {
     room: 1,
   });
 
+  const [destinationName, setDestinationName] = useState("");
+
   // send data to /hotels path in single object state
   const [hotelsData, setHotelsData] = useState({});
 
   const [destinationCoords, setDestinationCoords] = useState([0, 0]);
 
-  // states governing options displayed in CreatableSingle
+  // states governing options displayed in Single component
   const [destinationData, setDestinationData] = useState([]);
   const [noFilteredDestinations, setNoFilteredDestinations] = useState(100);
   const [checkSubmitButton, setCheckSubmitButton] = useState(0);
@@ -52,14 +56,10 @@ const Home = ({ type }) => {
   useEffect(() => {
     setNoFilteredDestinations(100);
     axios.get("http://localhost:3001/api/destinations").then((response) => {
-      console.log("data retrieved");
+      //console.log("data retrieved");
       setDestinationData(response.data);
     });
   }, []);
-
-  // console.log("destinationData:", destinationData);
-  console.log("noFilteredDestinations: ", noFilteredDestinations);
-  console.log("dropdownDisplay:", dropdownDisplay);
 
   const handleOption = (name, operation) => {
     setOptions((prev) => {
@@ -74,7 +74,7 @@ const Home = ({ type }) => {
     checkSubmitButton != 2
       ? window.alert("Input DESTINATION and CHECK-IN CHECK-OUT DATES!")
       : navigate("/hotels", {
-          state: { uid, date, options, destinationCoords },
+          state: { uid, date, options, destinationCoords, destinationName },
         });
   };
 
@@ -93,7 +93,7 @@ const Home = ({ type }) => {
   };
 
   return (
-    <div>
+    <React.Fragment>
       <Navbar />
       {/* <Test/>  */}
       <div className="homeContainer">
@@ -118,8 +118,10 @@ const Home = ({ type }) => {
                 options={dropdownDisplay}
                 onInputChange={handleInputChange}
                 onChange={(newValue) => {
+                  console.log("newValue:", newValue);
                   setUid(newValue.uid);
                   setDestinationCoords([newValue.lat, newValue.lng]);
+                  setDestinationName(newValue.value)
                   setCheckSubmitButton(1);
                 }} // activates when selecting destination
               />
@@ -288,8 +290,7 @@ const Home = ({ type }) => {
               <button
                 data-testid="SearchBtn"
                 className="searchButton"
-                onClick={handleSearch}
-              >
+                onClick={handleSearch}>
                 Search
               </button>
             </div>
@@ -302,7 +303,8 @@ const Home = ({ type }) => {
           </div>
         </div>
       </div>
-    </div>
+   
+    </React.Fragment>
   );
 };
 

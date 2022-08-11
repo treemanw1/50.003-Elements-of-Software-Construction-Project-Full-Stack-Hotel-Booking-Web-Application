@@ -14,6 +14,10 @@ const Navbar = () => {
     navigate("/register");
   };
 
+  const handleLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <div className="navbar">
       <div className="navContainer">
@@ -32,7 +36,7 @@ const Navbar = () => {
           <button data-testid= "RegBtn" className="navButton" onClick={handleRegister}>
             Register
           </button>
-          <button className="navButton">Login</button>
+          <button data-testid= "LoginBtn" className="navButton" onClick={handleLogin}>Login</button>
         </div>
       </div>
     </div>

@@ -1,23 +1,20 @@
-import axios from "axios";
+import axios from 'axios'
 import "./hotels.css";
-import Navbar from "../../components/navbar/Navbar";
-import Header from "../../components/header/Header";
+import loadable from '@loadable/component'
 import Map from "../../components/map/Map";
-import Rating from "../../components/rating/Rating";
-import Distance from "../../components/distance/Distance";
-
-import SearchItem from "../../components/searchItem/SearchItem";
-import { Button } from "react-bootstrap";
-import HotelDisplay from "../../components/hotelDisplay/HotelDisplay";
-
-import { renderMatches, useLocation, useNavigate } from "react-router-dom";
-import { render } from "react-dom";
+import { render } from 'react-dom'
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { hotelList } from "./info.jsx";
-import { useLoadScript } from "@react-google-maps/api";
+import { useLoadScript } from "@react-google-maps/api"
 
-const imagePerRow = 7;
+import { Button } from "react-bootstrap";
+const Navbar = loadable(() => import('../../components/navbar/Navbar')) 
+const Header = loadable(() => import('../../components/header/Header')) 
+const SearchItem = loadable(() => import('../../components/searchItem/SearchItem')) 
+
+const imagePerRow = 10;
 const List = () => {
+
   const location = useLocation();
   const [hotels, setHotels] = useState([]);
   const [hotelPrices, setHotelPrices] = useState([]);
@@ -54,6 +51,9 @@ const List = () => {
   );
   const endDate = `${ye1}-${mo1}-${da1}`;
 
+  const destinationName = location.state.destinationName
+  console.log(destinationName);
+
   const [next, setNext] = useState(imagePerRow);
   const navigate = useNavigate();
   const [coords, setCoords] = useState([0, 0]);
@@ -82,9 +82,9 @@ const List = () => {
         ])
         .then(
           axios.spread((hotelResponse, hotelPricingResponse) => {
-            console.log("RESPONSES:");
-            console.log(hotelResponse.data);
-            console.log(hotelPricingResponse.data);
+            // console.log("RESPONSES:");
+            // console.log(hotelResponse.data);
+            // console.log(hotelPricingResponse.data);
             setHotelPrices(hotelPricingResponse.data);
             setHotels(hotelResponse.data);
           })
@@ -242,13 +242,17 @@ const List = () => {
                     );
                   })}
                   {next < hotels?.length && (
-                    <Button className="btn success" onClick={handleMoreImage}>
+                    <div>
+                      {hotels.length<=imagePerRow ? <div>Showing {hotels.length} results of {imagePerRow} results</div> : <div>Showing {next} results of {hotels.length} results</div>}
+                      <Button data-testid= "loadMoreBtn" className="btn success" onClick={handleMoreImage}>
                       Load more
                     </Button>
+                    </div>
                   )}
                 </>
               )}
             </div>
+
           </div>
         </div>
       </div>
