@@ -5,6 +5,8 @@ const jwt= require('jsonwebtoken');
 
 require("../db/conn");
 const User= require("../model/userSchema");
+
+const authenticate= require("../middleware/authenticate");
 // const User= userschema.User;
 
 router.get('/', (req, res) => {
