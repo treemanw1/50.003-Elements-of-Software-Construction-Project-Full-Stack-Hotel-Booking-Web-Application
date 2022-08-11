@@ -40,11 +40,16 @@ const Register= () => {
 
     const data= await res.json();
     
-    if(res.status===422 || !data){
+    if(!data){
       window.alert("Registration not Succesful");
-      console.log("Invalid Registration");
+    } else if(res.status===422){
+      window.alert("Fill in al the required fields!")
+    } else if(res.status===423){
+      window.alert("User with given email already exists!")
+    } else if(res.status===424){
+      window.alert("Password, and Confirm Password fields are mismatching!")
     } else{
-      window.alert("Success");
+      window.alert("Registration Success");
       console.log("Success");
       navigate("/login");
     }

@@ -44,15 +44,15 @@ router.post('/register', async (req, res) => {
     const {firstname, lastname, phonenumber, emailaddress, password, confirmpassword }= req.body;
     
     if(!firstname || !lastname || !phonenumber || !emailaddress || !password || !confirmpassword){
-        return res.status(422).json({error:"Fill all the required fields!"});
+        return res.status(422).json({error:"Fill in all the required fields!"});
     }
     
     try{
         const userExists= await User.findOne({emailaddress:emailaddress});
         if(userExists){
-            return res.status(422).json({error:"User with given email already exists!"});
+            return res.status(423).json({error:"User with given email already exists!"});
         } else if(password != confirmpassword){
-            return res.status(422).json({error:"Password and Confirm Password fields not the same!"});
+            return res.status(424).json({error:"Password and Confirm Password fields not the same!"});
         } else{
             const user= new User({firstname, lastname, phonenumber, emailaddress, password, confirmpassword});
             
@@ -74,19 +74,21 @@ router.post('/login', async (req, res) => {
     const {emailaddress, password}= req.body;
  
     if (!emailaddress || !password){
-        return res.status(422).json({error:"Fill in all the required fields"})
         window.alert("Fill in all the required fields!")
+        return res.status(422).json({error:"Fill in all the required fields"})
+        
     }
 
     
     try{
         let token;
-        const {emailaddress, password} = req.body;
-        if(!emailaddress || !password){
-            return res.status(400).json({error:"Please fill all required inputs!"})
-        }
+        //const {emailaddress, password} = req.body;
+        // if(!emailaddress || !password){
+        //     return res.status(400).json({error:"Please fill all required inputs!"})
+        // }
 
         const userLogin= await User.findOne({emailaddress:emailaddress});
+
 
         if (userLogin){
 
@@ -94,10 +96,12 @@ router.post('/login', async (req, res) => {
 
             token= await userLogin.generateAuthToken();
             
-            res.cookie("jwtoken", token, {
-                expires: new Date(Date.now()+6000000000),
-                httpOnly:true
-            });
+            // res.cookie("jwtoken", token, {
+            //     expires: new Date(Date.now()+6000000000),
+            //     httpOnly:true
+            // });
+
+            
 
             if(!check){
                 res.status(400).json({error:"Invalid keyed in credentials!"});
@@ -117,8 +121,59 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.get('/book', authenticate, (req, res) => {
-    res.send("Hello")
+router.get('/about', authenticate, async (req, res) => {
+    const {emailaddress, password}= req.body;
+ 
+    if (!emailaddress || !password){
+        window.alert("Fill in all the required fields!")
+        return res.status(422).json({error:"Fill in all the required fields"})
+        
+    }
+
+    
+    try{
+        // let token;
+        //const {emailaddress, password} = req.body;
+        // if(!emailaddress || !password){
+        //     return res.status(400).json({error:"Please fill all required inputs!"})
+        // }
+
+        const userLogin= await User.findOne({emailaddress:emailaddress});
+
+
+        if (userLogin){
+            
+            const check= await bcrypt.compare(password, userLogin.password);
+
+            //token= await userLogin.generateAuthToken();
+            
+            // res.cookie("jwtoken", token, {
+            //     expires: new Date(Date.now()+6000000000),
+            //     httpOnly:true
+            // });
+
+            
+
+            if(!check){
+                res.status(400).json({error:"Invalid keyed in credentials!"});
+            } else{
+                res.json({message:"User Login Successful!"});
+                res.send(req.rootUser);
+            }
+
+           
+        } else{
+            res.status(400).json({error:"Invalid keyed in credentials!"});
+        }
+
+        
+
+
+
+    } catch(err){
+        console.log(err);
+    }
+    
 });
 
 

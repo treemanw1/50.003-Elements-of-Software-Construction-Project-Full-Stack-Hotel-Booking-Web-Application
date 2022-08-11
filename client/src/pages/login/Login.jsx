@@ -36,11 +36,14 @@ const Login= (e) => {
 
     const data= res.json();
 
-    if (res.Status === 400 || !data){
-        window.alert("Invalid Credentials");
-    }else{
+    if (res.status === 422){
+        window.alert("Fill in all the required fields!");
+    }else if (res.status===400 || !data){
+        window.alert("Invalid Keyed in Credentials");
+    } else{
         window.alert("Login Succesful");
         navigate("/");
+        // navigate("for you page");
     }
     }
 

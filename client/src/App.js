@@ -11,7 +11,7 @@ import Hotels from "./pages/Hotels/Hotels";
 import Book from "./pages/booking/Book";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
-import UserDetails from "./components/UserDetails";
+import UserDetails from "./pages/about/About";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 function App() {
