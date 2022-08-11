@@ -74,7 +74,7 @@ const Register= () => {
           <input data-testid="firstname" type="text" class="form-control" id="firstname" 
             value={user.firstname}
             onChange={handleInputs}
-            placeholder="Enter your First Name"/>
+            placeholder="Enter your first name"/>
      
         </div>
         <div data-testid="second">
@@ -82,35 +82,35 @@ const Register= () => {
           <input data-testid="lastname" type="text" class="form-control" id="lastname" 
             value={user.lastame}
             onChange={handleInputs}
-            placeholder="Enter your Last Name"/>
+            placeholder="Enter your last name"/>
         </div>
         <div data-testid="third">
           <label for="phonenumber">Phone Number</label>
           <input data-testid="phone" type="text" class="form-control" id="phonenumber" 
             value={user.phonenumber}
             onChange={handleInputs}
-            placeholder="Enter your Phone Number"/>
+            placeholder="Enter your phone number"/>
         </div>
         <div data-testid="fourth">
           <label for="emailaddress">Email</label>
           <input data-testid="email" type="email" class="form-control" id="emailaddress" 
             value={user.emailaddress}
             onChange={handleInputs}
-            placeholder="Enter your Email Address"/>
+            placeholder="Enter your email address"/>
         </div>
         <div data-testid="fifth">
           <label for="password">Password</label>
           <input data-testid="password" type="password" class="form-control" id="password"
             value={user.password}
             onChange={handleInputs}
-            placeholder="Enter Password (Min. 6 characters)"/>
+            placeholder="Enter password (min. 6 characters)"/>
         </div>
         <div data-testid="sixth">
           <label for="confirmpassword">Confirm Password</label>
           <input data-testid="confirm" type="password" class="form-control" id="confirmpassword"
             value={user.confirmpassword}
             onChange={handleInputs}
-            placeholder="Confirm your Entered Password"/>
+            placeholder="Confirm your entered password"/>
         </div>
       </form>
       </section>

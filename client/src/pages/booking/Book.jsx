@@ -11,7 +11,7 @@ const Book = () => {
     creditcardnumber: "",
     expirydate: "",
     cvv: "",
-    specialrequests: ""
+    specialrequests: "",
   });
 
   let field, value;
@@ -79,102 +79,107 @@ const Book = () => {
                 <div data-testid="firstbook">
                   <label for="firstname">First Name</label>
                   <input
-                  data-testid="firstname-book"
+                    data-testid="firstname-book"
                     type="text"
                     class="form-control"
                     id="firstname"
                     value={booking.firstname}
                     onChange={handleInputs}
-                    placeholder="Enter your First Name"
+                    placeholder="Enter your first name"
                   />
                 </div>
                 <div data-testid="secondbook">
                   <label for="lastname">Last Name</label>
                   <input
-                  data-testid="lastname-book"
+                    data-testid="lastname-book"
                     type="text"
                     class="form-control"
                     id="lastname"
                     value={booking.lastname}
                     onChange={handleInputs}
-                    placeholder="Enter your Last Name"
+                    placeholder="Enter your last name"
                   />
                 </div>
                 <div data-testid="thirdbook">
                   <label for="phonenumber">Phone Number</label>
                   <input
-                  data-testid="phone-book"
+                    data-testid="phone-book"
                     type="tel"
                     class="form-control"
                     id="phonenumber"
                     value={booking.phonenumber}
                     onChange={handleInputs}
-                    placeholder="Enter your Phone Number"
+                    placeholder="Enter your phone number"
                   />
                 </div>
                 <div data-testid="fourthbook">
                   <label for="emailaddress">Email</label>
                   <input
-                  data-testid="email-book"
+                    data-testid="email-book"
                     type="email"
                     class="form-control"
                     id="emailaddress"
                     value={booking.emailaddress}
                     onChange={handleInputs}
-                    placeholder="Enter your Email Address"
+                    placeholder="Enter your email address"
                   />
                 </div>
                 <div data-testid="fifthbook">
                   <label for="creditcardnumber">Credit Card Number</label>
                   <input
-                  data-testid="card-book"
+                    data-testid="card-book"
                     type="text"
                     class="form-control"
                     id="creditcardnumber"
                     value={booking.creditcardnumber}
                     onChange={handleInputs}
-                    placeholder="Enter Credit Card Number"
+                    placeholder="Enter your credit card number"
                   />
                 </div>
                 <div data-testid="sixthbook">
                   <label for="expirydate">Expiry Date</label>
                   <input
-                  data-testid="expiry-book"
+                    data-testid="expiry-book"
                     type="text"
                     class="form-control"
                     id="expirydate"
                     value={booking.expirydate}
                     onChange={handleInputs}
-                    placeholder="Enter CC's Expiry Date on Back"
+                    placeholder="Enter your credit card expiration date (eg. 04/25)"
                   />
                 </div>
                 <div data-testid="seventhbook">
                   <label for="cvv">CVV</label>
                   <input
-                  data-testid="cvv-book"
+                    data-testid="cvv-book"
                     type="text"
                     class="form-control"
                     id="cvv"
                     value={booking.cvv}
                     onChange={handleInputs}
-                    placeholder="Enter CC's CCV"
+                    placeholder="Enter your CVV"
                   />
                 </div>
                 <div data-testid="eighthbook">
                   <label for="specialrequests">Special Requests</label>
                   <input
-                  data-testid="specialrequests-book"
+                    data-testid="specialrequests-book"
                     type="text"
                     class="form-control"
                     id="specialrequests"
                     value={booking.specialrequests}
                     onChange={handleInputs}
-                    placeholder="Enter any Special Requests (None if NA)"
+                    placeholder="Enter any special requests to the hotel (None if NA)"
                   />
                 </div>
               </form>
             </section>
-            <button data-testid="BookBtn" type="submit" className="submitButton" onClick={postData}>
+            <button
+              data-testid="BookBtn"
+              type="submit"
+              className="submitButton"
+              onClick={postData}
+            >
               Book
             </button>
           </div>
