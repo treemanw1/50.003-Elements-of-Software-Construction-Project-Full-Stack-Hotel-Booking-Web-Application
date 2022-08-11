@@ -9,6 +9,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { format } from "date-fns";
 import { useNavigate,Link } from "react-router-dom";
 import axios from "axios";
+import Login from '../login/Login';
 const Navbar = loadable(() => import('../../components/navbar/Navbar')) 
 const Single = loadable(() => import('../../components/single/Single')) 
 
@@ -33,12 +34,14 @@ const Home = ({ type }) => {
     room: 1,
   });
 
+  const [destinationName, setDestinationName] = useState("");
+
   // send data to /hotels path in single object state
   const [hotelsData, setHotelsData] = useState({});
 
   const [destinationCoords, setDestinationCoords] = useState([0, 0]);
 
-  // states governing options displayed in CreatableSingle
+  // states governing options displayed in Single component
   const [destinationData, setDestinationData] = useState([]);
   const [noFilteredDestinations, setNoFilteredDestinations] = useState(100);
   const [checkSubmitButton, setCheckSubmitButton] = useState(0);
@@ -59,10 +62,6 @@ const Home = ({ type }) => {
     });
   }, []);
 
-  // console.log("destinationData:", destinationData);
- // console.log("noFilteredDestinations: ", noFilteredDestinations);
-  //console.log("dropdownDisplay:", dropdownDisplay);
-
   const handleOption = (name, operation) => {
     setOptions((prev) => {
       return {
@@ -76,7 +75,7 @@ const Home = ({ type }) => {
     checkSubmitButton != 2
       ? window.alert("Input DESTINATION and CHECK-IN CHECK-OUT DATES!")
       : navigate("/hotels", {
-          state: { uid, date, options, destinationCoords },
+          state: { uid, date, options, destinationCoords, destinationName },
         });
   };
 
@@ -120,8 +119,10 @@ const Home = ({ type }) => {
                 options={dropdownDisplay}
                 onInputChange={handleInputChange}
                 onChange={(newValue) => {
+                  console.log("newValue:", newValue);
                   setUid(newValue.uid);
                   setDestinationCoords([newValue.lat, newValue.lng]);
+                  setDestinationName(newValue.value)
                   setCheckSubmitButton(1);
                 }} // activates when selecting destination
               />

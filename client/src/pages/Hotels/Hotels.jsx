@@ -51,6 +51,9 @@ const List = () => {
   );
   const endDate = `${ye1}-${mo1}-${da1}`;
 
+  const destinationName = location.state.destinationName
+  console.log(destinationName);
+
   const [next, setNext] = useState(imagePerRow);
   const navigate = useNavigate();
   const [coords, setCoords] = useState([0, 0]);
