@@ -11,7 +11,7 @@ import Hotels from "./pages/Hotels/Hotels";
 import Book from "./pages/booking/Book";
 import Login from "./components/Login";
 import Register from "./pages/register/Register";
-import UserDetails from "./pages/about/About";
+// import UserDetails from "./pages/about/About";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
         <Route exact path="/book" element={<Book />}></Route>
         <Route exact path="/login" element={<Login />}></Route>
         <Route exact path="/register" element={<Register />}></Route>
-        <Route exact path="/userdetails" element={<UserDetails />}></Route>
+        {/* <Route exact path="/userdetails" element={<UserDetails />}></Route> */}
         <Route path="*" element={<NotFoundPage/>} />
       </Routes>
     </BrowserRouter>
