@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import "./register.css";
 import Navbar from "../../components/navbar/Navbar";
+import "./register.css";
 import { useNavigate } from "react-router-dom";
 
 const Register= () => {
@@ -51,7 +51,7 @@ const Register= () => {
     } else{
       window.alert("Registration Success");
       console.log("Success");
-      navigate("/login");
+      navigate("/DestinationSearch");
     }
 
 

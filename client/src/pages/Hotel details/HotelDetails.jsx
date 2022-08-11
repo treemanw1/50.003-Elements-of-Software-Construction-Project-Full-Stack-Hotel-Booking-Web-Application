@@ -22,6 +22,7 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
   const uid = location.state.uid;
   const [options, setOptions] = useState(location.state.options);
   const hotelInfo = location.state.hotelInfo;
+  const destinationName = location.state.destinationName;
 
   const [rooms, setRooms] = useState([]);
 
@@ -74,7 +75,7 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
   useEffect(pullRoomData, [rooms]);
 
   const handleBookButton = (roomInfo) => {
-    navigate("/book",  { state: { hotelInfo, roomInfo}});
+    navigate("/book", { state: { hotelInfo, roomInfo } });
   };
 
   const { isLoaded } = useLoadScript({
@@ -94,7 +95,21 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
       <Navbar />
       <div className="hotelDetailsBackground">
         <div>
-          <Header destinationValue={"Enter Destination"}></Header>
+          <Header
+            destinationValue={destinationName}
+            dateValue={
+              new Intl.DateTimeFormat("en-GB", {
+                dateStyle: "medium",
+              }).format(date[0].startDate) +
+              " to " +
+              new Intl.DateTimeFormat("en-GB", {
+                dateStyle: "medium",
+              }).format(date[0].endDate)
+            }
+            adultsValue={options.adult}
+            childrenValue={options.children}
+            roomValue={options.room}
+          ></Header>
         </div>
         <div className="hotelDetailsResult">
           <div className="hotelDetailsWrapper">
@@ -159,11 +174,27 @@ const HotelDetails = ({ name, address, status, imageUrl, handleBookNow }) => {
               )}
               {next < rooms?.length && (
                 <div>
-                {rooms.length<=roomsPerRow ? <div>Showing {rooms.length} results of {roomsPerRow} results</div> : <div>Showing {next} results of {rooms.length} results</div>}
-                <Button className="btn success" onClick={handleMoreImage}>
-                  Load more
-                </Button>
-              </div>
+                  {/* {rooms.length <= roomsPerRow ? (
+                    <div>
+                      Showing {rooms.length} results of {roomsPerRow} results
+                    </div>
+                  ) : (
+                    <div>
+                      Showing {next} results of {rooms.length} results
+                    </div>
+                  )} */}
+                  <Button className="btn success" onClick={handleMoreImage}>
+                    {rooms.length <= roomsPerRow ? (
+                      <div>
+                        Showing {rooms.length} results of {roomsPerRow} results
+                      </div>
+                    ) : (
+                      <div>
+                        Showing {next} results of {rooms.length} results
+                      </div>
+                    )}
+                  </Button>
+                </div>
               )}
             </div>
           </div>

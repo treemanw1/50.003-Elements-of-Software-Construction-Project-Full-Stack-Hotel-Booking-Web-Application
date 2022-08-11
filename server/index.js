@@ -7,8 +7,6 @@ const Destination = require('../models/destination');
 const { remove } = require('../models/destination');
 // const Note = require('../models/note')
 
-// dotenv.config({path: "./config.env"});
-
 const app = express();
 app.use(cors());
 

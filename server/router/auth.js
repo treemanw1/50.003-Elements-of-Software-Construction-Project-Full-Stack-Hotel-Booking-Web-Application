@@ -3,11 +3,8 @@ const router= express.Router();
 const bcrypt= require('bcryptjs');
 const jwt= require('jsonwebtoken');
 
-const authenticate = require("../middleware/authenticate");
-
 require("../db/conn");
 const User= require("../model/userSchema");
-// const { default: App } = require('../../client/src/App');
 // const User= userschema.User;
 
 router.get('/', (req, res) => {
@@ -96,12 +93,14 @@ router.post('/login', async (req, res) => {
 
             token= await userLogin.generateAuthToken();
             
-            // res.cookie("jwtoken", token, {
-            //     expires: new Date(Date.now()+6000000000),
-            //     httpOnly:true
-            // });
+
 
             
+
+            // res.cookie("jwttoken", token, {
+            //     expires: new Date(Date.now()+60000000),
+            //     httpOnly:true
+            // });
 
             if(!check){
                 res.status(400).json({error:"Invalid keyed in credentials!"});
@@ -120,6 +119,7 @@ router.post('/login', async (req, res) => {
         console.log(err);
     }
 });
+
 
 router.get('/about', authenticate, async (req, res) => {
     const {emailaddress, password}= req.body;
@@ -175,6 +175,7 @@ router.get('/about', authenticate, async (req, res) => {
     }
     
 });
+
 
 
 module.exports= router;
