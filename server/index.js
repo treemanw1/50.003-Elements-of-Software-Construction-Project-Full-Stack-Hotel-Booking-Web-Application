@@ -58,7 +58,7 @@ app.get('/api/hotelsPricing/destinationID/:uid/:startDate/:endDate/:no_guests', 
       return {id: c.id, lowest_price:c.lowest_price};
     });
     apiResponseJsonReduced.sort(function(a, b){
-      return a.lowest_price - b.lowest_price;
+      return b.lowest_price - a.lowest_price;
     });
     res.json(apiResponseJsonReduced)
   } catch (err) {
@@ -87,7 +87,7 @@ app.get('*', (request, response) => {
   response.send('<h1>404 Error</h1>')
 })
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT3001 || 3001;
 // const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);

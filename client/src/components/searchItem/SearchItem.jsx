@@ -12,7 +12,17 @@ const SearchItem = ({
   price,
 }) => {
   const [imgSrc, setImgSrc] = useState(imageUrl);
-  const onError = () => setImgSrc("https://www.caspianpolicy.org/no-image.png");
+  // randomly select hotel images from here
+  const onError = () => {
+    var imgarr = ['https://media.timeout.com/images/105796267/1024/576/image.jpg',
+  "https://media.timeout.com/images/105568942/1024/576/image.jpg",
+  "https://media.timeout.com/images/105196567/1024/576/image.jpg",
+  "https://media.timeout.com/images/105750266/1024/576/image.jpg",
+  "https://media.timeout.com/images/105675470/1024/576/image.jpg",
+];
+    setImgSrc(imgarr[Math.floor(Math.random() * imgarr.length)])
+  }
+  
 
   return (
     <div className="searchItem">

@@ -106,12 +106,12 @@ const List = () => {
       (hotelPrices.length !== 0)
     ) {
       for (let i = 0; i < hotelPrices.length; i++) {
-        // if hotelPricing id exists in general info api
-        if (hotels.find((e) => e.id === hotelPrices[i].id) !== undefined) {
-          let entry = hotels.find((e) => e.id === hotelPrices[i].id);
-          // console.log(entry);
-          entry.lowest_price = hotelPrices[i].lowest_price;
-          hotelTemp.push(entry);
+        // if hotelPricing id exists in general info api + remove hotels with img_details.count == 0
+        if ((hotels.find((e) => e.id === hotelPrices[i].id) !== undefined) & (hotels[i].img_details.count !== 0)) {
+            let entry = hotels.find((e) => e.id === hotelPrices[i].id);
+            // console.log(entry);
+            entry.lowest_price = hotelPrices[i].lowest_price;
+            hotelTemp.push(entry);
         }
       }
       console.log("setting hotel display");
@@ -152,6 +152,11 @@ const List = () => {
       rooms = <div>Loaded</div>;
     }
   };
+
+  // for (let i=0; i<hotelDisplay.length; i++) {
+  //   let e = hotelDisplay[i];
+  //   console.log(e.img_details.prefix + e.img_index + e.img_details.suffix);
+  // }
 
   return (
     <div>
@@ -227,7 +232,8 @@ const List = () => {
                             e.img_details.count === 0
                               ? "https://www.caspianpolicy.org/no-image.png"
                               : e.img_details.prefix +
-                                e.img_index +
+                                0 +
+                                // e.img_index +
                                 e.img_details.suffix
                           }
                           handleBookNow={() => {
