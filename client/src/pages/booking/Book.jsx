@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../../components/navbar/Navbar";
+import { useLocation } from "react-router-dom";
 import "./book.css";
 
 const Book = () => {
@@ -13,6 +14,10 @@ const Book = () => {
     cvv: "",
     specialrequests: "",
   });
+
+  const roomsPage = useLocation();
+  const hotelInfo = roomsPage.hotelInfo;
+  const roomInfo = roomsPage.roomInfo;
 
   let field, value;
 
@@ -35,7 +40,10 @@ const Book = () => {
       expirydate,
       cvv,
       specialrequests,
+      hotelInfo,
+      roomInfo
     } = booking;
+
 
     const res = await fetch("/book", {
       method: "POST",
@@ -51,6 +59,8 @@ const Book = () => {
         expirydate,
         cvv,
         specialrequests,
+        hotelInfo,
+        roomInfo
       }),
     });
 

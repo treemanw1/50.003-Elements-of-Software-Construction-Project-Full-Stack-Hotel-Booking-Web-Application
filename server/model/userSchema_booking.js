@@ -33,6 +33,14 @@ const userSchema_bookingdetails= new mongoose.Schema({
     specialrequests:{
         type:String,
         required:true
+    },
+    hotelInfo:{
+        type:Object,
+        required:false
+    },
+    roomInfo:{
+        type:Object,
+        required:false
     }
 
  

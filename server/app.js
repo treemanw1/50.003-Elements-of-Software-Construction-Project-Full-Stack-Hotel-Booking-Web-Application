@@ -1,14 +1,11 @@
 const express= require('express');
 const app= express();
 const mongoose= require('mongoose');
-// const dotenv= require('dotenv');
+const dotenv= require('dotenv');
 
 app.use(express.json());
 
-// dotenv.config({path: "./config.env"});
-
-require('dotenv').config();
-
+dotenv.config({path: "./config.env"});
 require('./db/conn');
 // const User= require('./model/userSchema');
 
@@ -16,6 +13,7 @@ app.use(require('./router/auth'));
 app.use(require('./router/booking'));
 
 const PORT= process.env.PORT;
+
 console.log("PORT NO:", process.env.PORT);
 
 //middleware 
