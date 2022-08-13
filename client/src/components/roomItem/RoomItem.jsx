@@ -22,7 +22,7 @@ const RoomItem = ({
           <span className="roomPrice">SGD {price}</span>
           <span className="roomSubDetails">per night</span>
         </div>
-        <button className="roomCheckButton" onClick={handleBookNow}>
+        <button data-testid = "BookNow" className="roomCheckButton" onClick={handleBookNow}>
           Book Now
         </button>
       </div>

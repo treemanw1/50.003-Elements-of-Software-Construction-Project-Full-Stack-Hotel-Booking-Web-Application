@@ -29,7 +29,7 @@ afterEach(() => {
     container = null;
   });
 
-  it('gets the test endpoint /', async() => {
+  it('tests endpoint /', async() => {
     const response = await request.get('/')
   
     expect(response.status).toBe(200)
@@ -37,7 +37,7 @@ afterEach(() => {
  
   })
 
-  it('gets the destination info', async() => {
+  it('tests the endpoint /api/destinations', async() => {
     const response = await request.get('/api/destinations')
     
     expect(response.status).toBe(200)
@@ -58,11 +58,13 @@ afterEach(() => {
 
   it('gets the room info', async() => {
     const response = await request.get('/api/rooms/A6Dz/xPG9/2022-08-31/2022-09-01/1')
-    console.log(response.body)
+    //console.log(response.body)
     expect(response.status).toBe(200)
     
  
   }, 20000)
+
+  
 
 
   

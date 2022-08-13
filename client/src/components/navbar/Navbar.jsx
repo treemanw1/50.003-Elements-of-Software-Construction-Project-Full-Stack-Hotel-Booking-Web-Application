@@ -22,7 +22,7 @@ const Navbar = () => {
     <div className="navbar">
       <div className="navContainer">
         <div className="logoContainer">
-          <div class="childLogoContainer">
+          <div className="childLogoContainer">
             {/* <div className="logoImage">
               <img src={logo} alt="Logo" />
             </div> */}

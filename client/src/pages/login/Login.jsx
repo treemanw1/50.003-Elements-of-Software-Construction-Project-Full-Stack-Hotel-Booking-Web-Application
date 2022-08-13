@@ -120,7 +120,7 @@ const Login = (e) => {
               </form>
             </section>
             <button
-              data-testid="LoginBtn"
+              data-testid="login"
               type="submit"
               className="loginButton"
               onClick={loginUser}

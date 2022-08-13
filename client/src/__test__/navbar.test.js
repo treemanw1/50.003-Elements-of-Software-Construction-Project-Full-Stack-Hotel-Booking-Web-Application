@@ -44,8 +44,6 @@ it('LoginBtn redirects after click', () => {
   expect(login).toBeEnabled();
   fireEvent.click(login);
 
-  // TODO something something check useNavigate
-  // https://blog.logrocket.com/testing-react-router-usenavigate-hook-react-testing-library/
   expect(mockedUsedNavigate).toBeCalledTimes(1);
 })
 
@@ -60,12 +58,10 @@ it('RegBtn redirects after click', () => {
   expect(register).toBeEnabled();
   fireEvent.click(register);
 
-  // TODO something something check useNavigate
-  // https://blog.logrocket.com/testing-react-router-usenavigate-hook-react-testing-library/
   expect(mockedUsedNavigate).toBeCalledTimes(1);
 })
 
-it('Trivago redirects after click', () => {
+it('Ascenda logo redirects after click', () => {
 
   render(
       <BrowserRouter>
@@ -76,8 +72,7 @@ it('Trivago redirects after click', () => {
   expect(register).toBeEnabled();
   fireEvent.click(register);
 
-  // TODO something something check useNavigate
-  // https://blog.logrocket.com/testing-react-router-usenavigate-hook-react-testing-library/
+
   expect(mockedUsedNavigate).toBeCalledTimes(1);
-  //https://v5.reactrouter.com/web/guides/testing/checking-location-in-tests
+
 })

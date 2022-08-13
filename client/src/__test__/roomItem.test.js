@@ -1,4 +1,5 @@
 import React from "react";
+import RoomItem from "../components/roomItem/RoomItem";
 import SearchItem from "../components/searchItem/SearchItem";
 import { render, fireEvent, screen,within } from "@testing-library/react";
 const mockedUsedNavigate = jest.fn();
@@ -30,11 +31,11 @@ jest.mock('react-router-dom', () => ({
 it("renders without crashing", () => {
   
     const div = document.createElement("div");
-    render(<SearchItem></SearchItem>, div);
+    render(<RoomItem></RoomItem>, div);
 
 });
 
-it('Select Room button redirects after click', () => {
+it('Book Now button redirects after click', () => {
 
   render(<DestinationSearchPage></DestinationSearchPage>, {wrapper: MemoryRouter});
   const search = screen.getByTestId('SearchBtn');
@@ -50,7 +51,17 @@ it('Select Room button redirects after click', () => {
   expect(select).toBeEnabled();
   fireEvent.click(select);
 
+  //expect(mockedUsedNavigate).toBeCalledTimes(1);
 
+  render(
+    <BrowserRouter>
+        <RoomItem></RoomItem>
+    </BrowserRouter>
+)
+  const book = screen.getByTestId('BookNow');
+  expect(book).toBeEnabled();
+  fireEvent.click(book);  
+  
 })
 
 

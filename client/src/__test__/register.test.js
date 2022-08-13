@@ -66,7 +66,5 @@ it('SubmitBtn redirects after click', () => {
     expect(submit).toBeEnabled();
     fireEvent.click(submit);
   
-    // TODO something something check useNavigate
-    // https://blog.logrocket.com/testing-react-router-usenavigate-hook-react-testing-library/
-    //expect(mockedUsedNavigate).toBeCalledTimes(1);
+    
   })

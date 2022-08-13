@@ -88,5 +88,31 @@ describe('Test react-select component', () => {
 
     });
 
+    it('should not allow non-existent option selected through typing', async () => {
+        const mockedOnChange = jest.fn();
+        const mockedOnInputChange = jest.fn();
+        const { getByTestId, queryByTestId } = render(<Single
+            options={mockedOptions}
+            onChange={mockedOnChange}
+            onInputChange={mockedOnInputChange}
+        />);
+
+        const mySelectComponent = queryByTestId('my-select-component');
+
+        expect(mySelectComponent).toBeDefined();
+        expect(mySelectComponent).not.toBeNull();
+        expect(mockedOnChange).toHaveBeenCalledTimes(0);
+
+        const field = getByTestId('my-select-component').querySelector('input');
+        //test 1
+        fireEvent.change(field, { target: { value: 50 } });
+        expect(screen.getByText('No options')).toBeInTheDocument();
+        
+
+    });
+
+ 
+
+
 
 });

@@ -5,7 +5,7 @@ const bcrypt= require('bcryptjs');
 const db= require("../db/conn")
 
 const Booking= require("../model/userSchema_booking");
-
+router.use(express.json())
 router.post('/book', async (req, res) => {
     
     const {firstname, lastname, phonenumber, emailaddress, creditcardnumber, expirydate, cvv, specialrequests, hotelInfo, roomInfo}= req.body;
