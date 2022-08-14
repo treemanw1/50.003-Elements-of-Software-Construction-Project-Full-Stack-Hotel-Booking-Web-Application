@@ -1,18 +1,4 @@
 # ESC-Project
-## Current Issues
-27/6/22 Monday
-- can only access /hotels path via search from /DestinationSearch
-- Get below error when opening /DestinationSearch
-
-react-dom.development.js:86 Warning: Invalid DOM property `class`. Did you mean `className`?
-
-Also renamed some files for integration
-
-Ann/Feature 1
-Home.jsx -> DestinationSearchPage
-
-Aditi/Feature 2
-Home.jsx -> HotelSearchPage
 
 # Getting Started with Create React App
 
